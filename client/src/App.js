@@ -7,9 +7,9 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/styles/style.css';
-import { Container, Row, Col } from 'react-bootstrap';
 
 import Home from './pages/Home';
 import Signup from './pages/Signup';
@@ -21,7 +21,6 @@ import Header from './components/Header';
 import Banner from './components/Banner';
 import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
-
 import Assets from './pages/Assets';
 
 // construct our main GraphQL API endpoint
@@ -49,7 +48,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-
   return (
     <ApolloProvider client={client}>
       <Router>

@@ -28,13 +28,9 @@ console.log(user.activePet)
         <Card className="janky-card-wrapper">
           <Card.Body className="janky-card-body">
             <Card.Text className="janky-card-inner-body d-flex flex-column align-items-center">
-              <div className="button-wrapper">
                 <Link className="background-button" to="/login" title="LOG IN" />
-              </div>
               or
-              <div className="button-wrapper">
                 <Link className="background-button" to="/signup" title="SIGN UP" />
-              </div>
             </Card.Text>
           </Card.Body>
         </Card>
