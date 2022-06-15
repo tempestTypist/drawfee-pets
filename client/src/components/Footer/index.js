@@ -18,7 +18,7 @@ const Footer = () => {
           </button>
         )}
         <h4>
-          <Link to="https://www.youtube.com/c/Drawfee">https://www.youtube.com/c/Drawfee</Link>
+          <Link to="https://www.youtube.com/c/Drawfee">Drawfee Show on Youtube</Link>
         </h4>
       </Col>
     </Row>

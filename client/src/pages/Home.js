@@ -1,11 +1,12 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
+import { Link } from 'react-router-dom';
 
 import PetList from '../components/PetList';
 import PetForm from '../components/PetForm';
 import UserList from '../components/UserList';
 
-import { Card, Button } from 'react-bootstrap';
+import { Button, Card, Image } from 'react-bootstrap';
 
 import { QUERY_PETS } from '../utils/queries';
 import { QUERY_USERS } from '../utils/queries';
@@ -21,18 +22,6 @@ const Home = () => {
   return (
 <>
       <div className="container-fluid">
-        {/* <div className="row">
-          <div className="col-12">
-              <div className="diagonal-hero-bg">
-                <div className="p-4 p-md-5 text-white rounded">
-                  <h1 className="display-4 fst-italic">Announcement Banner</h1>
-                  <p className="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
-                  <p className="lead mb-0"><a className="text-white fw-bold">Continue reading...</a></p>
-                </div>
-              </div>
-          </div>
-        </div> */}
-
         <div className="row">
           <div className="col-md-8">
 
@@ -126,15 +115,48 @@ const Home = () => {
 
           <div className="col-md-4">
 
-              <Card className="janky-card-wrapper mt-3 mb-5">
-                <Card.Img variant="top" className="janky-card-body" src="https://via.placeholder.com/200x160.png" />
-                <Card.Body className="janky-card-body featured-pet-card">
-                  <Card.Text className="janky-card-inner-body">
-                    <Card.Title>Petname the Petspecies</Card.Title>
-                    Owned by: Username
-                  </Card.Text>
-                </Card.Body>
-              </Card>
+          <Card className="janky-card-wrapper key-was-here p-4">
+            <Card.Header className="janky-card-header">
+              <div className="pet-name">
+                Pet Name
+              </div>
+            </Card.Header>
+            <div className="janky-card-body-wrapper">
+              <Card.Body className="janky-card-body">
+                <div className="janky-card-inner-body">
+                    <Image src="https://via.placeholder.com/200x160.png" className="pet-list__image" alt="Pet image"/>
+                </div>
+              </Card.Body>
+            </div>
+            <Card.Footer className="janky-card-footer">
+              <div className="janky-card-footer__inner">
+                Made by: User
+                {/* {showUsername ? (
+                  <Link
+                    className="text-light"
+                    to={`/profiles/${pet.petOwner}`}
+                  >
+                    {pet.petOwner} <br />
+                    <span style={{ fontSize: '1rem' }}>
+                      created this pet on {pet.createdAt}
+                    </span>
+                  </Link>
+                ) : (
+                  <>
+                    <span style={{ fontSize: '1rem' }}>
+                      You made this pet on xTimestampx
+                    </span>
+                  </>
+                )} */}
+                {/* <Link
+                  className="btn btn-primary btn-block btn-squared"
+                  to={`/pets/${pet._id}`}
+                >
+                  View pet profile
+                </Link> */}
+              </div>
+            </Card.Footer>
+          </Card>
 
               <Card className="janky-card-wrapper">
                 <Card.Header className="janky-card-header">

@@ -52,9 +52,6 @@ console.log(user.activePet)
 
         <Card className="janky-card-wrapper position-sticky">
           <Card.Body className="janky-card-body">
-            {/* <Card.Header className="janky-card-header">
-              {user.activePet.petName} the {user.activePet.petSpecies}
-            </Card.Header> */}
             <Card.Text className="janky-card-inner-body d-flex flex-column align-items-center">
               <Image src={ALLPETS[user.activePet.petSpecies]} alt="Pet image" fluid/>
               {user.activePet.petName} the {user.activePet.petSpecies}
