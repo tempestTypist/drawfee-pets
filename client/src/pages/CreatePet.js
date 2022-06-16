@@ -15,7 +15,7 @@ import ColourSelect from '../components/ColourSelect';
 const CreatePet = () => {
 const { loading, data: allpetsData } = useQuery(QUERY_ALLPETS);
 
-// console.log("Pet Data: " + JSON.stringify(allpetsData))
+console.log("Pet Data: " + JSON.stringify(allpetsData))
 
 const allpets = allpetsData?.allpets || [];
 const pets = allpets.map((pet) => (pet.petSpecies))
