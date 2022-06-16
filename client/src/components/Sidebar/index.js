@@ -13,8 +13,6 @@ const Sidebar = () => {
 
   const user = data?.me || {};
 
-console.log(user.activePet)
-
   if (loading) {
     return <div>Loading...</div>;
   }
