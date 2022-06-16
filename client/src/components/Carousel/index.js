@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import CarouselItem from '../CarouselItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import ALLPETS from '../../assets/images';
+import ImageImport from '../../utils/imageimport';
 
 const Carousel = (props) => {
-	const { carouselItems, heading, selectPet } = props 
+	const { carouselItems, heading, selectPet, importImages } = props 
 	const headingId = `${heading.replace(/\s+/g, '-').toLowerCase()}`
 
 	const [app, updateApp] = useState({
@@ -16,6 +16,7 @@ const Carousel = (props) => {
 	});
 
 	const { items, currentIndex, currentItems } = app
+	const images = ImageImport.importAll(require.context('../../assets/images/pets', false, /\.(png|jpe?g|svg)$/));
 
 	const moveLeft = () => {
 		let newIndex = currentIndex
@@ -41,6 +42,10 @@ const Carousel = (props) => {
     event.target.style.opacity = 1
   }
 
+	const importPetImage = (id) => {
+		importImages(id)
+	}
+
 useEffect(() => {
 	let listItems = []
 	let level
@@ -49,23 +54,14 @@ useEffect(() => {
 
 	for (let i = currentIndex - 2; i < currentIndex + 3; i++) {
 			let index = i
-			console.log("Loop begins-------")
-			console.log("Starting variable: " + i)
 			if (i < 0) {
-				console.log("Starting variable " + i + " is less than 0.")
 					index = items.length + i
-					console.log("index set to: " + index)
 			} else if (i >= items.length) {
-				console.log("Starting variable " + i + " is equal to or greater than the number of items in the list.")
 					index = i % items.length
-					console.log("index set to: " + index)
 			}
 			level = currentIndex - i
 			className = 'item level' + level
-			console.log("Testing % " + (currentIndex % items.length))
 			if (currentIndex === index) className += ' item--current'
-			//we start with 'if the current index/active item is the same as the index we are setting in this for loop,
-			//then set the class
 
 			switch (index) {
 				case currentIndex:
@@ -81,13 +77,7 @@ useEffect(() => {
 					break;
 			}
 
-			console.log("Pushing item...")
-			console.log("Item key: " + index)
-			console.log("Item ID: " + items[index])
-			console.log("Item level: " + level)
-			console.log("_____________________")
 			listItems.push({ "index": index, "id": items[index], "class": className })
-			// <CarouselItem key={index} index={index} id={items[index]} level={level} handleSlideClick={handleSlideClick} />
 	}
 	updateApp({ ...app, currentItems: [...listItems] });
 	selectPet(items[currentIndex])
@@ -104,7 +94,6 @@ useEffect(() => {
 
 			<ul className="item-list__wrapper">
 				<h3 id={headingId} className="visuallyhidden">{heading}</h3>
-				{/* {generateItems()} */}
 
 				{currentItems.map((item) => (
 					<li 
@@ -116,7 +105,7 @@ useEffect(() => {
 								className="item__image"
 								alt={item.id}
 								name="petSpecies"
-								src={ALLPETS[item.id]}
+								src={images[`${item.id}.png`]}
 								onLoad={imageLoaded}
 							/>
 						</div>

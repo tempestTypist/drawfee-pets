@@ -7,6 +7,7 @@ import { QUERY_ALLPETS } from '../utils/queries';
 import { ADD_PET } from './../utils/mutations';
 
 import ALLPETS from '../assets/images';
+import ImageImport from './../utils/imageimport';
 import Auth from './../utils/auth';
 import Carousel from '../components/Carousel';
 import ColourSelect from '../components/ColourSelect';
@@ -14,8 +15,13 @@ import ColourSelect from '../components/ColourSelect';
 const CreatePet = () => {
 const { loading, data: allpetsData } = useQuery(QUERY_ALLPETS);
 
+// console.log("Pet Data: " + JSON.stringify(allpetsData))
+
 const allpets = allpetsData?.allpets || [];
 const pets = allpets.map((pet) => (pet.petSpecies))
+const images = ImageImport.importAll(require.context('../assets/images/pets', false, /\.(png|jpe?g|svg)$/));
+
+// console.log("Pet data: " + pets)
 
 const [addPet, { error, data }] = useMutation(ADD_PET);
 
@@ -79,7 +85,7 @@ if (loading) {
                       <div  className="pet-preview">
                         <Image 
                           className="pet-preview__screen" 
-                          src={ALLPETS[petState.petSpecies]}
+                          src={images[`${petState.petSpecies}.png`]}
                         />
                       </div>
                     </div>

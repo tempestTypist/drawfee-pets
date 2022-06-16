@@ -5,6 +5,7 @@ import { QUERY_USER, QUERY_ME } from '../../utils/queries';
 import Auth from '../../utils/auth';
 import ALLPETS from '../../assets/images';
 import { Col, Image, Card } from 'react-bootstrap';
+import ImageImport from '../../utils/imageimport';
 
 const Sidebar = () => {
   const { username: userParam } = useParams();
@@ -12,6 +13,7 @@ const Sidebar = () => {
   const { loading, data } = useQuery(QUERY_ME);
 
   const user = data?.me || {};
+	const images = ImageImport.importAll(require.context('../../assets/images/pets', false, /\.(png|jpe?g|svg)$/));
 
   if (loading) {
     return <div>Loading...</div>;
@@ -40,8 +42,6 @@ const Sidebar = () => {
     return <></>
   }
 
-  console.log("User data: " + JSON.stringify(Auth.getProfile().data))
-
   return (
     <Col lg={3} xl={2} className="d-none d-lg-flex sidebar" id="sidebarMenu">
         <div className="hanger-wrapper">
@@ -51,7 +51,7 @@ const Sidebar = () => {
         <Card className="janky-card-wrapper position-sticky">
           <Card.Body className="janky-card-body">
             <Card.Text className="janky-card-inner-body d-flex flex-column align-items-center">
-              <Image src={ALLPETS[user.activePet.petSpecies]} alt="Pet image" fluid/>
+              <Image src={images[`${user.activePet.petSpecies}.png`]} alt="Pet image" fluid/>
               {user.activePet.petName} the {user.activePet.petSpecies}
             </Card.Text>
           </Card.Body>
