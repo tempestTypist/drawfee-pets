@@ -31,6 +31,8 @@ const [petState, setPetState] = useState({
   petColour: '',
 });
 
+console.log("Pet state: " + petState)
+
 const selectPet = (selected) => {
   setPetState({ ...petState, petSpecies: selected})
 }
