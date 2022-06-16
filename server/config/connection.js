@@ -31,7 +31,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 // || 'mongodb://localhost/drawfee-pets'
 
 mongoose.connect(
-  'mongodb://localhost/drawfee-pets',
+  process.env.MONGODB_URI || 'mongodb://localhost/drawfee-pets',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
