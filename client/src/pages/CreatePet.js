@@ -110,11 +110,9 @@ if (loading) {
                     <Carousel heading="Pet Chooser" carouselItems={pets} selectPet={selectPet} />
                   </Col>
 
-                  <Col xs={12}>
-                    <button type="submit" className="screen-btn py-3">
-                      Create!
-                    </button> 
-                  </Col>
+                  <div className="screen-btn-wrapper">
+                    <button type="submit" className="screen-btn" />
+                  </div>
                 </Row>
 
                 {error && (

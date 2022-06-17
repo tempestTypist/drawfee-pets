@@ -57,7 +57,7 @@
   width: 15px;
   height: 8rem;
   background: transparent;
-  background-image: url(../images/sign-rope.png);
+  border-image: url(../images/sign-pole.svg) 1 fill;
   z-index: -1;
 }
 
@@ -103,7 +103,8 @@
 
 .content {
   border-top: 0;
-  padding-top: 2rem
+  padding-top: 2rem;
+  padding-bottom: 2rem
 }
 
 .form-control,
@@ -862,17 +863,6 @@ input[class="color-yellow"]:focus + .paint-color {
 
 /* ***** Pet Chooser ***** */
 
-/* #carousel {
-  position: absolute;
-  height: 200px;
-  width: 810px;
-  margin: auto;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-} */
-
 .pet-chooser {
   display: flex;
   flex-direction: row;
@@ -880,6 +870,7 @@ input[class="color-yellow"]:focus + .paint-color {
   justify-content: space-evenly;
   border-image: url(../images/screen-long.svg) 1 fill;
   padding: 4rem 2rem;
+  z-index: 1
 }
 
 .arrow {
@@ -1428,11 +1419,15 @@ color: #FFEB3B;
     border-image: url(../images/screen-stacked-2.svg) 1 fill;
   }
 
+  .screen-btn-wrapper {
+    margin-top: -1.5rem;
+    margin-left: 4rem;
+  }
+
   .screen-btn {
-    background-image: url(../images/screen-button.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    padding: 4rem
+    background-color: transparent;
+    border-image: url(../images/screen-button.svg) 1 fill;
+    padding: 4rem 5rem;
   }
 
 
