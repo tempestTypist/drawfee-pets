@@ -28,19 +28,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-// db.connect(err => {
-
-//   if (err) {
-//     console.log(err)
-//   }
-
-//   const collection = db.db("drawfee-pets").collection("allpets");
-//     console.log(collection)
-//     db.close();
-// });
-
-// db.on("error", console.error.bind(console, "connection error: "));
-
 db.once('open', () => {
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
