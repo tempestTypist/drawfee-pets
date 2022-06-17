@@ -1,9 +1,10 @@
 import React from 'react';
-import ALLPETS from '../../assets/images';
+import ImageImport from '../../utils/imageimport';
 
 const CarouselItem = (props) => {
   const { index, active, id, level } = props 
 	const slideClick = props.handleSlideClick
+	const images = ImageImport.importAll(require.context('../../assets/images/pets', false, /\.(png|jpe?g|svg)$/));
 	let className = 'item level' + level
 
 	if (active === index) className += ' item--current'
@@ -27,7 +28,7 @@ const CarouselItem = (props) => {
 				className="item__image"
 				alt={id}
 				name="petSpecies"
-				src={ALLPETS[id]}
+				src={images[`${id}.png`]}
 				onLoad={imageLoaded}
 			/>
 		</div>

@@ -11,7 +11,7 @@ import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
 import { ButtonGroup, Card, Image, ToggleButton } from 'react-bootstrap';
-import ALLPETS from '../../assets/images';
+import ImageImport from '../../utils/imageimport';
 
 library.add(fasStar, farStar)
 
@@ -21,8 +21,8 @@ const PetList = ({
   showTitle = true,
   showUsername = true,
 }) => {
-
-  console.log(pets)
+  
+	const images = ImageImport.importAll(require.context('../../assets/images/pets', false, /\.(png|jpe?g|svg)$/));
 
   const [favourite, setFavourite] = useState({
     activePet: null,
@@ -126,7 +126,7 @@ const PetList = ({
             <div className="janky-card-body-wrapper">
               <Card.Body className="janky-card-body">
                 <div className="janky-card-inner-body">
-                    <Image src={ALLPETS[pet.petSpecies]} className="pet-list__image" alt="Pet image"/>
+                    <Image src={images[`${pet.petSpecies}.png`]} className="pet-list__image" alt="Pet image"/>
                 </div>
               </Card.Body>
             </div>

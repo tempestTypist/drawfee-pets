@@ -7,11 +7,6 @@ import { QUERY_PETS, QUERY_ME } from '../../utils/queries';
 
 import Auth from '../../utils/auth';
 
-import PetSelect from '../PetSelect';
-import PetChooser from '../PetChooser'
-
-import ALLPETS from '../../assets/images/index.js'
-
 const PetForm = () => {
 
   const [petState, setPetState] = useState({
