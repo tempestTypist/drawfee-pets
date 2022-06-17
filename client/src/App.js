@@ -51,9 +51,9 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
+        <Header />
+        {/* <Banner /> */}
         <Container fluid>
-          <Header />
-          {/* <Banner /> */}
           <Row className="main-content">
             <Sidebar />
             <Col lg={{span: 9, offset: 3}} xl={{span: 10, offset: 2}} className="content">
@@ -83,8 +83,8 @@ function App() {
               </Route>
             </Col>
           </Row>
-          <Footer />
         </Container>
+        <Footer />
       </Router>
     </ApolloProvider>
   );

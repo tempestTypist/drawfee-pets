@@ -7,8 +7,8 @@ const Footer = () => {
   const location = useLocation();
   const history = useHistory();
   return (
-    <Row className="footer text-center">
-      <Col>
+    <div className="footer text-center">
+      <div>
         {location.pathname !== '/' && (
           <button
             className="btn btn-dark mb-3"
@@ -20,8 +20,8 @@ const Footer = () => {
         <h4>
           <Link to="https://www.youtube.com/c/Drawfee">Drawfee Show on Youtube</Link>
         </h4>
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 

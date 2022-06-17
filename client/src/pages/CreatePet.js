@@ -74,10 +74,11 @@ if (loading) {
                 fluid >
 
                 <Row>
-                  <Col md={5}>
+                  <Col md={5} style={{"margin-bottom": "-1rem"}}>
                     <div className="pet-preview__wrapper">
                       <div  className="pet-preview">
                         <Image 
+                          fluid
                           className="pet-preview__screen" 
                           src={images[`${petState.petSpecies}.png`]}
                         />
@@ -85,7 +86,7 @@ if (loading) {
                     </div>
                   </Col>
 
-                  <Col md={6}>
+                  <Col md={6} className="flex-grow-1" style={{"margin-bottom": "-1rem"}}>
                     <div className="stacked-screens__wrapper">
                       <div className="stacked-screen">
                         <InputGroup>
@@ -109,8 +110,8 @@ if (loading) {
                     <Carousel heading="Pet Chooser" carouselItems={pets} selectPet={selectPet} />
                   </Col>
 
-                  <Col xs={12} className="screen-btn">
-                    <button type="submit" className="btn py-3">
+                  <Col xs={12}>
+                    <button type="submit" className="screen-btn py-3">
                       Create!
                     </button> 
                   </Col>

@@ -713,19 +713,17 @@ button:active.btn-janky::after {
 using methods found in https://www.sitepoint.com/css-path-function-squeaky-portraits */
 
 .pet-preview__wrapper {
+  display: flex;
+  height: 100%;
   border: solid 60px red;
   border-image: url(../images/screen.svg) 60 fill;
 }
 
 .pet-preview {
   display: flex;
-  height: 18rem;
 }
 
 .pet-preview img {
-  height: 100%;
-  width: 100%;
-  border-radius: 30px;
   object-fit: contain;
   background: transparent;
 }
@@ -747,6 +745,10 @@ using methods found in https://www.sitepoint.com/css-path-function-squeaky-portr
   font-weight: bold;
   color: inherit;
 }
+
+/* .colour-chooser label .color-label {
+
+} */
 
 input[type="radio"] {
 	position: absolute;
@@ -1398,14 +1400,18 @@ color: #FFEB3B;
   .stacked-screens__wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
+    justify-content: flex-end ;
     height: 100%;
   }
 
   .stacked-screen {
     width: 100%;
-    padding: 2rem 4rem;
+    padding: 2rem 4rem 4rem 4rem;
+    margin-bottom: -.5rem
+  }
+
+  .stacked-screen > div {
+    padding: 2rem;
   }
 
   .stacked-screens__wrapper .stacked-screen:nth-child(odd) {
@@ -1419,7 +1425,8 @@ color: #FFEB3B;
   .screen-btn {
     background-image: url(../images/screen-button.svg);
     background-repeat: no-repeat;
-    background-position: center
+    background-position: center;
+    padding: 4rem
   }
 
 
