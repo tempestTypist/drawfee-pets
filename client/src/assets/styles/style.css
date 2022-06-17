@@ -743,26 +743,23 @@ using methods found in https://www.sitepoint.com/css-path-function-squeaky-portr
   font-family: "Supersonic Rocketship", Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 1.4rem;
   font-weight: bold;
-  color: inherit;
 }
 
-/* .colour-chooser label .color-label {
+.colour-chooser label .color-label {
+  position: absolute;
+  top: 33%;
+  text-shadow: 3px 2px #000
+}
 
-} */
-
-input[type="radio"] {
+.colour-chooser input[type="radio"] {
 	position: absolute;
 	opacity: 0;
 }
 
-input[type="radio"] + .paint-color, 
-input[type="radio"] + .color-label {
+.colour-chooser input[type="radio"] + .paint-color, 
+.colour-chooser input[type="radio"] + .color-label {
 	-webkit-transition: all 0.2s;
 	transition: all 0.2s;
-}
-
-input + .paint-color {
-	cursor: pointer;
 }
 
 .paint-color {
@@ -791,10 +788,10 @@ input + .paint-color {
   margin: 10px 11px 10px 11px
 }
 
-.colour-chooser label:hover input[class="color-red"]:checked + .paint-color,
-.colour-chooser label:hover input[class="color-blue"]:checked + .paint-color,
-.colour-chooser label:hover input[class="color-green"]:checked + .paint-color,
-.colour-chooser label:hover input[class="color-yellow"]:checked + .paint-color {
+label:hover input[class="color-red"]:checked + .paint-color,
+label:hover input[class="color-blue"]:checked + .paint-color,
+label:hover input[class="color-green"]:checked + .paint-color,
+label:hover input[class="color-yellow"]:checked + .paint-color {
   --clip: var(--splattier);
   --scale: 1;
   --rotate: 0deg;
@@ -813,12 +810,16 @@ input[class="color-yellow"]:checked + .paint-color {
   margin: 10px 11px 10px 11px
 }
 
-input[class="color-red"]:checked + .color-label,
+input[type="radio"] ~ .color-label {
+  color: #ccc
+}
+
+/* input[class="color-red"]:checked + .color-label,
 input[class="color-blue"]:checked + .color-label,
 input[class="color-green"]:checked + .color-label,
 input[class="color-yellow"]:checked + .color-label {
   color: rgb(216, 35, 11);
-}
+} */
 
 input[class="color-red"]:hover + .paint-color,
 input[class="color-red"]:checked + .paint-color,
@@ -827,8 +828,10 @@ input[class="color-red"]:focus + .paint-color {
 }
 
 .colour-chooser label:hover .color-label,
-.colour-chooser label:focus .color-label {
-  color: rgb(216, 35, 11);
+.colour-chooser label:focus .color-label,
+.colour-chooser input[type="radio"]:checked ~ .color-label {
+  color: #fff;
+  transition: color 0.2s
 }
 
 input[class="color-blue"]:hover + .paint-color,
@@ -838,6 +841,7 @@ input[class="color-blue"]:focus + .paint-color {
   color: rgb(5, 46, 228);
 }
 
+
 input[class="color-green"]:hover + .paint-color,
 input[class="color-green"]:checked + .paint-color,
 input[class="color-green"]:focus + .paint-color {
@@ -845,12 +849,14 @@ input[class="color-green"]:focus + .paint-color {
   color: rgb(45, 199, 6);
 }
 
+
 input[class="color-yellow"]:hover + .paint-color,
 input[class="color-yellow"]:checked + .paint-color,
 input[class="color-yellow"]:focus + .paint-color {
 	background: rgb(232, 214, 0);
   color: rgb(232, 214, 0);
 }
+
 
 
 
