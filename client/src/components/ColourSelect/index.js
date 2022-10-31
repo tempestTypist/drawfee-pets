@@ -18,6 +18,7 @@ const ColourSelect = (props) => {
 					id="color-red" 
 					value="Red"
 					onChange={changeHandler}
+					defaultChecked
 				/>
 				<div className="paint-color" />
 				<div className="color-label">Red</div>

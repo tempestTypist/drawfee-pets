@@ -17,7 +17,6 @@ const typeDefs = gql`
     petColour: String
     createdAt: String
     petOwner: String
-    isFavourite: Boolean
   }
 
   type AllPets {

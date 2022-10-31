@@ -15,15 +15,18 @@ const CreatePet = () => {
 const { loading, data: allpetsData } = useQuery(QUERY_ALLPETS);
 const allpets = allpetsData?.allpets || [];
 const pets = allpets.map((pet) => (pet.petSpecies))
-const images = ImageImport.importAll(require.context('../assets/images/pets', false, /\.(png|jpe?g|svg)$/));
+const images = ImageImport.importAll(require.context('../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
 
 const [addPet, { error, data }] = useMutation(ADD_PET);
 
 const [petState, setPetState] = useState({
   petSpecies: pets[0],
   petName: '',
-  petColour: '',
+  petColour: "Red",
 });
+
+console.log(`${petState.petSpecies}--${petState.petColour}.png`)
+console.log(images)
 
 const selectPet = (selected) => {
   setPetState({ ...petState, petSpecies: selected})
@@ -58,7 +61,7 @@ if (loading) {
 }
 
   return (
-      <>
+    <>
       {Auth.loggedIn() ? (
         <>
           {data ? (
@@ -69,7 +72,7 @@ if (loading) {
             ) : (
               <Container
                 as={Form}
-                className="d-flex flex-column justify-content-center align-items-center"
+                className="d-flex flex-column justify-content-center"
                 onSubmit={handleFormSubmit}
                 fluid >
 
@@ -80,7 +83,7 @@ if (loading) {
                         <Image 
                           fluid
                           className="pet-preview__screen" 
-                          src={images[`${petState.petSpecies}.png`]}
+                          src={images[`${petState.petSpecies}/${petState.petSpecies}--${petState.petColour}.png`]}
                         />
                       </div>
                     </div>
@@ -105,7 +108,9 @@ if (loading) {
                       </div>
                     </div>
                   </Col>
+                </Row>
 
+                <Row>
                   <Col xs={12} className="pet-chooser">
                     <Carousel heading="Pet Chooser" carouselItems={pets} selectPet={selectPet} />
                   </Col>
@@ -121,7 +126,8 @@ if (loading) {
                   </div>
                 )}
               </Container>
-              )}
+            )
+          }
         </>
       ) : (
         <p>

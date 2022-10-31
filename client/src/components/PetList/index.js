@@ -21,8 +21,10 @@ const PetList = ({
   showTitle = true,
   showUsername = true,
 }) => {
+
+  console.log(pets)
   
-	const images = ImageImport.importAll(require.context('../../assets/images/pets', false, /\.(png|jpe?g|svg)$/));
+	const images = ImageImport.importAll(require.context('../../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
 
   const [favourite, setFavourite] = useState({
     activePet: null,
@@ -111,8 +113,7 @@ const PetList = ({
                     </>
                   ) : (
                     <>
-                      <div key={pet._id} onClick={() => handleFavePet(pet._id)}>
-                      </div>
+                      <div key={pet._id} onClick={() => handleFavePet(pet._id)} />
                       <FontAwesomeIcon className={isFavourite(index)} icon={"fa-solid fa-star"} onClick={() => handleFavePet(index)} />
                       <button
                         className="btn"
@@ -126,7 +127,7 @@ const PetList = ({
             <div className="janky-card-body-wrapper">
               <Card.Body className="janky-card-body">
                 <div className="janky-card-inner-body">
-                    <Image src={images[`${pet.petSpecies}.png`]} className="pet-list__image" alt="Pet image"/>
+                    <Image src={images[`${pet.petSpecies}/${pet.petSpecies}--${pet.petColour}.png`]} className="pet-list__image" alt="Pet image"/>
                 </div>
               </Card.Body>
             </div>

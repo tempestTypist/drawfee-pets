@@ -12,7 +12,7 @@ const Sidebar = () => {
   const { loading, data } = useQuery(QUERY_ME);
 
   const user = data?.me || {};
-	const images = ImageImport.importAll(require.context('../../assets/images/pets', false, /\.(png|jpe?g|svg)$/));
+	const images = ImageImport.importAll(require.context('../../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
 
   if (loading) {
     return <div>Loading...</div>;
@@ -50,7 +50,7 @@ const Sidebar = () => {
         <Card className="janky-card-wrapper position-sticky">
           <Card.Body className="janky-card-body">
             <Card.Text className="janky-card-inner-body d-flex flex-column align-items-center">
-              <Image src={images[`${user.activePet.petSpecies}.png`]} alt="Pet image" fluid/>
+              <Image src={images[`${user.activePet.petSpecies}/${user.activePet.petSpecies}--${user.activePet.petColour}.png`]} alt="Pet image" fluid/>
               {user.activePet.petName} the {user.activePet.petSpecies}
             </Card.Text>
           </Card.Body>

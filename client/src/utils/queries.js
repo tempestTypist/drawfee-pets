@@ -10,6 +10,7 @@ export const QUERY_USER = gql`
         _id
         petName
         petSpecies
+        petColour
         createdAt
         petOwner
       }
@@ -17,6 +18,7 @@ export const QUERY_USER = gql`
         _id
         petName
         petSpecies
+        petColour
         createdAt
         petOwner
       }
@@ -33,6 +35,7 @@ export const QUERY_USERS = gql`
         _id
         petName
         petSpecies
+        petColour
         createdAt
         petOwner
       }
@@ -40,6 +43,7 @@ export const QUERY_USERS = gql`
         _id
         petName
         petSpecies
+        petColour
         createdAt
         petOwner
       }
@@ -91,6 +95,7 @@ export const QUERY_ME = gql`
         _id
         petName
         petSpecies
+        petColour
         createdAt
         petOwner
       }
@@ -98,6 +103,7 @@ export const QUERY_ME = gql`
         _id
         petName
         petSpecies
+        petColour
         createdAt
         petOwner
       }

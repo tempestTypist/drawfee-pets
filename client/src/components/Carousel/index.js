@@ -16,7 +16,7 @@ const Carousel = (props) => {
 	});
 
 	const { items, currentIndex, currentItems } = app
-	const images = ImageImport.importAll(require.context('../../assets/images/pets', false, /\.(png|jpe?g|svg)$/));
+	const images = ImageImport.importAll(require.context('../../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
 
 	const moveLeft = () => {
 		let newIndex = currentIndex
@@ -105,7 +105,7 @@ useEffect(() => {
 								className="item__image"
 								alt={item.id}
 								name="petSpecies"
-								src={images[`${item.id}.png`]}
+								src={images[`${item.id}/${item.id}.png`]}
 								onLoad={imageLoaded}
 							/>
 						</div>

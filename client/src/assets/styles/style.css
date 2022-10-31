@@ -715,6 +715,8 @@ using methods found in https://www.sitepoint.com/css-path-function-squeaky-portr
 
 .pet-preview__wrapper {
   display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   border: solid 60px red;
   border-image: url(../images/screen.svg) 60 fill;
@@ -722,6 +724,7 @@ using methods found in https://www.sitepoint.com/css-path-function-squeaky-portr
 
 .pet-preview {
   display: flex;
+  height: 25vmin
 }
 
 .pet-preview img {
