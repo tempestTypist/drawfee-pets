@@ -18,8 +18,8 @@ const Footer = () => {
       )}
       <p>Drawfee is a comedy drawing YouTube show where artists (primarily Nathan Yaffe, Jacob Andrews, Julia Lepetit-Andrews, and Karina Farek) turn audience suggestions into silly drawings.</p>
       <p>Drawfee Pets is a lovingly made fan-project to give a home to these wayward drawings.</p>
-      <Link to="https://www.youtube.com/c/Drawfee">Drawfee Show on Youtube</Link>
-      <Link to="https://www.patreon.com/drawfee">Drawfee's Patreon</Link>
+      <a href="https://www.youtube.com/c/Drawfee" target="_blank" rel="noopener noreferrer">Drawfee Show on Youtube</a>
+      <a href="https://www.patreon.com/drawfee" target="_blank" rel="noopener noreferrer">Drawfee's Patreon</a>
     </div>
   );
 };
