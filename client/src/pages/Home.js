@@ -1,28 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
 
 import PetList from '../components/PetList';
 import PetForm from '../components/PetForm';
 import UserList from '../components/UserList';
+import ImageImport from '../utils/imageimport';
 
 import { Container, Row, Col, Button, Card, Image } from 'react-bootstrap';
 
-import { QUERY_PETS } from '../utils/queries';
-import { QUERY_USERS } from '../utils/queries';
-
+import { QUERY_PETS, QUERY_USERS } from '../utils/queries';
 
 const Home = () => {
-  // const { loading, data } = useQuery(QUERY_PETS);
-  // const pets = data?.pets || [];
+  const { loading, data } = useQuery(QUERY_PETS);
+  const pets = data?.pets || [];
 
-  const { loading, data } = useQuery(QUERY_USERS);
+  // const { loading, data } = useQuery(QUERY_USERS);
   const users = data?.users || [];
+
+  const images = ImageImport.importAll(require.context('../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
+
+  const [previewPet, setPreviewedPet] = useState(0);
+
+  useEffect(() => {
+    const len = pets.length;
+    setPreviewedPet(Math.floor(Math.random() * len));
+    console.log("pets: " + JSON.stringify(pets))
+    console.log(previewPet)
+    // console.log(cities[activeCity].activePet.petName)
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Container fluid>
       <Row>
-        <Col md={8}>
+        <Col xl={8}>
           <div className="diagonal-hero-bg">
             <div className="p-4 p-md-5 text-white rounded">
               <h1 className="display-4 fst-italic">Announcement Banner</h1>
@@ -40,6 +55,14 @@ const Home = () => {
                 <Card.Body className="janky-card-body">
                   <div className="janky-card-inner-body">
                       <div className="text">
+                        {/* {loading ? (
+                          <div>Loading...</div>
+                        ) : (
+                          <UserList
+                            users={users}
+                            title="Users..."
+                          />
+                        )} */}
                         <Card.Title>January 1, 2021 by Mark</Card.Title>
                         <Card.Text>
                           This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, lists, tables, images, code, and more are all supported as expected.
@@ -92,41 +115,29 @@ const Home = () => {
             </Card>
           </div>
 
-          {/* {loading ? (
-          <div>Loading...</div>
-        ) : (
-          <UserList
-            users={users}
-            title="All users."
-          />
-        )}
-
-
-          <PetList pets={pets} />
-
           <nav className="blog-pagination" aria-label="Pagination">
             <a className="btn btn-outline-primary">Older</a>
             <a className="btn btn-outline-secondary disabled" tabIndex="-1" aria-disabled="true">Newer</a>
-          </nav> */}
+          </nav>
         </Col>
 
-        <Col md={4}>
-          <Card className="janky-card-wrapper key-was-here p-4">
+        <Col xl={4}>
+          <Card className="janky-card-wrapper key-was-here p-4 pt-0">
             <Card.Header className="janky-card-header">
               <div className="pet-name">
-                Pet Name
+                {pets[previewPet].petName}
               </div>
             </Card.Header>
             <div className="janky-card-body-wrapper">
               <Card.Body className="janky-card-body">
                 <div className="janky-card-inner-body">
-                    <Image src="https://via.placeholder.com/200x160.png" className="pet-list__image" alt="Pet image"/>
+                    <Image src={images[`${pets[previewPet].petSpecies}/${pets[previewPet].petSpecies}--${pets[previewPet].petColour}.png`]} className="pet-list__image" alt="Pet image"/>
                 </div>
               </Card.Body>
             </div>
             <Card.Footer className="janky-card-footer">
               <div className="janky-card-footer__inner">
-                Made by: User
+                Made by: {pets[previewPet].petOwner}
                 {/* {showUsername ? (
                   <Link
                     className="text-light"

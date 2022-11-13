@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const UserList = ({ users, title }) => {
+
+  const cities = [...users];
+
+  const [activeCity, setActiveCity] = useState(0);
+
+  useEffect(() => {
+    const len = cities.length;
+    setActiveCity(Math.floor(Math.random() * len));
+    console.log(cities)
+    console.log(activeCity)
+    // console.log(cities[activeCity].activePet.petName)
+  }, []);
+
   if (!users.length) {
     return <h3>No Users Yet</h3>;
   }
@@ -10,7 +23,10 @@ const UserList = ({ users, title }) => {
     <div>
       <h3 className="text-primary">{title}</h3>
       <div className="flex-row justify-space-between my-4">
-        {users &&
+
+        <p>{cities[activeCity].username}s pet, </p>
+
+        {/* {users &&
           users.map((user) => (
             <div key={user._id} className="col-12 col-xl-6">
               <div className="card mb-3">
@@ -31,7 +47,7 @@ const UserList = ({ users, title }) => {
                 </Link>
               </div>
             </div>
-          ))}
+          ))} */}
       </div>
     </div>
   );

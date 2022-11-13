@@ -107,22 +107,20 @@ const PetList = ({
               <div className="pet-name">
                 {pet.petName}
               </div>
-              <div className="pet-toolbar">
-                  {showUsername ? (
-                    <>
-                    </>
-                  ) : (
-                    <>
-                      <div key={pet._id} onClick={() => handleFavePet(pet._id)} />
-                      <FontAwesomeIcon className={isFavourite(index)} icon={"fa-solid fa-star"} onClick={() => handleFavePet(index)} />
-                      <button
-                        className="btn"
-                        onClick={() => handleRemovePet(pet._id)}>
-                        X
-                      </button>
-                    </>
-                  )}
-              </div>
+                {showUsername ? (
+                  <>
+                  </>
+                ) : (
+                  <div className="pet-toolbar">
+                    <div key={pet._id} onClick={() => handleFavePet(pet._id)} />
+                    <FontAwesomeIcon className={isFavourite(index)} icon={"fa-solid fa-star"} onClick={() => handleFavePet(index)} />
+                    <button
+                      className="btn"
+                      onClick={() => handleRemovePet(pet._id)}>
+                      X
+                    </button>
+                  </div>
+                )}
             </Card.Header>
             <div className="janky-card-body-wrapper">
               <Card.Body className="janky-card-body">

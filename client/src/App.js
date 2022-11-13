@@ -56,7 +56,7 @@ function App() {
         <Container fluid>
           <Row className="main-content">
             <Sidebar />
-            <Col lg={{span: 9, offset: 3}} xl={{span: 10, offset: 2}} className="content">
+            <Col lg={{span: 9, offset: 3}} xxl={{span: 10, offset: 2}} className="content">
               <Route exact path="/">
                 <Home />
               </Route>

@@ -20,10 +20,13 @@
   background: linear-gradient(180deg, rgba(205,51,51,1) 10%, rgba(135,8,8,1) 100%);
   border-bottom: 1px solid rgb(109, 1, 1);
   height: var(--header-height);
+  z-index: 1000
 }
 
 .navbar-nav a {
   color: #fff;
+  font-family: "Supersonic Rocketship";
+  font-size: 1.4rem;
   text-decoration: none;
 }
 
@@ -39,7 +42,7 @@
 .sidebar {
   position: fixed;
   flex-direction: column;
-  z-index: 1030;
+  z-index: 999;
 }
 
 .dropdown-menu a {
@@ -95,7 +98,7 @@
 	display: flex;
 	flex-direction: row;
   justify-content: space-between;
-	min-height: calc(100vh - var(--header-height) - var(--footer-height));
+	min-height: calc(100vh - var(--header-height));
   margin-top: var(--header-height);
   background-color: #edf2f4;
 }
@@ -172,6 +175,9 @@ input[type=checkbox]:not(.form-switch input[type=checkbox]) {
   border-radius: 0
 }
 
+.font-supersonic {
+  font-family: "Supersonic Rocketship";
+}
 
 /* ****** Janky Cards ****** */
 
@@ -349,6 +355,13 @@ input[type=checkbox]:not(.form-switch input[type=checkbox]) {
   padding-left: 2rem;
   background-color: transparent;
   border: 0;
+}
+
+@media (max-width: 767.98px) { 
+  .framed-card-group .janky-card-wrapper:nth-child(odd),
+  .framed-card-group .janky-card-wrapper:nth-child(even) {
+    padding: 0
+  }
 }
 
 .framed-card-group .janky-card-wrapper:nth-child(odd) .janky-card-header {
@@ -1423,7 +1436,7 @@ color: #FFEB3B;
 
   .screen-btn-wrapper {
     margin-top: -1.5rem;
-    margin-left: 4rem;
+    padding-left: 4rem;
   }
 
   .screen-btn {
