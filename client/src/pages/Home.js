@@ -115,23 +115,23 @@ const Home = () => {
             </Card>
           </div>
 
-          <nav className="blog-pagination" aria-label="Pagination">
+          {/* <nav className="blog-pagination" aria-label="Pagination">
             <a className="btn btn-outline-primary">Older</a>
             <a className="btn btn-outline-secondary disabled" tabIndex="-1" aria-disabled="true">Newer</a>
-          </nav>
+          </nav> */}
         </Col>
 
         <Col xl={4}>
           <Card className="janky-card-wrapper key-was-here p-4 pt-0">
             <Card.Header className="janky-card-header">
               <div className="pet-name">
-                {pets[previewPet].petName}
+                Featured Pet: {pets[previewPet].petName}!
               </div>
             </Card.Header>
             <div className="janky-card-body-wrapper">
               <Card.Body className="janky-card-body">
                 <div className="janky-card-inner-body">
-                    <Image src={images[`${pets[previewPet].petSpecies}/${pets[previewPet].petSpecies}--${pets[previewPet].petColour}.png`]} className="pet-list__image" alt="Pet image"/>
+                    <Image src={images[`${pets[previewPet].petSpecies}/${pets[previewPet].petSpecies}--${pets[previewPet].petColour}.png`]} className="pet-list__image featured-pet" alt="Pet image"/>
                 </div>
               </Card.Body>
             </div>

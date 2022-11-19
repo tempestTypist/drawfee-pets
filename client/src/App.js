@@ -17,6 +17,7 @@ import Login from './pages/Login';
 import CreatePet from './pages/CreatePet';
 import SinglePet from './pages/SinglePet';
 import Profile from './pages/Profile';
+import ProfilePets from './pages/ProfilePets';
 import Header from './components/Header';
 import Banner from './components/Banner';
 import Sidebar from './components/Sidebar';
@@ -72,8 +73,14 @@ function App() {
               <Route exact path="/me">
                 <Profile />
               </Route>
-              <Route exact path="/profiles/:username">
+              <Route exact path="/profile/:username">
                 <Profile />
+              </Route>
+              <Route exact path="/pets">
+                <ProfilePets />
+              </Route>
+              <Route exact path="/profile/:username/pets">
+                <ProfilePets />
               </Route>
               <Route exact path="/pets/:petId">
                 <SinglePet />

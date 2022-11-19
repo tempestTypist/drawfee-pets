@@ -23,15 +23,20 @@
   z-index: 1000
 }
 
-.navbar-nav a {
-  color: #fff;
+#account-dropdown + div a {
   font-family: "Supersonic Rocketship";
   font-size: 1.4rem;
+}
+
+.navbar-nav a {
+  color: #fff;
   text-decoration: none;
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: #eee
+  color: #fff;
+  font-family: "Supersonic Rocketship";
+  font-size: 1.4rem;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover,
@@ -39,11 +44,63 @@
   color: #ddd
 }
 
+.dropdown-toggle-icon:hover #notifications-dropdown svg {
+  color: goldenrod;
+  -webkit-animation: ring 4s .1s ease-in-out infinite;
+  -webkit-transform-origin: 50% 4px;
+  -moz-animation: ring 4s .1s ease-in-out infinite;
+  -moz-transform-origin: 50% 4px;
+  animation: ring 4s .1s ease-in-out infinite;
+  transform-origin: 50% 4px;
+}
+
+@-webkit-keyframes ring {
+  0% { transform: rotate(30deg); }
+  3% { transform: rotate(-28deg); }
+  5% { transform: rotate(26deg); }
+  7% { transform: rotate(-24deg); }
+  9% { transform: rotate(6deg); }
+  11% { transform: rotate(-4deg); }
+  13% { transform: rotate(2deg); }
+  15% { transform: rotate(-1deg); }
+  100% { transform: rotate(0); }
+}
+
+@-moz-keyframes ring {
+  0% { transform: rotate(30deg); }
+  3% { transform: rotate(-28deg); }
+  5% { transform: rotate(26deg); }
+  7% { transform: rotate(-24deg); }
+  9% { transform: rotate(6deg); }
+  11% { transform: rotate(-4deg); }
+  13% { transform: rotate(2deg); }
+  15% { transform: rotate(-1deg); }
+  100% { transform: rotate(0); }
+}
+
+@keyframes ring {
+  0% { transform: rotate(30deg); }
+  3% { transform: rotate(-28deg); }
+  5% { transform: rotate(26deg); }
+  7% { transform: rotate(-24deg); }
+  9% { transform: rotate(6deg); }
+  11% { transform: rotate(-4deg); }
+  13% { transform: rotate(2deg); }
+  15% { transform: rotate(-1deg); }
+  100% { transform: rotate(0); }
+}
+
+
+
 .sidebar {
   position: fixed;
   flex-direction: column;
   z-index: 999;
 }
+
+/* .dropdown-menu {
+  width: 100%
+} */
 
 .dropdown-menu a {
   color: #000
@@ -724,6 +781,10 @@ button:active.btn-janky::after {
 
 /* ***** Paint Colour ***** 
 using methods found in https://www.sitepoint.com/css-path-function-squeaky-portraits */
+
+.featured-pet {
+  height: 200px
+}
 
 .pet-preview__wrapper {
   display: flex;
