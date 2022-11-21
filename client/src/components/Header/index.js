@@ -21,8 +21,6 @@ const Header = () => {
   const { loading, data } = useQuery(QUERY_ME);
 
   const user = data?.me || {};
-  console.log("user information: " + JSON.stringify(user))
-  console.log("username: " + JSON.stringify(user.username))
 
   useEffect(() => {
     if (inView) {
@@ -58,7 +56,7 @@ const Header = () => {
                     </Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Link className="nav-link">
+                    <Link to="/community-forums" className="nav-link">
                       Community
                     </Link>
                   </Nav.Item>

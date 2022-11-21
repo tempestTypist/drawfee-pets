@@ -8,6 +8,7 @@ const typeDefs = gql`
     password: String
     activePet: Pet
     pets: [Pet]!
+    posts: [Post]!
   }
 
   type Pet {
@@ -17,6 +18,21 @@ const typeDefs = gql`
     petColour: String
     createdAt: String
     petOwner: String
+  }
+
+  type Post {
+    _id: ID
+    postText: String
+    postAuthor: String
+    createdAt: String
+    comments: [Comment]!
+  }
+
+  type Comment {
+    _id: ID
+    commentText: String
+    commentAuthor: String
+    createdAt: String
   }
 
   type AllPets {
@@ -35,6 +51,8 @@ const typeDefs = gql`
     allpets: [AllPets]
     pets(username: String): [Pet]
     pet(petId: ID!): Pet
+    posts(username: String): [Post]
+    post(postId: ID!): Post
     me: User
   }
 
@@ -44,6 +62,10 @@ const typeDefs = gql`
     addPet(petSpecies: String!, petName: String!, petColour: String!): Pet
     favouritePet(petId: String!): Pet
     removePet(petId: String!): Pet
+    addPost(postText: String!): Post
+    addComment(postId: ID!, commentText: String!): Post
+    removePost(postId: ID!): Post
+    removeComment(postId: ID!, commentId: ID!): Post
   }
 `;
 

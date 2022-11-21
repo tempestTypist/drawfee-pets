@@ -15,6 +15,8 @@ import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import CreatePet from './pages/CreatePet';
+import Forum from './pages/Forum';
+import NewPost from './pages/NewPost';
 import SinglePet from './pages/SinglePet';
 import Profile from './pages/Profile';
 import ProfilePets from './pages/ProfilePets';
@@ -69,6 +71,12 @@ function App() {
               </Route>
               <Route exact path="/create-pet">
                 <CreatePet />
+              </Route>
+              <Route exact path="/community-forums">
+                <Forum />
+              </Route>
+              <Route exact path="/new-post">
+                <NewPost />
               </Route>
               <Route exact path="/me">
                 <Profile />

@@ -51,7 +51,7 @@ const Login = () => {
             Log in
           </Card.Header>
           <Card.Body className="janky-card-body">
-            <Card.Text className="janky-card-inner-body d-flex flex-column align-items-center">
+            <div className="janky-card-inner-body d-flex flex-column align-items-center">
               {data ? (
                 <p>
                   Success! You may now head{' '}
@@ -113,7 +113,7 @@ const Login = () => {
                   {error.message}
                 </div>
               )}
-            </Card.Text>
+            </div>
           </Card.Body>
         </Card>
 

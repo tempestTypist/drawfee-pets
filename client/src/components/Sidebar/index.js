@@ -56,7 +56,7 @@ const Sidebar = () => {
 
         <Card className="janky-card-wrapper">
           <Card.Body className="janky-card-body">
-            <Card.Text className="janky-card-inner-body d-flex flex-column align-items-center">
+            <div className="janky-card-inner-body d-flex flex-column align-items-center">
               {Auth.loggedIn() ? (
                 [(!user?.activePet) 
                   ? <p>No favourite pet!</p>
@@ -73,7 +73,7 @@ const Sidebar = () => {
                   <Link className="background-button" to="/signup" title="SIGN UP" />
                 </>
               )}
-            </Card.Text>
+            </div>
           </Card.Body>
         </Card>
       </motion.div>

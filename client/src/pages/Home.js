@@ -61,11 +61,11 @@ const Home = () => {
                           />
                         )} */}
                         <Card.Title>January 1, 2021 by Mark</Card.Title>
-                        <Card.Text>
+                        <div>
                           This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, lists, tables, images, code, and more are all supported as expected.
                           <hr></hr>
                           This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.
-                        </Card.Text>
+                        </div>
                         <a>Read More</a>
                       </div>
                   </div>
@@ -79,14 +79,14 @@ const Home = () => {
               </Card.Header>
               <div className="janky-card-body-wrapper">
                 <Card.Body className="janky-card-body">
-                  <Card.Text className="janky-card-inner-body">
+                  <div className="janky-card-inner-body">
                     <Card.Title>January 1, 2021 by Mark</Card.Title>
                     <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
                     <blockquote>
                       <p>Longer quote goes here, maybe with some <strong>emphasized text</strong> in the middle of it.</p>
                     </blockquote>
                     <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
-                  </Card.Text>
+                  </div>
                 </Card.Body>
               </div>
             </Card>
@@ -97,7 +97,7 @@ const Home = () => {
               </Card.Header>
               <div className="janky-card-body-wrapper">
                 <Card.Body className="janky-card-body">
-                  <Card.Text className="janky-card-inner-body">
+                  <div className="janky-card-inner-body">
                     <Card.Title>January 1, 2021 by Mark</Card.Title>
                     <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
                     <ul>
@@ -106,7 +106,7 @@ const Home = () => {
                       <li>Third list item to close it out</li>
                     </ul>
                     <p>This is some additional paragraph placeholder content. It's a slightly shorter version of the other highly repetitive body text used throughout.</p>
-                  </Card.Text>
+                  </div>
                 </Card.Body>
               </div>
             </Card>
@@ -167,7 +167,7 @@ const Home = () => {
               Status/Development
             </Card.Header>
             <Card.Body className="janky-card-body developement-card">
-              <Card.Text className="janky-card-inner-body">
+              <div className="janky-card-inner-body">
                 <Card.Title>January 1, 2021 by Mark</Card.Title>
                 <ol className="list-unstyled mb-0">
                   <li><a>March 2021</a></li>
@@ -184,7 +184,7 @@ const Home = () => {
                   <li><a>April 2020</a></li>
                 </ol>
                 <Button variant="primary">Go somewhere</Button>
-              </Card.Text>
+              </div>
             </Card.Body>
           </Card>
         </Col>

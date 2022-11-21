@@ -49,7 +49,7 @@ const Signup = () => {
             Sign up
           </Card.Header>
           <Card.Body className="janky-card-body">
-            <Card.Text className="janky-card-inner-body d-flex flex-column align-items-center">
+            <div className="janky-card-inner-body d-flex flex-column align-items-center">
               {data ? (
                 <p>
                   Success! Onto the{' '}
@@ -108,7 +108,7 @@ const Signup = () => {
                   {error.message}
                 </div>
               )}
-            </Card.Text>
+            </div>
           </Card.Body>
         </Card>
 
