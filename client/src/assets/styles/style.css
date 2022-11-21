@@ -41,18 +41,40 @@
 
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link:active {
-  color: #ddd
+  color: #ddd;
+  transform: scale(1.1)
+}
+
+.dropdown-toggle-icon:hover #messages-dropdown {
+  animation-name: bounce-7;
+  animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+  animation-duration: .75s;
+  animation-iteration-count: 1;
+  transform-origin: bottom;
 }
 
 .dropdown-toggle-icon:hover #notifications-dropdown svg {
   color: goldenrod;
-  -webkit-animation: ring 4s .1s ease-in-out infinite;
+  -webkit-animation: ring 4s .1s ease-in-out 1;
   -webkit-transform-origin: 50% 4px;
-  -moz-animation: ring 4s .1s ease-in-out infinite;
+  -moz-animation: ring 4s .1s ease-in-out 1;
   -moz-transform-origin: 50% 4px;
-  animation: ring 4s .1s ease-in-out infinite;
+  animation: ring 4s .1s ease-in-out 1;
   transform-origin: 50% 4px;
 }
+
+@keyframes bounce-7 {
+  0%   { transform: scale(1,1)      translateY(0); }
+  10%  { transform: scale(1.1,.9)   translateY(0); }
+  30%  { transform: scale(.9,1.1)   translateY(-8px); }
+  50%  { transform: scale(1.05,.95) translateY(0); }
+  57%  { transform: scale(1,1)      translateY(-3px); }
+  64%  { transform: scale(1,1)      translateY(0); }
+  100% { transform: scale(1,1)      translateY(0); }
+}
+
+
+
 
 @-webkit-keyframes ring {
   0% { transform: rotate(30deg); }
@@ -515,11 +537,17 @@ input[type=checkbox]:not(.form-switch input[type=checkbox]) {
   align-items: center
 }
 
+.pet-toolbar button {
+  font-size: 1.4rem
+}
+
 .pet-toolbar .pet__favourite {
   color: goldenrod
 }
 
-
+.pet-toolbar .fa-star:hover {
+  cursor: pointer;
+}
 
 
 
@@ -781,10 +809,6 @@ button:active.btn-janky::after {
 
 /* ***** Paint Colour ***** 
 using methods found in https://www.sitepoint.com/css-path-function-squeaky-portraits */
-
-.featured-pet {
-  height: 200px
-}
 
 .pet-preview__wrapper {
   display: flex;
@@ -1630,4 +1654,79 @@ color: #FFEB3B;
 .footer > a {
   font-weight: bold;
   text-decoration: none
+}
+
+
+
+.user-profile-link {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+
+
+/* About Me 
+---------------------*/
+
+.about-text h3 {
+font-size: 45px;
+font-weight: 700;
+margin: 0 0 6px;
+}
+@media (max-width: 767px) {
+.about-text h3 {
+  font-size: 35px;
+}
+}
+.about-text h6 {
+font-weight: 600;
+margin-bottom: 15px;
+}
+@media (max-width: 767px) {
+.about-text h6 {
+  font-size: 18px;
+}
+}
+.about-text p {
+font-size: 18px;
+max-width: 450px;
+}
+.about-text p mark {
+font-weight: 600;
+color: #20247b;
+}
+
+.about-list {
+padding-top: 10px;
+}
+.about-list .media {
+padding: 5px 0;
+}
+.about-list label {
+color: #20247b;
+font-weight: 600;
+/* width: 88px; */
+margin: 0;
+position: relative;
+}
+
+.about-list p {
+margin: 0;
+font-size: 15px;
+}
+
+@media (max-width: 991px) {
+.about-avatar {
+  margin-top: 30px;
+}
+}
+
+mark {
+  background-image: linear-gradient(rgba(252, 83, 86, 0.6), rgba(252, 83, 86, 0.6));
+  background-size: 100% 3px;
+  background-repeat: no-repeat;
+  background-position: 0 bottom;
+  background-color: transparent;
+  padding: 0;
+  color: currentColor;
 }

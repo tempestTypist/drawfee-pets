@@ -25,9 +25,6 @@ const Home = () => {
   useEffect(() => {
     const len = pets.length;
     setPreviewedPet(Math.floor(Math.random() * len));
-    console.log("pets: " + JSON.stringify(pets))
-    console.log(previewPet)
-    // console.log(cities[activeCity].activePet.petName)
   }, []);
 
   if (loading) {

@@ -33,13 +33,13 @@ const ProfilePets = () => {
   return (
     <>
       <h2 className="col-12 bg-dark text-light p-3 mb-5">
-        Viewing {userParam ? `${user.username}'s` : 'your'} pets.
+        {userParam ? `${user.username}'s` : 'Your'} pets
       </h2>
 
       <div className="col-12 mb-5">
         <div className="framed-card-group">
           <PetList
-            pets={user.pets}
+            user={user}
             title={`${user.username}'s pets`}
             showTitle={false}
             showUsername={userParam ? true : false}

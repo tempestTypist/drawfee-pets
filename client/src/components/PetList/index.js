@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
@@ -16,26 +16,22 @@ import ImageImport from '../../utils/imageimport';
 library.add(fasStar, farStar)
 
 const PetList = ({
-  pets,
+  user,
   title,
   showTitle = true,
   showUsername = true,
-}) => {
-
-  console.log(pets)
-  
+}) => {  
 	const images = ImageImport.importAll(require.context('../../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
+  const { pets, activePet } = user
 
   const [favourite, setFavourite] = useState({
-    activePet: null,
+    activePet: activePet,
   });
 
   const isFavourite = (index) => { 
-    if (pets[index] === favourite.activePet) {
-      console.log("fav = true")
+    if (pets[index]._id === activePet._id) {
       return "pet__favourite"
     } else {
-      console.log("fav = false")
       return
     }
   };
@@ -93,6 +89,10 @@ const PetList = ({
     }
   };
 
+  useEffect(() => {
+    setFavourite(activePet)
+  }, []);
+
   if (!pets.length) {
     return <h3>No Pets Yet</h3>;
   }
@@ -130,18 +130,17 @@ const PetList = ({
               </Card.Body>
             </div>
             <Card.Footer className="janky-card-footer">
-              <div className="janky-card-footer__inner">
+              <div className="janky-card-footer__inner text-center">
                 {pet.petName} the {pet.petSpecies}
                 {showUsername ? (
-                  <Link
-                    className="text-light"
-                    to={`/profiles/${pet.petOwner}`}
-                  >
-                    {pet.petOwner} <br />
-                    <span style={{ fontSize: '1rem' }}>
+                  <span style={{ fontSize: '1rem' }}>
+                    <Link 
+                      className="user-profile-link me-2"
+                      to={`/profiles/${pet.petOwner}`}>
+                        {pet.petOwner} 
+                    </Link>
                       created this pet on {pet.createdAt}
-                    </span>
-                  </Link>
+                  </span>
                 ) : (
                   <>
                     <span style={{ fontSize: '1rem' }}>

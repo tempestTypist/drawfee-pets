@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { QUERY_USER, QUERY_ME } from '../../utils/queries'
@@ -15,6 +15,9 @@ import Logo from '../../assets/images/drawfee-logos/drawfee-light.png'
 const Header = () => {
   const control = useAnimation()
 	const [ref, inView] = useInView()
+
+  const [isHovered, setHovered] = useState(false)
+
   const { loading, data } = useQuery(QUERY_ME);
 
   const user = data?.me || {};
@@ -50,17 +53,32 @@ const Header = () => {
               {Auth.loggedIn() ? (
                 <div className="d-flex flex-row align-items-center">
                   <Nav.Item>
-                    <Nav.Link >
-                      <Link to="/assets">(Temp) Assets</Link>
-                    </Nav.Link>
+                    <Link to="/assets" className="nav-link">
+                      (Temp) Assets
+                    </Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link>
-                      <Link to="/create-pet">Create a Pet</Link>
-                    </Nav.Link>
+                    <Link className="nav-link">
+                      Community
+                    </Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Link to="/create-pet" className="nav-link">
+                      Create a Pet
+                    </Link>
                   </Nav.Item>
 
-                  <NavDropdown title={<FontAwesomeIcon icon={faEnvelope} />} className="dropdown-toggle-icon" align="end" id="messages-dropdown">
+                  <NavDropdown 
+                    onMouseEnter={() => setHovered(true)}
+                    onMouseLeave={() => setHovered(false)}
+                    title={isHovered ? (
+                      <FontAwesomeIcon icon={faEnvelopeOpen} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEnvelope} />
+                    )}
+                    className="dropdown-toggle-icon" 
+                    align="end" 
+                    id="messages-dropdown">
                     <NavDropdown.Header>
                       <h4 className="title">Messages (6)</h4>
                       <div className="ms-auto action-area">
@@ -135,7 +153,11 @@ const Header = () => {
                     </NavDropdown.Item>
                   </NavDropdown>
 
-                  <NavDropdown title={<FontAwesomeIcon icon={faBell} />} className="dropdown-toggle-icon" align="end" id="notifications-dropdown">
+                  <NavDropdown 
+                    title={<FontAwesomeIcon icon={faBell} />} 
+                    className="dropdown-toggle-icon" 
+                    align="end" 
+                    id="notifications-dropdown">
                     <NavDropdown.Header>
                       <h4 className="title">Notifications (9)</h4>
                       <div className="ms-auto action-area">

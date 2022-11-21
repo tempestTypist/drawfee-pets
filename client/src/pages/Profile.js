@@ -6,6 +6,9 @@ import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import PetList from '../components/PetList';
 
+import { Card } from 'react-bootstrap';
+
+
 const Profile = () => {
   const { username: userParam } = useParams();
 
@@ -36,39 +39,54 @@ const Profile = () => {
   }
 
   return (
-    <>
-      <h2 className="col-12 bg-dark text-light p-3 mb-5">
-        {userParam ? `${user.username}'s` : 'Your'} profile
-      </h2>
-
-      <div className="profile-card">
-        <div className="profile-header">
-          <div className="profile-username"></div>
-          <div className="profile-actions"></div>
-        </div>
-        <div className="profile-picture"></div>
-        <div className="profile-stats"></div>
-        <div className="profile-desc"></div>
+    <section className="section about-section container-fluid" id="about">
+      <div className="row align-items-center">
+          <div className="col-lg-6 bg-white">
+              <div className="about-text go-to">
+                  <h3 className="janky-card-header">{userParam ? `${user.username}'s` : 'Your'} profile</h3>
+                  <div className="row about-list mb-4">
+                      <div className="col-md-6">
+                          <div className="media">
+                              <label>Joined on</label>
+                              <p>4th april 1998</p>
+                          </div>
+                          <div className="media">
+                              <label>Birthday</label>
+                              <p>11/11/1111</p>
+                          </div>
+                          <div className="media">
+                              <label>I Go By</label>
+                              <p>She/Her</p>
+                          </div>
+                      </div>
+                      <div className="col-md-6">
+                          <div className="media">
+                              <label>Pets</label>
+                              <p>3</p>
+                          </div>
+                          <div className="media">
+                              <label>Favourite Pet</label>
+                              <p>favpet</p>
+                          </div>
+                          <div className="media">
+                              <label>Forum Posts</label>
+                              <p>23</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div className="about-desc">
+                    <h4 className="janky-card-header">User Description</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                  </div>
+              </div>
+          </div>
+          <div className="col-lg-6">
+              <div className="about-avatar">
+                  <img src="https://via.placeholder.com/350" title="User Profile Picture" alt="User Profile Picture" />
+              </div>
+          </div>
       </div>
-
-      <div className="user-posts">
-
-      </div>
-
-
-
-      <div className="col-12 mb-5">
-        {/* <div className="framed-card-group">
-          <PetList
-            pets={user.pets}
-            title={`${user.username}'s pets`}
-            showTitle={false}
-            showUsername={userParam ? true : false}
-          />
-        </div> */}
-        <Link to="/pets">Your pets</Link>
-      </div>
-    </>
+    </section>
   );
 };
 
