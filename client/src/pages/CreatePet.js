@@ -39,7 +39,6 @@ const handleChange = (event) => {
 
 const handleFormSubmit = async (event) => {
   event.preventDefault();
-  console.log(petState);
 
   try {
     const { data } = await addPet({
@@ -49,7 +48,6 @@ const handleFormSubmit = async (event) => {
       },
     });
 
-    console.log(data.addPet._id)
     window.location.assign('/')
   } catch (err) {
     console.error(err);

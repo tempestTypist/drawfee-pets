@@ -48,68 +48,70 @@ const Signup = () => {
           <Card.Header className="janky-card-header">
             Sign up
           </Card.Header>
-          <Card.Body className="janky-card-body">
-            <div className="janky-card-inner-body d-flex flex-column align-items-center">
-              {data ? (
-                <p>
-                  Success! Onto the{' '}
-                  <Link to="/create-pet">next step.</Link>
-                </p>
-              ) : (
-                <form onSubmit={handleFormSubmit}>
+          <div className="janky-card-body-wrapper">
+            <Card.Body className="janky-card-body">
+              <div className="janky-card-inner-body d-flex flex-column align-items-center">
+                {data ? (
+                  <p>
+                    Success! Onto the{' '}
+                    <Link to="/create-pet">next step.</Link>
+                  </p>
+                ) : (
+                  <form onSubmit={handleFormSubmit}>
 
-                  <InputGroup className="mb-3">
-										<InputGroup.Text id="inputGroup-sizing-default">Username</InputGroup.Text>
-										<FormControl
-											aria-label="Default"
-											aria-describedby="inputGroup-sizing-default"
-                      placeholder="Username"
-                      name="username"
-                      type="text"
-                      value={formState.username}
-                      onChange={handleChange}
-										/>
-									</InputGroup>
-                  <InputGroup className="mb-3">
-										<InputGroup.Text id="inputGroup-sizing-default">Email</InputGroup.Text>
-										<FormControl
-											aria-label="Default"
-											aria-describedby="inputGroup-sizing-default"
-                      placeholder="Email"
-                      name="email"
-                      type="email"
-                      value={formState.email}
-                      onChange={handleChange}
-										/>
-									</InputGroup>
-									<InputGroup className="mb-3">
-										<InputGroup.Text id="inputGroup-sizing-default">Password</InputGroup.Text>
-										<FormControl
-											aria-label="Default"
-											aria-describedby="inputGroup-sizing-default"
-                      placeholder="******"
-                      name="password"
-                      type="password"
-                      value={formState.password}
-                      onChange={handleChange}
-										/>
-									</InputGroup>
-                  
-                  <JankyButton 
-                    type="submit"
-                    label="Next"
-                    variant="red"
-                  />
-                </form>
-              )}
+                    <InputGroup className="mb-3">
+                      <InputGroup.Text id="inputGroup-sizing-default">Username</InputGroup.Text>
+                      <FormControl
+                        aria-label="Default"
+                        aria-describedby="inputGroup-sizing-default"
+                        placeholder="Username"
+                        name="username"
+                        type="text"
+                        value={formState.username}
+                        onChange={handleChange}
+                      />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                      <InputGroup.Text id="inputGroup-sizing-default">Email</InputGroup.Text>
+                      <FormControl
+                        aria-label="Default"
+                        aria-describedby="inputGroup-sizing-default"
+                        placeholder="Email"
+                        name="email"
+                        type="email"
+                        value={formState.email}
+                        onChange={handleChange}
+                      />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                      <InputGroup.Text id="inputGroup-sizing-default">Password</InputGroup.Text>
+                      <FormControl
+                        aria-label="Default"
+                        aria-describedby="inputGroup-sizing-default"
+                        placeholder="******"
+                        name="password"
+                        type="password"
+                        value={formState.password}
+                        onChange={handleChange}
+                      />
+                    </InputGroup>
+                    
+                    <JankyButton 
+                      type="submit"
+                      label="Next"
+                      variant="red"
+                    />
+                  </form>
+                )}
 
-              {error && (
-                <div className="my-3 p-3 bg-danger text-white">
-                  {error.message}
-                </div>
-              )}
-            </div>
-          </Card.Body>
+                {error && (
+                  <div className="my-3 p-3 bg-danger text-white">
+                    {error.message}
+                  </div>
+                )}
+              </div>
+            </Card.Body>
+          </div>
         </Card>
 
       </div>

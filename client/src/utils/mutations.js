@@ -55,9 +55,10 @@ export const REMOVE_PET = gql`
 `;
 
 export const ADD_POST = gql`
-  mutation addPost($postText: String!) {
-    addPost(postText: $postText) {
+  mutation addPost($postTitle: String!, $postText: String!) {
+    addPost(postTitle: $postTitle, postText: $postText) {
       _id
+      postTitle
       postText
       postAuthor
       createdAt

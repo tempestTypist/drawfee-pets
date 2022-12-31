@@ -166,26 +166,28 @@ const Home = () => {
             <Card.Header className="janky-card-header">
               Status/Development
             </Card.Header>
-            <Card.Body className="janky-card-body developement-card">
-              <div className="janky-card-inner-body">
-                <Card.Title>January 1, 2021 by Mark</Card.Title>
-                <ol className="list-unstyled mb-0">
-                  <li><a>March 2021</a></li>
-                  <li><a>February 2021</a></li>
-                  <li><a>January 2021</a></li>
-                  <li><a>December 2020</a></li>
-                  <li><a>November 2020</a></li>
-                  <li><a>October 2020</a></li>
-                  <li><a>September 2020</a></li>
-                  <li><a>August 2020</a></li>
-                  <li><a>July 2020</a></li>
-                  <li><a>June 2020</a></li>
-                  <li><a>May 2020</a></li>
-                  <li><a>April 2020</a></li>
-                </ol>
-                <Button variant="primary">Go somewhere</Button>
-              </div>
-            </Card.Body>
+            <div className="janky-card-body-wrapper">
+              <Card.Body className="janky-card-body developement-card">
+                <div className="janky-card-inner-body">
+                  <Card.Title>January 1, 2021 by Mark</Card.Title>
+                  <ol className="list-unstyled mb-0">
+                    <li><a>March 2021</a></li>
+                    <li><a>February 2021</a></li>
+                    <li><a>January 2021</a></li>
+                    <li><a>December 2020</a></li>
+                    <li><a>November 2020</a></li>
+                    <li><a>October 2020</a></li>
+                    <li><a>September 2020</a></li>
+                    <li><a>August 2020</a></li>
+                    <li><a>July 2020</a></li>
+                    <li><a>June 2020</a></li>
+                    <li><a>May 2020</a></li>
+                    <li><a>April 2020</a></li>
+                  </ol>
+                  <Button variant="primary">Go somewhere</Button>
+                </div>
+              </Card.Body>
+            </div>
           </Card>
         </Col>
       </Row>

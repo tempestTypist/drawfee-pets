@@ -22,6 +22,7 @@ const typeDefs = gql`
 
   type Post {
     _id: ID
+    postTitle: String
     postText: String
     postAuthor: String
     createdAt: String
@@ -62,7 +63,7 @@ const typeDefs = gql`
     addPet(petSpecies: String!, petName: String!, petColour: String!): Pet
     favouritePet(petId: String!): Pet
     removePet(petId: String!): Pet
-    addPost(postText: String!): Post
+    addPost(postTitle: String!, postText: String!): Post
     addComment(postId: ID!, commentText: String!): Post
     removePost(postId: ID!): Post
     removeComment(postId: ID!, commentId: ID!): Post

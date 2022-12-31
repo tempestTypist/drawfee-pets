@@ -16,6 +16,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import CreatePet from './pages/CreatePet';
 import Forum from './pages/Forum';
+import SinglePost from './pages/SinglePost';
 import NewPost from './pages/NewPost';
 import SinglePet from './pages/SinglePet';
 import Profile from './pages/Profile';
@@ -74,6 +75,9 @@ function App() {
               </Route>
               <Route exact path="/community-forums">
                 <Forum />
+              </Route>
+              <Route exact path="/posts/:postId">
+                <SinglePost />
               </Route>
               <Route exact path="/new-post">
                 <NewPost />

@@ -73,9 +73,6 @@
   100% { transform: scale(1,1)      translateY(0); }
 }
 
-
-
-
 @-webkit-keyframes ring {
   0% { transform: rotate(30deg); }
   3% { transform: rotate(-28deg); }
@@ -263,12 +260,12 @@ input[type=checkbox]:not(.form-switch input[type=checkbox]) {
 .janky-card-wrapper.card {
   background-color: transparent;
   border: 0;
-  /* filter: drop-shadow(6px 6px 0 rgba(0, 0, 0, 1)); */
 }
 
 .janky-card-header {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   position: relative;
   background: transparent;
   border: 0;
@@ -293,6 +290,12 @@ input[type=checkbox]:not(.form-switch input[type=checkbox]) {
   z-index: -1;
   background-color: #D02337;
   filter: drop-shadow(6px 6px 0 rgba(0, 0, 0, 1));
+}
+
+.janky-card-header a {
+  color: white;
+  text-shadow: 2px 2px #000;
+  text-decoration: none;
 }
 
 /* applies dropshadow to card body */
@@ -724,7 +727,7 @@ input[type=checkbox]:not(.form-switch input[type=checkbox]) {
 }
 
 .btn-group .btn-janky {
-  padding: 1rem 1.6rem;
+  padding: .375rem .75rem
 }
 
 .btn-group .btn-janky-wrapper:nth-child(1n) .btn-janky {
@@ -1737,6 +1740,163 @@ mark {
 
 .forum-toolbar {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  background-color: #D02337
+}
+
+.forum-toolbar .btn {
+  font-family: "Supersonic Rocketship";
+  font-size: 1.4rem;
+}
+
+.table-users td:first-child {
+  width: 60px
+}
+
+.table-users td img {
+   border-radius: 50%;
+   height: 60px;
+   width: 60px;
+}
+
+.table-users {
+   max-width: calc(100% - 3px);
+   overflow: hidden;
+   border-collapse: separate;
+   border-spacing: 0 1rem;
+}
+
+.table-users tbody tr {
+  background-color: #D02337;
+  padding: 1rem;
+  -webkit-clip-path: polygon(1% 4%, 98% 2%, 99% 100%, 0 96%);
+  clip-path: polygon(1% 4%, 98% 2%, 99% 100%, 0 96%);
+}
+
+.table-users tbody tr:nth-child(odd) {
+  -webkit-clip-path: polygon(0 0, 100% 8%, 98% 95%, 3% 100%);
+  clip-path: polygon(0 0, 100% 8%, 98% 95%, 3% 100%);
+}
+
+.table-users tbody tr td {
+  background-color: white;
+}
+
+/* .table-users table td {
+  text-align: center;
+  vertical-align: middle;
+} */
+
+.table-users td:last-child {
+  font-size: 0.95em;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.table-users th { 
+  color: white;
+  background-color: #D02337;
+  font-family: "Supersonic Rocketship";
+}
+
+/* .table-users tr:nth-child(2n),
+.table-users tr:nth-child(2n+1) { 
+  background-color: white; 
+} */
+
+@media screen and (max-width: 700px) {   
+  table, tr, td { display: block; }
+   
+  td:first-child {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100px;
+  }
+
+  td:not(:first-child) {
+    clear: both;
+    margin-left: 100px;
+    padding: 4px 20px 4px 90px;
+    position: relative;
+    text-align: left;
+  }
+
+  td:not(:first-child):before {
+    color: lighten(#398B93, 30%);
+    content: '';
+    display: block;
+    left: 0;
+    position: absolute;
+  }
+
+  td:nth-child(2):before { content: 'Name:'; }
+  td:nth-child(3):before { content: 'Email:'; }
+  td:nth-child(4):before { content: 'Phone:'; }
+  td:nth-child(5):before { content: 'Comments:'; }
+   
+  tr {
+    padding: 10px 0;
+    position: relative;
+  }
+
+  tr:first-child { display: none; }
+}
+
+@media screen and (max-width: 500px) {
+   .header {
+      background-color: transparent;
+      color: #398B93;
+      font-size: 2em;
+      font-weight: 700;
+      padding: 0;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+   }
+   
+   img {
+      border: 3px solid;
+      border-color: rgba(57,139,147,0.1);
+      height: 100px;
+      margin: 0.5rem 0;
+      width: 100px;
+   }
+   
+  td:first-child { 
+      background-color: rgba(57,139,147,0.1); 
+      border-bottom: 1px solid #398B93;
+      border-radius: 10px 10px 0 0;
+      position: relative;   
+      top: 0;
+      transform: translateY(0);
+      width: 100%;
+  }
+  
+  td:not(:first-child) {
+      margin: 0;
+      padding: 5px 1em;
+      width: 100%;
+  }
+
+  td:not(:first-child):before {
+    font-size: .8em;
+    padding-top: 0.3em;
+    position: relative;
+  }
+  
+  td:last-child  { padding-bottom: 1rem !important; }
+   
+  tr {
+  background-color: white !important;
+  border: 1px solid #398B93;
+  border-radius: 10px;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+  margin: 0.5rem 0;
+  padding: 0;
+  }
+  
+  .table-users { 
+    border: none; 
+    box-shadow: none;
+    overflow: visible;
+  }
 }
