@@ -6,6 +6,7 @@ import PetList from '../components/PetList';
 import PetForm from '../components/PetForm';
 import UserList from '../components/UserList';
 import ImageImport from '../utils/imageimport';
+import Loading from '../components/Loading'
 
 import { Container, Row, Col, Button, Card, Image } from 'react-bootstrap';
 
@@ -28,7 +29,7 @@ const Home = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   return (
@@ -36,10 +37,9 @@ const Home = () => {
       <Row>
         <Col xl={8}>
           <div className="diagonal-hero-bg">
-            <div className="p-4 p-md-5 text-white rounded">
-              <h1 className="display-4 fst-italic">Announcement Banner</h1>
+            <div className="p-4 p-md-5 text-white">
+              <h1 className="display-4 fw-bold">Welcome Message</h1>
               <p className="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
-              <p className="lead mb-0"><a className="text-white fw-bold">Continue reading...</a></p>
             </div>
           </div>
 
@@ -120,9 +120,9 @@ const Home = () => {
 
         <Col xl={4}>
           <Card className="janky-card-wrapper key-was-here p-4 pt-0">
-            <Card.Header className="janky-card-header">
+            <Card.Header className="janky-card-header pt-0">
               <div className="pet-name">
-                Featured Pet: {pets[previewPet].petName}!
+                Featured: {pets[previewPet].petName}!
               </div>
             </Card.Header>
             <div className="janky-card-body-wrapper">
@@ -162,7 +162,7 @@ const Home = () => {
             </Card.Footer>
           </Card>
 
-          <Card className="janky-card-wrapper">
+          {/* <Card className="janky-card-wrapper">
             <Card.Header className="janky-card-header">
               Status/Development
             </Card.Header>
@@ -188,7 +188,7 @@ const Home = () => {
                 </div>
               </Card.Body>
             </div>
-          </Card>
+          </Card> */}
         </Col>
       </Row>
     </Container>

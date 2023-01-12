@@ -32,9 +32,9 @@ const ProfilePets = () => {
 
   return (
     <>
-      <h2 className="col-12 bg-dark text-light p-3 mb-5">
+      {/* <h2 className="col-12 bg-dark text-light p-3 mb-5">
         {userParam ? `${user.username}'s` : 'Your'} pets
-      </h2>
+      </h2> */}
 
       <div className="col-12 mb-5">
         <div className="framed-card-group">

@@ -15,19 +15,16 @@ const Forum = () => {
   const posts = data?.posts || [];
 
   return (
-    <>
-      <h2 className="mb-4">Community Forum</h2>
-      <div className="forum-table flex-row justify-center">
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          <PostList
-            posts={posts}
-            title="Posts"
-          />
-        )}
-      </div>
-    </>
+    <div className="forum-table flex-row justify-center">
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <PostList
+          posts={posts}
+          title="Community Forum"
+        />
+      )}
+    </div>
   );
 };
 

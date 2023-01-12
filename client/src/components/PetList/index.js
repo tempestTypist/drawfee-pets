@@ -24,38 +24,45 @@ const PetList = ({
 	const images = ImageImport.importAll(require.context('../../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
   const { pets, activePet } = user
 
+  //this sets the state of favourite to the activepet
   const [favourite, setFavourite] = useState({
     activePet: activePet,
   });
 
+  //this function checks if there is an active pet, and the id of the pet in activepet against the pets in the list, and provides the class name
   const isFavourite = (index) => { 
-    if (pets[index]._id === activePet._id) {
+    console.log("index: " + index)
+    console.log("pets index: " + JSON.stringify(pets[index]))
+    console.log("pets index id: " + pets[index]._id)
+    if (activePet && pets[index]._id === activePet._id) {
       return "pet__favourite"
     } else {
       return
     }
   };
 
+  //this accesses the favourite pet mutation, which will take whatever pet is starred and update the users activepet with the favourite
   const [favouritePet, { err }] = useMutation(FAVOURITE_PET, {
     update(cache, { data: { favouritePet } }) {
-      console.log("data: favouritePet", { data: { favouritePet } })
+      // console.log("data: favouritePet", { data: { favouritePet } })
       try {
         cache.writeQuery({
           query: QUERY_ME,
           data: { me: favouritePet },
         });
-        console.log("me: favouritePet", { me: { favouritePet } })
+        // console.log("me: favouritePet", { me: { favouritePet } })
       } catch (e) {
         console.error(e);
       }
     },
   });
 
+  //this passes the pet ID to the set state above and asyncroniously waits for the favourite pet data to pass to the mutation?
   const handleFavePet = async (index) => {
     const petId = pets[index]._id;
-    console.log("ID passed to handleFavePet", petId);
+    // console.log("ID passed to handleFavePet", petId);
     setFavourite({...favourite, activePet: pets[index]});
-    console.log("setting active pet:", favourite)
+    // console.log("setting active pet:", favourite)
     try {
       const { data } = await favouritePet({
         variables: { petId },
@@ -89,8 +96,11 @@ const PetList = ({
     }
   };
 
+  //this sets the favourite when the page loads
   useEffect(() => {
-    setFavourite(activePet)
+    if (activePet) {
+      setFavourite(activePet)
+    }
   }, []);
 
   if (!pets.length) {
@@ -102,7 +112,7 @@ const PetList = ({
       {showTitle && <h3>{title}</h3>}
       {pets &&
         pets.map((pet, index) => (
-          <Card className="janky-card-wrapper key-was-here col-12 col-sm-6 col-lg-4 col-xl-3 p-4">
+          <Card className="janky-card-wrapper key-was-here col-12 col-sm-6 col-lg-4 col-xl-3 p-4 pt-0">
             <Card.Header className="janky-card-header">
               <div className="pet-name">
                 {pet.petName}

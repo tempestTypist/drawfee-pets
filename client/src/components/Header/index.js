@@ -11,6 +11,7 @@ import { faBell, faBellOn, faEnvelope, faEnvelopeOpen, faGear } from '@fortaweso
 
 import { Container, Row, Navbar, Nav, NavDropdown, Button } from 'react-bootstrap'
 import Logo from '../../assets/images/drawfee-logos/drawfee-light.png'
+import Loading from '../Loading';
 
 const Header = () => {
   const control = useAnimation()
@@ -34,7 +35,7 @@ const Header = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
   
   return (
@@ -50,11 +51,11 @@ const Header = () => {
             <Nav>
               {Auth.loggedIn() ? (
                 <div className="d-flex flex-row align-items-center">
-                  <Nav.Item>
+                  {/* <Nav.Item>
                     <Link to="/assets" className="nav-link">
                       (Temp) Assets
                     </Link>
-                  </Nav.Item>
+                  </Nav.Item> */}
                   <Nav.Item>
                     <Link to="/community-forums" className="nav-link">
                       Community
@@ -86,15 +87,13 @@ const Header = () => {
 
                     <NavDropdown.Divider />
 
-                    <NavDropdown.Item href="#action/3.1">
-                      <img className="dt-avatar me-3" src="https://via.placeholder.com/150x150" alt="User" />
-
+                    <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.1">
                       <span className="media-body text-truncate">
-                      <span className="user-name mb-1">Chris Mathew: </span>
-                      <span className="message text-light-gray text-truncate">Okay.. I will be waiting for your...</span>
+                        <span className="user-name mb-1">Chris Mathew: </span>
+                        <span className="message text-light-gray text-truncate">Okay.. I will be waiting for your...</span>
                       </span>
 
-                      <span className="action-area h-100 min-w-80 text-right">
+                      <span className="action-area h-100 min-w-80">
                         <span className="meta-date ms-2 mb-1">8 hours ago</span>
                         <span className="toggle-button" data-toggle="tooltip" data-placement="left" title="Mark as read">
                           <span className="show"><i className="icon icon-dot-o icon-fw f-10 text-light-gray"></i></span>
@@ -103,9 +102,7 @@ const Header = () => {
                       </span>
                     </NavDropdown.Item>
 
-                    <NavDropdown.Item href="#action/3.2">
-                      <img className="dt-avatar me-3" src="https://via.placeholder.com/150x150" alt="User" />
-
+                    <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.2">
                       <span className="media-body text-truncate">
                         <span className="user-name mb-1">Alia Joseph: </span>
                         <span className="message text-light-gray text-truncate">
@@ -113,7 +110,7 @@ const Header = () => {
                         </span>
                       </span>
 
-                      <span className="action-area h-100 min-w-80 text-right">
+                      <span className="action-area h-100 min-w-80">
                         <span className="meta-date ms-2 mb-1">9 hours ago</span>
                         <span className="toggle-button" data-toggle="tooltip" data-placement="left" title="Mark as read">
                           <span className="show"><i className="icon icon-dot-o icon-fw f-10 text-light-gray"></i></span>
@@ -122,9 +119,7 @@ const Header = () => {
                       </span>
                     </NavDropdown.Item>
 
-                    <NavDropdown.Item href="#action/3.3">
-                      <img className="dt-avatar me-3" src="https://via.placeholder.com/150x150" alt="User" />
-
+                    <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.3">
                       <span className="media-body text-truncate">
                         <span className="user-name mb-1">Joshua Brian: </span>
                         <span className="message text-light-gray text-truncate">
@@ -132,7 +127,7 @@ const Header = () => {
                         </span>
                       </span>
 
-                      <span className="action-area h-100 min-w-80 text-right">
+                      <span className="action-area h-100 min-w-80">
                         <span className="meta-date ms-2 mb-1">12 hours ago</span>
                         <span className="toggle-button" data-toggle="tooltip" data-placement="left" title="Mark as read">
                           <span className="show"><i className="icon icon-dot-o icon-fw f-10 text-light-gray"></i></span>
@@ -165,39 +160,36 @@ const Header = () => {
 
                     <NavDropdown.Divider />
 
-                    <NavDropdown.Item href="#action/3.1">
-                      <img className="dt-avatar me-3" src="https://via.placeholder.com/150x150" alt="User"></img>
-
-                      <span className="media-body">
+                    <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.1">
+                      <span className="media-body text-truncate">
+                        <img className="dt-avatar me-2" src="https://via.placeholder.com/36x36" alt="User"></img>
                         <span className="message">
                           <span className="user-name">Stella Johnson</span> and <span className="user-name">Chris Harris </span>
                           have birthdays today. Help them celebrate!
                         </span>
-                        <span className="meta-date ms-2">8 hours ago</span>
                       </span>
+                      <span className="meta-date ms-2">8 hours ago</span>
                     </NavDropdown.Item>
 
-                    <NavDropdown.Item href="#action/3.2">
-                      <img className="dt-avatar me-3" src="https://via.placeholder.com/150x150" alt="User" />
-
-                      <span className="media-body">
+                    <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.2">
+                      <span className="media-body text-truncate">
+                        <img className="dt-avatar me-2" src="https://via.placeholder.com/36x36" alt="User" />
                         <span className="message">
                           <span className="user-name">Jonathan Madano</span> commented on your post.
                         </span>
-                        <span className="meta-date ms-2">9 hours ago</span>
                       </span>
+                      <span className="meta-date ms-2">9 hours ago</span>
                     </NavDropdown.Item>
 
-                    <NavDropdown.Item href="#action/3.3">
-                      <img className="dt-avatar me-3" src="https://via.placeholder.com/150x150" alt="User" />
-
-                      <span className="media-body">
+                    <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.3">
+                      <span className="media-body text-truncate">
+                        <img className="dt-avatar me-2" src="https://via.placeholder.com/36x36" alt="User" />
                         <span className="message">
                           <span className="user-name">Chelsea Brown</span> sent a video recomendation.
                         </span>
-                        <span className="meta-date ms-2">
-                          13 hours ago
-                        </span>
+                      </span>
+                      <span className="meta-date ms-2">
+                        13 hours ago
                       </span>
                     </NavDropdown.Item>
 

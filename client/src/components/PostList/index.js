@@ -10,16 +10,16 @@ const PostList = ({
   showUsername = true,
 }) => {
   if (!posts.length) {
-    return <h3>No Posts Yet</h3>;
+    return ( <Link className="btn" to="/new-post">New Topic</Link> )
   }
 
   console.log(JSON.stringify(posts))
 
-  console.log(JSON.stringify(posts[0].comments[0].createdAt))
+  // console.log(JSON.stringify(posts[0].comments[0].createdAt))
 
   return (
     <>
-      {showTitle && <h3>{title}</h3>}
+      {showTitle && <h2>{title}</h2>}
 
         <Card className="janky-card-wrapper">
 
@@ -63,53 +63,47 @@ const PostList = ({
             </div>
           </div>
 
-            <Card.Header className="janky-card-header">
+          <table className="table table-hover table-users table-responsive text-nowrap mb-4" cellSpacing="0">
+            <thead>
+              <tr>
+                <th></th>
+                <th><h1>Topic</h1></th>
+                <th>Made By</th>
+                <th>Replies</th>
+                <th>Last Post</th>
+              </tr>
+            </thead>
 
-            </Card.Header>
-
-            {/* <Card.Body className="janky-card-body developement-card"> */}
-                <table className="table table-hover table-users table-responsive text-nowrap mb-4" cellSpacing="0">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th><h1>Topic</h1></th>
-                      <th>Made By</th>
-                      <th>Replies</th>
-                      <th>Last Post</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {posts &&
-                      posts.map((post) => (
-                      <tr>
-                        <td>
-                          <img src="https://i.picsum.photos/id/1005/100/100.jpg" alt="" />
-                        </td>
-                        <td className="w-100">
-                          <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>
-                        </td>
-                        <td>
-                          <Link
-                            className=""
-                            to={`/profile/${post.postAuthor}`}
-                            >
-                            {post.postAuthor}
-                          </Link>
-                        </td>
-                        <td className="text-center">{post.comments.length}</td>
-                        <td>
-                          {post.comments.length > 0 ? (
-                            <>{post.comments[0].createdAt}<br/>by {post.comments[0].commentAuthor}</>
-                          ) : (
-                            <>{post.createdAt}<br/>by {post.postAuthor}</>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-            {/* </Card.Body> */}
+            <tbody>
+              {posts &&
+                posts.map((post) => (
+                <tr>
+                  <td>
+                    <img src="https://i.picsum.photos/id/1005/100/100.jpg" alt="" />
+                  </td>
+                  <td className="w-100">
+                    <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>
+                  </td>
+                  <td>
+                    <Link
+                      className=""
+                      to={`/profile/${post.postAuthor}`}
+                      >
+                      {post.postAuthor}
+                    </Link>
+                  </td>
+                  <td className="text-center">{post.comments.length}</td>
+                  <td>
+                    {post.comments.length > 0 ? (
+                      <>{post.comments[0].createdAt}<br/>by {post.comments[0].commentAuthor}</>
+                    ) : (
+                      <>{post.createdAt}<br/>by {post.postAuthor}</>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
           </Card>
 
 

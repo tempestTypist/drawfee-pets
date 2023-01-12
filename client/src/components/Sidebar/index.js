@@ -17,7 +17,7 @@ const Sidebar = () => {
       y: -400
     },
     onscreen: {
-      y: -50,
+      y: -75,
       transition: {
         type: "spring",
         bounce: 0.4,
@@ -41,12 +41,12 @@ const Sidebar = () => {
 
   return (
     <Col 
+      ref={ref}
       lg={3} 
       xxl={2} 
       className="d-none d-lg-flex sidebar" 
       id="sidebarMenu">
       <motion.div
-        ref={ref}
         variants={sidebarVariant}
         initial="offscreen"
         animate={control}>

@@ -1,42 +1,46 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col, Button, Card, Form, FormControl, Image, InputGroup } from 'react-bootstrap';
-import { useQuery, useMutation } from '@apollo/client';
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Container, Row, Col, Button, Card, Form, FormControl, Image, InputGroup } from 'react-bootstrap'
+import { useQuery, useMutation } from '@apollo/client'
 
-import { QUERY_ALLPETS } from '../utils/queries';
-import { ADD_PET } from './../utils/mutations';
+import { QUERY_ALLPETS } from '../utils/queries'
+import { ADD_PET } from './../utils/mutations'
 
-import ImageImport from './../utils/imageimport';
-import Auth from './../utils/auth';
-import Carousel from '../components/Carousel';
-import ColourSelect from '../components/ColourSelect';
+import ImageImport from './../utils/imageimport'
+import Auth from './../utils/auth'
+import Loading from '../components/Loading'
+import Carousel from '../components/Carousel'
+import ColourSelect from '../components/ColourSelect'
 
 const CreatePet = () => {
+// this fetches the names of all pets in the database
 const { loading, data: allpetsData } = useQuery(QUERY_ALLPETS);
 const allpets = allpetsData?.allpets || [];
+//this maps the array of pets into several individual pets
 const pets = allpets.map((pet) => (pet.petSpecies))
 const images = ImageImport.importAll(require.context('../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
 
+//addPet mutation
 const [addPet, { error, data }] = useMutation(ADD_PET);
 
+//pet state
 const [petState, setPetState] = useState({
   petSpecies: pets[0],
   petName: '',
   petColour: "Red",
 });
 
-console.log(`${petState.petSpecies}--${petState.petColour}.png`)
-console.log(images)
-
 const selectPet = (selected) => {
   setPetState({ ...petState, petSpecies: selected})
 }
 
+// handles input changes, passing the users choice to the pet state
 const handleChange = (event) => {
   const { name, value } = event.target;
   setPetState({ ...petState, [name]: value });
 };
 
+//on form submit, plugs the variables into the add pet mutation, adds pet to users pets array, and sends user to homepage
 const handleFormSubmit = async (event) => {
   event.preventDefault();
 
@@ -55,7 +59,7 @@ const handleFormSubmit = async (event) => {
 };
 
 if (loading) {
-  return <div>Loading...</div>;
+  return <Loading />
 }
 
   return (
@@ -77,7 +81,7 @@ if (loading) {
                 <Row>
                   <Col md={5} style={{"margin-bottom": "-1rem"}}>
                     <div className="pet-preview__wrapper">
-                      <div  className="pet-preview">
+                      <div className="pet-preview">
                         <Image 
                           fluid
                           className="pet-preview__screen" 
@@ -101,6 +105,7 @@ if (loading) {
                           />
                         </InputGroup>
                       </div>
+
                       <div className="stacked-screen">
                         <ColourSelect handleChange={handleChange} />
                       </div>

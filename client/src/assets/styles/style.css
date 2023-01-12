@@ -11,6 +11,47 @@
   --header-height: 4.5rem;
 }
 
+.container .text-container {
+  margin: 2rem 0;
+  font-weight: 700;
+  color: #000;
+}
+.container .text-container span {
+  display: inline-block;
+  margin-right: 0.5rem;
+  animation: jump infinite 1s ease-out;
+}
+.container .text-container span:nth-child(2), .container .text-container span:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.container .text-container span:nth-child(4), .container .text-container span:nth-child(5) {
+  animation-delay: 0.2s;
+}
+.container .text-container span:nth-child(6), .container .text-container span:nth-child(7) {
+  animation-delay: 0.3s;
+}
+.container .text-container span:nth-child(8), .container .text-container span:nth-child(9) {
+  animation-delay: 0.4s;
+}
+.container .text-container span:nth-child(10), .container .text-container span:nth-child(11) {
+  animation-delay: 0.5s;
+}
+.container .text-container span:last-of-type {
+  margin: 0;
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(1rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .navbar-brand img {
 	max-width: 180px
 }
@@ -29,20 +70,27 @@
 }
 
 .navbar-nav a {
-  color: #fff;
+  color: #ddd;
   text-decoration: none;
 }
 
 .navbar-nav .nav-link {
-  color: #fff;
+  color: #ddd;
   font-family: "Supersonic Rocketship";
   font-size: 1.4rem;
+  transition: all .2s
 }
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link:active {
-  color: #ddd;
+  color: #fff;
   transform: scale(1.1)
+}
+
+.dropdown-toggle.nav-link:hover,
+.dropdown-toggle.nav-link:active {
+  color: #fff;
+  transform: scale(1)
 }
 
 .dropdown-toggle-icon:hover #messages-dropdown {
@@ -109,6 +157,18 @@
   100% { transform: rotate(0); }
 }
 
+/* #messages-dropdown+div .media-body {
+  width: 200px
+} */
+
+.nav-item.dropdown .dropdown-menu {
+  width: 500px
+}
+
+#notifications-dropdown + .dropdown-menu .media-body .message {
+  vertical-align: top
+}
+
 
 
 .sidebar {
@@ -160,14 +220,27 @@
   position: relative;
 }
 
+.pet-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .diagonal-hero-bg {
   width: 100%;
   height: 400px;
-  background: #2b2d42;  /* fallback for old browsers */
+  margin-bottom: -2rem;
+  background: #2b2d42;
   background: -webkit-linear-gradient(#4e4376, #2b2d42);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(#4e4376, #2b2d42); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   z-index: -1;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%);
+  clip-path: polygon(0 3%, 100% 0, 99.5% 95%, 0 80%);
+}
+
+.diagonal-hero-bg h1 {
+  font-family: "Supersonic Rocketship", Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing: 5px;
+  text-shadow:#000 3px 3px
 }
 
 .main-content {
@@ -1671,70 +1744,29 @@ color: #FFEB3B;
 /* About Me 
 ---------------------*/
 
-.about-text h3 {
+.profile-header {
 font-size: 45px;
-font-weight: 700;
-margin: 0 0 6px;
 }
+
 @media (max-width: 767px) {
-.about-text h3 {
+.profile-header {
   font-size: 35px;
 }
 }
-.about-text h6 {
-font-weight: 600;
-margin-bottom: 15px;
-}
-@media (max-width: 767px) {
-.about-text h6 {
-  font-size: 18px;
-}
-}
-.about-text p {
-font-size: 18px;
-max-width: 450px;
-}
-.about-text p mark {
-font-weight: 600;
-color: #20247b;
+
+.janky-card-header.profile-header::after {
+  bottom: 16px
 }
 
-.about-list {
-padding-top: 10px;
-}
-.about-list .media {
-padding: 5px 0;
-}
-.about-list label {
-color: #20247b;
-font-weight: 600;
-/* width: 88px; */
-margin: 0;
-position: relative;
+.profile-section .framed-card-group .janky-card-wrapper:nth-child(even),
+.profile-section .framed-card-group .janky-card-wrapper:nth-child(odd) {
+  padding-left: 0;
+  padding-right: 0
 }
 
-.about-list p {
-margin: 0;
-font-size: 15px;
+.profile-avatar {
+  margin-top: 3rem
 }
-
-@media (max-width: 991px) {
-.about-avatar {
-  margin-top: 30px;
-}
-}
-
-mark {
-  background-image: linear-gradient(rgba(252, 83, 86, 0.6), rgba(252, 83, 86, 0.6));
-  background-size: 100% 3px;
-  background-repeat: no-repeat;
-  background-position: 0 bottom;
-  background-color: transparent;
-  padding: 0;
-  color: currentColor;
-}
-
-
 
 /* Forum */
 
