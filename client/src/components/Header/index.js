@@ -49,7 +49,7 @@ const Header = ({ theme, setTheme }) => {
   }
   
   return (
-    <Navbar collapseOnSelect expand="lg" fixed="top" variant={theme}>
+    <Navbar collapseOnSelect expand="lg" fixed="top" variant="dark">
       <Container fluid>
           <Navbar.Brand>
             <Link to="/">

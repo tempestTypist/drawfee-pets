@@ -13,7 +13,7 @@ const PostList = ({
     return ( <Link className="btn" to="/new-post">New Topic</Link> )
   }
 
-  console.log(JSON.stringify(posts))
+  // console.log(JSON.stringify(posts))
 
   // console.log(JSON.stringify(posts[0].comments[0].createdAt))
 
@@ -63,11 +63,12 @@ const PostList = ({
             </div>
           </div>
 
+
           <table className="table table-hover table-users table-responsive text-nowrap mb-4" cellSpacing="0">
             <thead>
               <tr>
                 <th></th>
-                <th><h1>Topic</h1></th>
+                <th>Topic</th>
                 <th>Made By</th>
                 <th>Replies</th>
                 <th>Last Post</th>
