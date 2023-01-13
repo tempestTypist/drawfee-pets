@@ -44,7 +44,7 @@ const Profile = () => {
       <div className="col-lg-6">
         <div className="framed-card-group">
           <Card className="janky-card-wrapper mb-2">
-            <Card.Header className="janky-card-header profile-header">
+            <Card.Header className="janky-card-header profile-header pt-0">
               {userParam ? `${user.username}'s` : 'Your'} profile
             </Card.Header>
             <div className="janky-card-body-wrapper">

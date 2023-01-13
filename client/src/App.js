@@ -1,31 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
-} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets/styles/style.css';
+} from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Container, Row, Col } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './assets/styles/style.css'
 
-import Home from './pages/Home';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
-import CreatePet from './pages/CreatePet';
-import Forum from './pages/Forum';
-import SinglePost from './pages/SinglePost';
-import NewPost from './pages/NewPost';
-import SinglePet from './pages/SinglePet';
-import Profile from './pages/Profile';
-import ProfilePets from './pages/ProfilePets';
-import Header from './components/Header';
-import Banner from './components/Banner';
-import Sidebar from './components/Sidebar';
-import Footer from './components/Footer';
-import Assets from './pages/Assets';
+import Home from './pages/Home'
+import Signup from './pages/Signup'
+import Login from './pages/Login'
+import CreatePet from './pages/CreatePet'
+import Forum from './pages/Forum'
+import SinglePost from './pages/SinglePost'
+import NewPost from './pages/NewPost'
+import SinglePet from './pages/SinglePet'
+import Profile from './pages/Profile'
+import ProfilePets from './pages/ProfilePets'
+import Header from './components/Header'
+import Sidebar from './components/Sidebar'
+import Footer from './components/Footer'
+import Assets from './pages/Assets'
 
 // construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -51,12 +50,25 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-function App() {
+const App = () => {
+  const [theme, setTheme] = useState(
+      localStorage.getItem('theme') || 'light'
+    );
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme', theme) || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    
+    if (storedTheme) { 
+      document.documentElement.setAttribute('data-theme', storedTheme) 
+    }
+
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [theme]);
+  
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Header />
-        {/* <Banner /> */}
+        <Header theme={theme} setTheme={setTheme} />
         <Container fluid>
           <Row className="main-content">
             <Sidebar />

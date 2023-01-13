@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { QUERY_USER, QUERY_ME } from '../../utils/queries'
 import Auth from '../../utils/auth';
-import { motion, useAnimation } from "framer-motion"
-import { useInView } from "react-intersection-observer"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell, faBellOn, faEnvelope, faEnvelopeOpen, faGear } from '@fortawesome/free-solid-svg-icons';
@@ -13,33 +11,45 @@ import { Container, Row, Navbar, Nav, NavDropdown, Button } from 'react-bootstra
 import Logo from '../../assets/images/drawfee-logos/drawfee-light.png'
 import Loading from '../Loading';
 
-const Header = () => {
-  const control = useAnimation()
-	const [ref, inView] = useInView()
-
-  const [isHovered, setHovered] = useState(false)
-
+const Header = ({ theme, setTheme }) => {
   const { loading, data } = useQuery(QUERY_ME);
 
   const user = data?.me || {};
 
-  useEffect(() => {
-    if (inView) {
-      control.start("onscreen");
-    } 
-  }, [control, inView]);
+  const [isHovered, setHovered] = useState(false)
+  const [checked, setChecked] = useState(false);
+
+  const toggleTheme = () => {
+    if (checked === false) {
+      setChecked(true)
+      setTheme('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      setChecked(false)
+      setTheme('light');
+      localStorage.setItem('theme', 'light');
+    }
+  };
 
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
   };
 
+   useEffect(() => {
+    if (theme === 'dark') {
+      setChecked(true)
+    } else {
+      setChecked(false)
+    }
+  }, [theme]);
+
   if (loading) {
     return <Loading/>;
   }
   
   return (
-    <Navbar collapseOnSelect expand="lg" fixed="top" variant="dark" className="lm-header">
+    <Navbar collapseOnSelect expand="lg" fixed="top" variant={theme}>
       <Container fluid>
           <Navbar.Brand>
             <Link to="/">
@@ -77,7 +87,8 @@ const Header = () => {
                     )}
                     className="dropdown-toggle-icon" 
                     align="end" 
-                    id="messages-dropdown">
+                    id="messages-dropdown"
+                    >
                     <NavDropdown.Header>
                       <h4 className="title">Messages (6)</h4>
                       <div className="ms-auto action-area">
@@ -150,7 +161,8 @@ const Header = () => {
                     title={<FontAwesomeIcon icon={faBell} />} 
                     className="dropdown-toggle-icon" 
                     align="end" 
-                    id="notifications-dropdown">
+                    id="notifications-dropdown"
+                    >
                     <NavDropdown.Header>
                       <h4 className="title">Notifications (9)</h4>
                       <div className="ms-auto action-area">
@@ -213,12 +225,23 @@ const Header = () => {
                               </span> 
                             </> } 
                     id="account-dropdown"
-                    align="end">
+                    align="end"
+                    >
                     <Link className="dropdown-item" to="/me">Profile</Link>
                     <Link className="dropdown-item" to="/pets">Pets</Link>
-                    {/* <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item> */}
-                    <NavDropdown.Item href="#action/3.3">Theme</NavDropdown.Item>
+                    <div className="theme-toggler">
+                      <div class="toggle">
+                        <input class="toggle-input" type="checkbox" checked={checked} onChange={toggleTheme} />
+                        <div class="toggle-bg"></div>
+                        <div class="toggle-switch">
+                          <div class="toggle-switch-figure"></div>
+                          <div class="toggle-switch-figureAlt"></div>
+                        </div>  
+                      </div>
+                    </div>
+
                     <NavDropdown.Divider />
+
                     <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                   </NavDropdown>
                 </div>
