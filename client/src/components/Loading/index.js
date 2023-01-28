@@ -3,7 +3,7 @@ import React from 'react';
 const Loading = () => {
 
   return (
-    <div className="container">
+    <div className="container-fluid loading">
       <div className="text-container text-center">
         <span>L</span>
         <span>o</span>

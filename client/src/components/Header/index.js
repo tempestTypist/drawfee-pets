@@ -36,21 +36,20 @@ const Header = ({ theme, setTheme }) => {
     Auth.logout();
   };
 
-   useEffect(() => {
+  useEffect(() => {
     if (theme === 'dark') {
       setChecked(true)
     } else {
       setChecked(false)
     }
   }, [theme]);
-
-  if (loading) {
-    return <Loading/>;
-  }
   
   return (
     <Navbar collapseOnSelect expand="lg" fixed="top" variant="dark">
-      <Container fluid>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Container fluid className="py-0">
           <Navbar.Brand>
             <Link to="/">
               <img src={Logo} />
@@ -58,7 +57,7 @@ const Header = ({ theme, setTheme }) => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
-            <Nav>
+            <Nav className="align-items-center">
               {Auth.loggedIn() ? (
                 <div className="d-flex flex-row align-items-center">
                   {/* <Nav.Item>
@@ -253,11 +252,22 @@ const Header = ({ theme, setTheme }) => {
                   <Link className="nav-link m-2" to="/signup">
                     Signup
                   </Link>
+                  <div className="theme-toggler ms-2">
+                    <div class="toggle">
+                      <input class="toggle-input" type="checkbox" checked={checked} onChange={toggleTheme} />
+                      <div class="toggle-bg"></div>
+                      <div class="toggle-switch">
+                        <div class="toggle-switch-figure"></div>
+                        <div class="toggle-switch-figureAlt"></div>
+                      </div>  
+                    </div>
+                  </div>
                 </>
               )}
             </Nav>
           </Navbar.Collapse>
-      </Container>
+        </Container>
+      )}
     </Navbar>
   );
 };

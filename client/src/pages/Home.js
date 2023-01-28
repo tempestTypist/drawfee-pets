@@ -1,36 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import React, { useState, useEffect } from 'react'
+import { useQuery } from '@apollo/client'
 import { Link } from 'react-router-dom';
+import { QUERY_PETS, QUERY_USERS } from '../utils/queries'
+import { Container, Row, Col, Button, Card, Image } from 'react-bootstrap'
 
-import PetList from '../components/PetList';
-import PetForm from '../components/PetForm';
-import UserList from '../components/UserList';
-import ImageImport from '../utils/imageimport';
+import PetList from '../components/PetList'
+import PetForm from '../components/PetForm'
+import UserList from '../components/UserList'
+import ImageImport from '../utils/imageimport'
 import Loading from '../components/Loading'
 
-import { Container, Row, Col, Button, Card, Image } from 'react-bootstrap';
-
-import { QUERY_PETS, QUERY_USERS } from '../utils/queries';
+// const PetList = React.lazy(() => import('../components/PetList'));
+// const PetForm = React.lazy(() => import('../components/PetForm'))
+// const UserList = React.lazy(() => import('../components/UserList'))
+// const Loading = React.lazy(() => import('../components/Loading'))
 
 const Home = () => {
   const { loading, data } = useQuery(QUERY_PETS);
   const pets = data?.pets || [];
 
-  // const { loading, data } = useQuery(QUERY_USERS);
-  const users = data?.users || [];
-
   const images = ImageImport.importAll(require.context('../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
+
+  // const { loading, data } = useQuery(QUERY_USERS);
+  // const users = data?.users || [];
 
   const [previewPet, setPreviewedPet] = useState(0);
 
   useEffect(() => {
     const len = pets.length;
     setPreviewedPet(Math.floor(Math.random() * len));
-  }, []);
-
-  if (loading) {
-    return <Loading/>;
-  }
+  }, [pets]);
 
   return (
     <Container fluid>
@@ -119,49 +118,52 @@ const Home = () => {
         </Col>
 
         <Col xl={4}>
-          <Card className="janky-card-wrapper key-was-here p-4 pt-0">
-            <Card.Header className="janky-card-header pt-0">
-              <div className="pet-name">
-                Featured: {pets[previewPet].petName}!
-              </div>
-            </Card.Header>
-            <div className="janky-card-body-wrapper">
-              <Card.Body className="janky-card-body">
-                <div className="janky-card-inner-body">
-                    <Image src={images[`${pets[previewPet].petSpecies}/${pets[previewPet].petSpecies}--${pets[previewPet].petColour}.png`]} className="pet-list__image featured-pet" alt="Pet image"/>
+          {loading ? (
+            <Loading />
+          ) : (
+            <Card className="janky-card-wrapper key-was-here p-4 pt-0">
+              <Card.Header className="janky-card-header pt-0">
+                <div className="pet-name">
+                  Featured: {pets[previewPet].petName}!
                 </div>
-              </Card.Body>
-            </div>
-            <Card.Footer className="janky-card-footer">
-              <div className="janky-card-footer__inner">
-                Made by: {pets[previewPet].petOwner}
-                {/* {showUsername ? (
-                  <Link
-                    className="text-light"
-                    to={`/profiles/${pet.petOwner}`}
-                  >
-                    {pet.petOwner} <br />
-                    <span style={{ fontSize: '1rem' }}>
-                      created this pet on {pet.createdAt}
-                    </span>
-                  </Link>
-                ) : (
-                  <>
-                    <span style={{ fontSize: '1rem' }}>
-                      You made this pet on xTimestampx
-                    </span>
-                  </>
-                )} */}
-                {/* <Link
-                  className="btn btn-primary btn-block btn-squared"
-                  to={`/pets/${pet._id}`}
-                >
-                  View pet profile
-                </Link> */}
+              </Card.Header>
+              <div className="janky-card-body-wrapper">
+                <Card.Body className="janky-card-body">
+                  <div className="janky-card-inner-body pet-list__wrapper">
+                    <Image src={images[`${pets[previewPet].petSpecies}/${pets[previewPet].petSpecies}--${pets[previewPet].petColour}.png`]} className="pet-list__image featured-pet" alt="Pet image"/>
+                  </div>
+                </Card.Body>
               </div>
-            </Card.Footer>
-          </Card>
-
+              <Card.Footer className="janky-card-footer">
+                <div className="janky-card-footer__inner">
+                  Made by: {pets[previewPet].petOwner}
+                  {/* {showUsername ? (
+                    <Link
+                      className="text-light"
+                      to={`/profiles/${pet.petOwner}`}
+                    >
+                      {pet.petOwner} <br />
+                      <span style={{ fontSize: '1rem' }}>
+                        created this pet on {pet.createdAt}
+                      </span>
+                    </Link>
+                  ) : (
+                    <>
+                      <span style={{ fontSize: '1rem' }}>
+                        You made this pet on xTimestampx
+                      </span>
+                    </>
+                  )} */}
+                  {/* <Link
+                    className="btn btn-primary btn-block btn-squared"
+                    to={`/pets/${pet._id}`}
+                  >
+                    View pet profile
+                  </Link> */}
+                </div>
+              </Card.Footer>
+            </Card>
+          )}
           {/* <Card className="janky-card-wrapper">
             <Card.Header className="janky-card-header">
               Status/Development

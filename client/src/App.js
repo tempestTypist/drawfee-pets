@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import {
   ApolloClient,
   InMemoryCache,
@@ -25,6 +25,23 @@ import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
 import Assets from './pages/Assets'
+import Loading from './components/Loading'
+
+// const Home = React.lazy(() => import('./pages/Home'))
+// const Signup = React.lazy(() => import('./pages/Signup'))
+// const Login = React.lazy(() => import('./pages/Login'))
+// const CreatePet = React.lazy(() => import('./pages/CreatePet'))
+// const Profile = React.lazy(() => import('./pages/Profile'))
+// const ProfilePets = React.lazy(() => import('./pages/ProfilePets'))
+// const SinglePet = React.lazy(() => import('./pages/SinglePet'))
+// const Forum = React.lazy(() => import('./pages/Forum'))
+// const SinglePost = React.lazy(() => import('./pages/SinglePost'))
+// const NewPost = React.lazy(() => import('./pages/NewPost'))
+// const Assets = React.lazy(() => import('./pages/Assets'))
+// const Header = React.lazy(() => import('./components/Header'))
+// const Sidebar = React.lazy(() => import('./components/Sidebar'))
+// const Footer = React.lazy(() => import('./components/Footer'))
+// const Loading = React.lazy(() => import('./components/Loading'))
 
 // construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -51,9 +68,11 @@ const client = new ApolloClient({
 });
 
 const App = () => {
+  const [loading, setLoading] = useState(true)
+
   const [theme, setTheme] = useState(
-      localStorage.getItem('theme') || 'light'
-    );
+    localStorage.getItem('theme') || 'light'
+  );
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme', theme) || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
@@ -63,59 +82,71 @@ const App = () => {
     }
 
     document.documentElement.setAttribute('data-theme', theme)
+    setTimeout(() => setLoading(false), 10000)
   }, [theme]);
   
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Header theme={theme} setTheme={setTheme} />
-        <Container fluid>
-          <Row className="main-content">
-            <Sidebar />
-            <Col lg={{span: 9, offset: 3}} xxl={{span: 10, offset: 2}} className="content">
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/login">
-                <Login />
-              </Route>
-              <Route exact path="/signup">
-                <Signup />
-              </Route>
-              <Route exact path="/create-pet">
-                <CreatePet />
-              </Route>
-              <Route exact path="/community-forums">
-                <Forum />
-              </Route>
-              <Route exact path="/posts/:postId">
-                <SinglePost />
-              </Route>
-              <Route exact path="/new-post">
-                <NewPost />
-              </Route>
-              <Route exact path="/me">
-                <Profile />
-              </Route>
-              <Route exact path="/profile/:username">
-                <Profile />
-              </Route>
-              <Route exact path="/pets">
-                <ProfilePets />
-              </Route>
-              <Route exact path="/profile/:username/pets">
-                <ProfilePets />
-              </Route>
-              <Route exact path="/pets/:petId">
-                <SinglePet />
-              </Route>
-              <Route exact path="/assets">
-                <Assets />
-              </Route>
-            </Col>
-          </Row>
-        </Container>
-        <Footer />
+        { loading === false ? (
+          <>
+            <Header theme={theme} setTheme={setTheme} />
+            <Container fluid>
+              <Row className="main-content">
+                <Sidebar />
+                <Col lg={{span: 9, offset: 3}} xxl={{span: 10, offset: 2}} className="content">
+                  {/* uses image import, QUERY_PETS */}
+                  <Route exact path="/">
+                    <Home />
+                  </Route>
+                  <Route exact path="/login">
+                    <Login />
+                  </Route>
+                  <Route exact path="/signup">
+                    <Signup />
+                  </Route>
+                  {/*uses image import, QUERY_ALLPETS*/}
+                  <Route exact path="/create-pet">
+                    <CreatePet />
+                  </Route>
+                  {/* uses QUERY_POSTS */}
+                  <Route exact path="/community-forums">
+                    <Forum />
+                  </Route>
+                  <Route exact path="/posts/:postId">
+                    <SinglePost />
+                  </Route>
+                  <Route exact path="/new-post">
+                    <NewPost />
+                  </Route>
+                  {/* uses QUERY_USER, QUERY_ME */}
+                  <Route exact path="/me">
+                    <Profile />
+                  </Route>
+                  <Route exact path="/profile/:username">
+                    <Profile />
+                  </Route>
+                  {/* uses QUERY_USER, QUERY_ME */}
+                  <Route exact path="/pets">
+                    <ProfilePets />
+                  </Route>
+                  <Route exact path="/profile/:username/pets">
+                    <ProfilePets />
+                  </Route>
+                  <Route exact path="/pets/:petId">
+                    <SinglePet />
+                  </Route>
+                  <Route exact path="/assets">
+                    <Assets />
+                  </Route>
+                </Col>
+              </Row>
+            </Container>
+            <Footer />
+          </>
+        ) : (
+          <Loading />
+        )}
       </Router>
     </ApolloProvider>
   );

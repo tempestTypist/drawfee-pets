@@ -1,10 +1,11 @@
-import React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import React from 'react'
+import { Redirect, useParams } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
+import { QUERY_USER, QUERY_ME } from '../utils/queries'
 
-import Auth from '../utils/auth';
-import PetList from '../components/PetList';
+import Auth from '../utils/auth'
+import PetList from '../components/PetList'
+import Loading from '../components/Loading'
 
 const ProfilePets = () => {
   const { username: userParam } = useParams();
@@ -17,10 +18,6 @@ const ProfilePets = () => {
 
   console.log("Userdata: " + JSON.stringify(user))
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (!user?.username) {
     return (
       <h4>
@@ -32,10 +29,9 @@ const ProfilePets = () => {
 
   return (
     <>
-      {/* <h2 className="col-12 bg-dark text-light p-3 mb-5">
-        {userParam ? `${user.username}'s` : 'Your'} pets
-      </h2> */}
-
+    {loading ? (
+      <Loading />
+    ) : (
       <div className="col-12 mb-5">
         <div className="framed-card-group">
           <PetList
@@ -46,6 +42,10 @@ const ProfilePets = () => {
           />
           </div>
       </div>
+    )}
+      {/* <h2 className="col-12 bg-dark text-light p-3 mb-5">
+        {userParam ? `${user.username}'s` : 'Your'} pets
+      </h2> */}
     </>
   );
 };

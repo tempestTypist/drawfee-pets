@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button, Card, ButtonGroup, Table, Pagination } from 'react-bootstrap';
 import JankyButton from '../../components/JankyButton';
+import mug from '../../assets/images/drawfee-logos/drawfee-logo-red.jpg'
 
 const PostList = ({
   posts,
@@ -23,7 +24,7 @@ const PostList = ({
 
         <Card className="janky-card-wrapper">
 
-          <div className="forum-toolbar w-100 justify-content-between">
+          <div className="forum-toolbar w-100 mb-3 justify-content-between">
             <Link className="btn" to="/new-post">New Topic</Link>
             <div>
               {/* <Pagination>
@@ -68,7 +69,7 @@ const PostList = ({
             <thead>
               <tr>
                 <th></th>
-                <th>Topic</th>
+                <th><h2>Topic</h2></th>
                 <th>Made By</th>
                 <th>Replies</th>
                 <th>Last Post</th>
@@ -80,9 +81,9 @@ const PostList = ({
                 posts.map((post) => (
                 <tr>
                   <td>
-                    <img src="https://i.picsum.photos/id/1005/100/100.jpg" alt="" />
+                    <img src={mug} alt="Drawfee Mug Logo" />
                   </td>
-                  <td className="w-100">
+                  <td className="post-title w-100">
                     <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>
                   </td>
                   <td>

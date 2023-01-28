@@ -58,10 +58,6 @@ const handleFormSubmit = async (event) => {
   }
 };
 
-if (loading) {
-  return <Loading />
-}
-
   return (
     <>
       {Auth.loggedIn() ? (
@@ -78,50 +74,56 @@ if (loading) {
                 onSubmit={handleFormSubmit}
                 fluid >
 
-                <Row>
-                  <Col md={5} style={{"margin-bottom": "-1rem"}}>
-                    <div className="pet-preview__wrapper">
-                      <div className="pet-preview">
-                        <Image 
-                          fluid
-                          className="pet-preview__screen" 
-                          src={images[`${petState.petSpecies}/${petState.petSpecies}--${petState.petColour}.png`]}
-                        />
-                      </div>
-                    </div>
-                  </Col>
-
-                  <Col md={6} className="flex-grow-1" style={{"margin-bottom": "-1rem"}}>
-                    <div className="stacked-screens__wrapper">
-                      <div className="stacked-screen">
-                        <InputGroup>
-                          <InputGroup.Text id="inputGroup-sizing-default">Pet Name</InputGroup.Text>
-                          <FormControl
-                            aria-label="Default"
-                            aria-describedby="inputGroup-sizing-default"
-                            name="petName"
-                            value={petState.petName}
-                            onChange={handleChange}
+                {loading ? (
+                  <Loading />
+                ) : (
+                <>
+                  <Row>
+                    <Col lg={5} style={{"margin-bottom": "-1rem"}}>
+                      <div className="pet-preview__wrapper">
+                        <div className="pet-preview">
+                          <Image 
+                            fluid
+                            className="pet-preview__screen" 
+                            src={images[`${petState.petSpecies}/${petState.petSpecies}--${petState.petColour}.png`]}
                           />
-                        </InputGroup>
+                        </div>
                       </div>
+                    </Col>
 
-                      <div className="stacked-screen">
-                        <ColourSelect handleChange={handleChange} />
+                    <Col lg={6} className="flex-grow-1" style={{"margin-bottom": "-1rem"}}>
+                      <div className="stacked-screens__wrapper">
+                        <div className="stacked-screen">
+                          <InputGroup className="w-75">
+                            <InputGroup.Text id="pet-name-input">Name</InputGroup.Text>
+                            <FormControl
+                              aria-label="Default"
+                              aria-describedby="pet-name-input"
+                              name="petName"
+                              value={petState.petName}
+                              onChange={handleChange}
+                            />
+                          </InputGroup>
+                        </div>
+
+                        <div className="stacked-screen">
+                          <ColourSelect handleChange={handleChange} />
+                        </div>
                       </div>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col xs={12} className="pet-chooser">
+                      <Carousel heading="Pet Chooser" carouselItems={pets} selectPet={selectPet} />
+                    </Col>
+
+                    <div className="screen-btn-wrapper">
+                      <button type="submit" className="screen-btn" />
                     </div>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col xs={12} className="pet-chooser">
-                    <Carousel heading="Pet Chooser" carouselItems={pets} selectPet={selectPet} />
-                  </Col>
-
-                  <div className="screen-btn-wrapper">
-                    <button type="submit" className="screen-btn" />
-                  </div>
-                </Row>
+                  </Row>
+                </>
+                )}
 
                 {error && (
                   <div className="col-12 my-3 bg-danger text-white p-3">
