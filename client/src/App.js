@@ -69,10 +69,9 @@ const client = new ApolloClient({
 
 const App = () => {
   const [loading, setLoading] = useState(true)
-
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') || 'light'
-  );
+  )
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme', theme) || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
@@ -82,7 +81,7 @@ const App = () => {
     }
 
     document.documentElement.setAttribute('data-theme', theme)
-    setTimeout(() => setLoading(false), 10000)
+    setTimeout(() => setLoading(false), 1000)
   }, [theme]);
   
   return (

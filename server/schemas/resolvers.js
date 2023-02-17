@@ -39,20 +39,15 @@ const resolvers = {
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
+
       return { token, user };
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
-
-      //later, change this to not specify if the problem is email or pass, as per standards
-      if (!user) {
-        throw new AuthenticationError('No user found with this email address');
-      }
-
       const correctPw = await user.isCorrectPassword(password);
 
-      if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
+      if (!user || !correctPw) {
+        throw new AuthenticationError('Incorrect email or password!');
       }
 
       const token = signToken(user);

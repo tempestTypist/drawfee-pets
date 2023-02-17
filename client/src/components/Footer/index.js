@@ -21,7 +21,7 @@ const Footer = () => {
       <a href="https://www.youtube.com/c/Drawfee" target="_blank" rel="noopener noreferrer">Drawfee Show on Youtube</a>
       <a href="https://www.patreon.com/drawfee" target="_blank" rel="noopener noreferrer">Drawfee's Patreon</a>
     </div>
-  );
-};
+  )
+}
 
 export default Footer;

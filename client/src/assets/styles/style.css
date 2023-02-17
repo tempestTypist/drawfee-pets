@@ -115,7 +115,7 @@ a:focus {
 /* ********* */
 
 .navbar-brand img {
-	max-width: 180px
+	max-width: 180px;
 }
 
 #account-dropdown + div a,
@@ -131,6 +131,18 @@ a:focus {
   border-bottom: 1px solid rgb(109, 1, 1);
   height: var(--header-height);
   z-index: 1000
+}
+
+.navbar .container-fluid {
+  padding-top: 0.3125rem
+}
+
+@media (max-width: 991.98px) {
+  .navbar {
+    --bs-navbar-brand-padding-y: 0;
+  }
+
+  
 }
 
 .navbar-light {
@@ -673,7 +685,6 @@ input[type=checkbox]:not(.form-switch input[type=checkbox]) {
     -webkit-clip-path: polygon(0 0, 100% 8%, 98% 95%, 3% 100%);
     clip-path: polygon(0 0, 100% 8%, 98% 95%, 3% 100%);
     text-align: justify; 
-    transition: background .2s;
   }
 
   .janky-card-footer {
@@ -696,7 +707,6 @@ input[type=checkbox]:not(.form-switch input[type=checkbox]) {
     flex-direction: column;
     background: var(--panel-bg-color);
     padding: 1rem;
-    transition: background .2s;
   }
   
 
@@ -2392,12 +2402,8 @@ font-size: 45px;
       text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
    }
    
-   img {
-      border: 3px solid;
-      border-color: rgba(57,139,147,0.1);
-      height: 100px;
-      margin: 0.5rem 0;
-      width: 100px;
+   .navbar img {
+      width: 80%;
    }
    
   td:first-child { 

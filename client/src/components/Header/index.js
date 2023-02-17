@@ -45,11 +45,11 @@ const Header = ({ theme, setTheme }) => {
   }, [theme]);
   
   return (
-    <Navbar collapseOnSelect expand="lg" fixed="top" variant="dark">
+    <Navbar collapseOnSelect expand="lg" fixed="top" variant="dark" className="py-0">
       {loading ? (
         <Loading />
       ) : (
-        <Container fluid className="py-0">
+        <Container fluid>
           <Navbar.Brand>
             <Link to="/">
               <img src={Logo} />
