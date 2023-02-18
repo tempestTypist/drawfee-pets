@@ -101,103 +101,99 @@ const Signup = () => {
   return (
     <main className="flex-row justify-center mb-4">
       <div className="col-12 col-lg-10">
+        <Card className="janky-card-wrapper">
+          <Card.Header className="janky-card-header">
+            Sign up
+          </Card.Header>
+          <div className="janky-card-body-wrapper">
+            <Card.Body className="janky-card-body">
+              <div className="janky-card-inner-body d-flex flex-column align-items-center">
+                {data ? (
+                  <p>
+                    Success! Onto the{' '}
+                    <Link to="/create-pet">next step.</Link>
+                  </p>
+                ) : (
+                  <form onSubmit={handleFormSubmit}>
 
-      <Card className="janky-card-wrapper">
-        <Card.Header className="janky-card-header">
-          Sign up
-        </Card.Header>
-        <div className="janky-card-body-wrapper">
-          <Card.Body className="janky-card-body">
-            <div className="janky-card-inner-body d-flex flex-column align-items-center">
-              {data ? (
-                <p>
-                  Success! Onto the{' '}
-                  <Link to="/create-pet">next step.</Link>
-                </p>
-              ) : (
-                <form onSubmit={handleFormSubmit}>
-
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text id="username-input">Username</InputGroup.Text>
-                    <FormControl
-                      aria-label="Username"
-                      aria-describedby="username-input"
-                      placeholder="Username"
-                      name="username"
-                      type="text"
-                      value={formState.username}
-                      onChange={handleChange}
+                    <InputGroup className="mb-3">
+                      <InputGroup.Text id="username-input">Username</InputGroup.Text>
+                      <FormControl
+                        aria-label="Username"
+                        aria-describedby="username-input"
+                        placeholder="Username"
+                        name="username"
+                        type="text"
+                        value={formState.username}
+                        onChange={handleChange}
+                      />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                      <InputGroup.Text id="email-input">Email</InputGroup.Text>
+                      <FormControl
+                        aria-label="Email"
+                        aria-describedby="email-input"
+                        placeholder="Email"
+                        name="email"
+                        type="text"
+                        value={formState.email}
+                        onChange={handleChange}
+                      />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                      <InputGroup.Text id="password-input">Password</InputGroup.Text>
+                      <FormControl
+                        aria-label="Password"
+                        aria-describedby="password-input"
+                        placeholder="******"
+                        name="password"
+                        type="password"
+                        value={formState.password}
+                        onChange={handleChange}
+                      />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                      <InputGroup.Text id="confirm-password-input">Confirm Password</InputGroup.Text>
+                      <FormControl
+                        aria-label="Confirm Password"
+                        aria-describedby="confirm-password-input"
+                        placeholder="******"
+                        name="confirmpass"
+                        type="password"
+                        value={formState.confirmpass}
+                        onChange={handleChange}
+                      />
+                    </InputGroup>
+                    
+                    <JankyButton 
+                      type="submit"
+                      label="Next"
+                      variant="red"
                     />
-                  </InputGroup>
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text id="email-input">Email</InputGroup.Text>
-                    <FormControl
-                      aria-label="Email"
-                      aria-describedby="email-input"
-                      placeholder="Email"
-                      name="email"
-                      type="text"
-                      value={formState.email}
-                      onChange={handleChange}
-                    />
-                  </InputGroup>
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text id="password-input">Password</InputGroup.Text>
-                    <FormControl
-                      aria-label="Password"
-                      aria-describedby="password-input"
-                      placeholder="******"
-                      name="password"
-                      type="password"
-                      value={formState.password}
-                      onChange={handleChange}
-                    />
-                  </InputGroup>
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text id="confirm-password-input">Confirm Password</InputGroup.Text>
-                    <FormControl
-                      aria-label="Confirm Password"
-                      aria-describedby="confirm-password-input"
-                      placeholder="******"
-                      name="confirmpass"
-                      type="password"
-                      value={formState.confirmpass}
-                      onChange={handleChange}
-                    />
-                  </InputGroup>
-                  
-                  <JankyButton 
-                    type="submit"
-                    label="Next"
-                    variant="red"
-                  />
-                </form>
-              )}
+                  </form>
+                )}
 
-              {/* {Object.entries(errors).map(([key, err]) => (
-                <span
-                  key={`${key}: ${err}`}
-                  className="my-1 p-3 bg-danger text-white"
-                >
-                  {key} : {err}
-                </span>
-              ))} */}
+                {/* {Object.entries(errors).map(([key, err]) => (
+                  <span
+                    key={`${key}: ${err}`}
+                    className="my-1 p-3 bg-danger text-white"
+                  >
+                    {key} : {err}
+                  </span>
+                ))} */}
 
-              {/* {error && (
-                <div className="my-1 p-3 bg-danger text-white">
-                  {JSON.stringify(error)}
-                </div>
-              )} */}
-            </div>
+                {/* {error && (
+                  <div className="my-1 p-3 bg-danger text-white">
+                    {JSON.stringify(error)}
+                  </div>
+                )} */}
+              </div>
 
-          </Card.Body>
-        </div>
-      </Card>
-
+            </Card.Body>
+          </div>
+        </Card>
       </div>
-      <ToastComponent
-        errors={errors} 
-      />
+      <ToastComponent errors={errors} />
     </main>
   );
 };
