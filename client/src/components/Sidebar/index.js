@@ -5,8 +5,8 @@ import { QUERY_USER, QUERY_ME } from '../../utils/queries'
 import Auth from '../../utils/auth'
 import { Col, Image, Card } from 'react-bootstrap'
 import ImageImport from '../../utils/imageimport'
-import { motion, useAnimation } from "framer-motion"
-import { useInView } from "react-intersection-observer"
+import { motion, useAnimation } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 import Loading from '../Loading'
 
 const Sidebar = () => {
@@ -70,7 +70,7 @@ const Sidebar = () => {
             {loading ? (
               <Loading />
             ) : (
-              <div className="d-flex flex-column align-items-center">
+              <div className="sidebar-screen__inner">
                 {Auth.loggedIn() ? (
                   [(!user?.activePet) 
                     ? 
@@ -83,9 +83,9 @@ const Sidebar = () => {
                   ]
                 ) : (
                   <>
-                    <Link className="btn-glitch background-button" to="/login" title="LOGIN">LOGIN</Link>
+                    <Link className="sidebar-screen-btn" to="/login" title="LOGIN">LOGIN</Link>
                       or
-                    <Link className="btn-glitch background-button" to="/signup" title="SIGNUP">SIGNUP</Link>
+                    <Link className="sidebar-screen-btn" to="/signup" title="SIGNUP">SIGNUP</Link>
                   </>
                 )}
               </div>

@@ -59,7 +59,7 @@ const Login = () => {
                     <Link to="/">back to the homepage.</Link>
                   </p>
                 ) : (
-                  <form className="d-flex flex-column" onSubmit={handleFormSubmit}>
+                  <form className="d-flex flex-column my-3" onSubmit={handleFormSubmit}>
                     <InputGroup className="mb-3">
                       <InputGroup.Text id="inputGroup-sizing-default">Email</InputGroup.Text>
                       <FormControl
@@ -104,7 +104,7 @@ const Login = () => {
                     <JankyButton 
                       type="submit"
                       label="Next"
-                      variant="red"
+                      variant="theme"
                     />
                   </form>
                 )}

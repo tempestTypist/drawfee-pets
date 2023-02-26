@@ -11,50 +11,79 @@ import Auth from './../utils/auth'
 import Loading from '../components/Loading'
 import Carousel from '../components/Carousel'
 import ColourSelect from '../components/ColourSelect'
+import ToastComponent from '../components/ToastComponent'
+
+const isPetname = (username) =>
+  /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i.test(username);
 
 const CreatePet = () => {
-// this fetches the names of all pets in the database
 const { loading, data: allpetsData } = useQuery(QUERY_ALLPETS);
 const allpets = allpetsData?.allpets || [];
-//this maps the array of pets into several individual pets
 const pets = allpets.map((pet) => (pet.petSpecies))
 const images = ImageImport.importAll(require.context('../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
 
-//addPet mutation
-const [addPet, { error, data }] = useMutation(ADD_PET);
-
-//pet state
+const [errors, setErrors] = useState({});
 const [petState, setPetState] = useState({
   petSpecies: pets[0],
   petName: '',
   petColour: "Red",
-});
+})
+
+const [addPet, { error, data }] = useMutation(ADD_PET);
 
 const selectPet = (selected) => {
   setPetState({ ...petState, petSpecies: selected})
 }
 
-// handles input changes, passing the users choice to the pet state
-const handleChange = (event) => {
-  const { name, value } = event.target;
-  setPetState({ ...petState, [name]: value });
+const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  setPetState((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
 };
 
-//on form submit, plugs the variables into the add pet mutation, adds pet to users pets array, and sends user to homepage
-const handleFormSubmit = async (event) => {
-  event.preventDefault();
+const validateForm = () => {
+  const { petName } = petState;
+  const errors = {};
+  setErrors();
 
-  try {
-    const { data } = await addPet({
-      variables: {
-        ...petState,
-        petOwner: Auth.getProfile().data.username,
-      },
-    });
+  if (petName.trim().length === 0) {
+    errors.petnameNull = "Please choose a name for your pet!"
+  } else if (!isPetname(petName)) {
+    errors.petnameReq = "Please enter a valid pet name! Pet names can contain characters a-z, 0-9, underscores and periods. The pets name cannot start or end with a period. It must also not have more than one period sequentially. Max length is 30 chars."
+  }
 
-    window.location.assign('/')
-  } catch (err) {
-    console.error(err);
+  setErrors(errors);
+
+  if (Object.keys(errors).length > 0) {
+    return false
+  } else {
+    return true
+  }
+}
+
+const handleFormSubmit = async (e) => {
+  e.preventDefault();
+
+  if (validateForm()) {
+    try {
+      const { data } = await addPet({
+        variables: {
+          ...petState,
+          petOwner: Auth.getProfile().data.username,
+        },
+      });
+
+      window.location.assign('/')
+    } catch (err) {
+      const { name, message } = err;
+
+      setErrors({
+        [name]: message,
+      });
+    }
   }
 };
 
@@ -93,7 +122,7 @@ const handleFormSubmit = async (event) => {
 
                     <Col lg={6} className="flex-grow-1" style={{"margin-bottom": "-1rem"}}>
                       <div className="stacked-screens__wrapper">
-                        <div className="stacked-screen">
+                        <div className="stacked-screen d-flex justify-content-center">
                           <InputGroup className="w-75">
                             <InputGroup.Text id="pet-name-input">Name</InputGroup.Text>
                             <FormControl
@@ -125,11 +154,7 @@ const handleFormSubmit = async (event) => {
                 </>
                 )}
 
-                {error && (
-                  <div className="col-12 my-3 bg-danger text-white p-3">
-                    {error.message}
-                  </div>
-                )}
+                <ToastComponent toasts={errors} />
               </Container>
             )
           }

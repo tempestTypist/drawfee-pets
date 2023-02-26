@@ -25,7 +25,8 @@ const PostList = ({
         <Card className="janky-card-wrapper">
 
           <div className="forum-toolbar w-100 mb-3 justify-content-between">
-            <Link className="btn" to="/new-post">New Topic</Link>
+            {/* <Link className="btn" to="/new-post">New Topic</Link> */}
+            <JankyButton variant="theme" href="/new-post" label="New Topic" />
             <div>
               {/* <Pagination>
                 <Pagination.First />

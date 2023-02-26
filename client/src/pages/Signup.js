@@ -18,14 +18,13 @@ const isPassword = (password) =>
   /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/i.test(password);
 
 const Signup = () => {
+  const [errors, setErrors] = useState({});
   const [formState, setFormState] = useState({
     username: '',
     email: '',
     password: '',
     confirmpass: '',
   });
-
-  const [errors, setErrors] = useState({});
 
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
@@ -87,8 +86,8 @@ const Signup = () => {
   
         Auth.login(data.addUser.token);
         window.location.assign('/create-pet')
-      } catch (e) {
-        const { name, message } = e;
+      } catch (err) {
+        const { name, message } = err;
   
         setErrors({
           [name]: message,
@@ -114,7 +113,7 @@ const Signup = () => {
                     <Link to="/create-pet">next step.</Link>
                   </p>
                 ) : (
-                  <form onSubmit={handleFormSubmit}>
+                  <form className="my-3" onSubmit={handleFormSubmit}>
 
                     <InputGroup className="mb-3">
                       <InputGroup.Text id="username-input">Username</InputGroup.Text>
@@ -168,7 +167,7 @@ const Signup = () => {
                     <JankyButton 
                       type="submit"
                       label="Next"
-                      variant="red"
+                      variant="theme"
                     />
                   </form>
                 )}
@@ -193,7 +192,7 @@ const Signup = () => {
           </div>
         </Card>
       </div>
-      <ToastComponent errors={errors} />
+      <ToastComponent toasts={errors} />
     </main>
   );
 };
