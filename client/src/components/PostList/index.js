@@ -121,7 +121,7 @@ const PostList = ({
                 <>
                   <Link
                     className=""
-                    to={`/profiles/${post.postAuthor}`}
+                    to={`/profile/${post.postAuthor}`}
                   >
                     {post.postAuthor}
                   </Link>

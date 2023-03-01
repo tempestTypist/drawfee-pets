@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-
 import { ADD_COMMENT } from '../../utils/mutations';
-
+import JankyButton from '../../components/JankyButton';
 import Auth from '../../utils/auth';
 
 const CommentForm = ({ postId }) => {
@@ -69,9 +68,7 @@ const CommentForm = ({ postId }) => {
             </div>
 
             <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
-                Add Comment
-              </button>
+              <JankyButton type="submit" variant="theme" label="Add Comment" />
             </div>
           </form>
         </>

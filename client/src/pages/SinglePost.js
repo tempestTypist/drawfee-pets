@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Import the `useParams()` hook
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 
 import CommentList from '../components/CommentList'
@@ -11,7 +11,7 @@ import Loading from '../components/Loading'
 import { QUERY_SINGLE_POST } from '../utils/queries'
 
 const SinglePost = () => {
-  // Use `useParams()` to retrieve value of the route parameter `:profileId`
+  // `useParams()` to retrieve value of the route parameter `:profileId`
   const { postId } = useParams();
 
   const { loading, data } = useQuery(QUERY_SINGLE_POST, {
@@ -28,7 +28,13 @@ const SinglePost = () => {
       ) : (
         <>
           <h3 className="card-header bg-dark text-light p-2 m-0">
-            {post.postAuthor} <br />
+            <Link
+              className=""
+              to={`/profile/${post.postAuthor}`}
+              >
+              {post.postAuthor}
+            </Link>
+            <br />
             <span style={{ fontSize: '1rem' }}>
               had this thought on {post.createdAt}
             </span>

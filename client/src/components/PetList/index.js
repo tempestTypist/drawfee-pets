@@ -11,6 +11,7 @@ import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
 import { ButtonGroup, Card, Image, ToggleButton } from 'react-bootstrap';
+import JankyButton from '../../components/JankyButton';
 import ImageImport from '../../utils/imageimport';
 
 library.add(fasStar, farStar)
@@ -146,7 +147,7 @@ const PetList = ({
                   <span style={{ fontSize: '1rem' }}>
                     <Link 
                       className="user-profile-link me-2"
-                      to={`/profiles/${pet.petOwner}`}>
+                      to={`/profile/${pet.petOwner}`}>
                         {pet.petOwner} 
                     </Link>
                       created this pet on {pet.createdAt}
@@ -158,12 +159,13 @@ const PetList = ({
                     </span>
                   </>
                 )}
-                <Link
+                {/* <Link
                   className="btn btn-primary btn-block btn-squared"
                   to={`/pets/${pet._id}`}
                 >
                   View pet profile
-                </Link>
+                </Link> */}
+                <JankyButton variant="theme" href={`/pets/${pet._id}`} label="View pet profile" />
               </div>
             </Card.Footer>
           </Card>

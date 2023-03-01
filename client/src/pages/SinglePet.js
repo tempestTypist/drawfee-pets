@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Import the `useParams()` hook
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 
 import { QUERY_SINGLE_PET } from '../utils/queries'
@@ -26,7 +26,13 @@ const SinglePet = () => {
       ) : (
         <>
           <h3 className="card-header bg-dark text-light p-2 m-0">
-            {pet.petOwner} <br />
+            <Link
+              className=""
+              to={`/profile/${pet.petOwner}`}
+              >
+              {pet.petOwner}
+            </Link>
+            <br />
             <span style={{ fontSize: '1rem' }}>
               created this pet on {pet.createdAt}
             </span>

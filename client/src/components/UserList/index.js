@@ -41,7 +41,7 @@ const UserList = ({ users, title }) => {
 
                 <Link
                   className="btn btn-block btn-squared btn-light text-dark"
-                  to={`/profiles/${user.username}`}
+                  to={`/profile/${user.username}`}
                 >
                   View their profile
                 </Link>

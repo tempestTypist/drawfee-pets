@@ -38,7 +38,7 @@ const Home = () => {
           <div className="diagonal-hero-bg">
             <div className="p-4 p-md-5 text-white">
               <h1 className="display-4 fw-bold">Welcome Message</h1>
-              <p className="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
+                <span className="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</span>
             </div>
           </div>
 
@@ -136,11 +136,16 @@ const Home = () => {
               </div>
               <Card.Footer className="janky-card-footer">
                 <div className="janky-card-footer__inner">
-                  Made by: {pets[previewPet].petOwner}
+                  Made by: 
+                  <Link 
+                    className="user-profile-link me-2"
+                    to={`/profile/${pets[previewPet].petOwner}`}>
+                      {pets[previewPet].petOwner} 
+                  </Link>
                   {/* {showUsername ? (
                     <Link
                       className="text-light"
-                      to={`/profiles/${pet.petOwner}`}
+                      to={`/profile/${pet.petOwner}`}
                     >
                       {pet.petOwner} <br />
                       <span style={{ fontSize: '1rem' }}>
