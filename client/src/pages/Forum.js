@@ -1,14 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
 
 // import PostList from '../components/PostList';
 // import PostForm from '../components/PostForm';
-import { Container, Row, Col, Button, Card, ButtonGroup, Table, Pagination  } from 'react-bootstrap';
-import JankyButton from '../components/JankyButton';
-import mug from '../assets/images/drawfee-logos/drawfee-logo-red.jpg';
+import { Container, Row, Col, Button, Card, ButtonGroup, Table, Pagination  } from 'react-bootstrap'
+import JankyButton from '../components/JankyButton'
+import redmug from '../assets/images/drawfee-logos/drawfee-logo-red.png'
+import purplemug from '../assets/images/drawfee-logos/drawfee-logo-purple.png'
+import Loading from '../components/Loading'
 
-import { QUERY_POSTS } from '../utils/queries';
+import { QUERY_POSTS } from '../utils/queries'
 
 const Forum = () => {
   const { loading, data } = useQuery(QUERY_POSTS);
@@ -19,21 +21,12 @@ const Forum = () => {
   }
 
   return (
-    // <div className="forum-table flex-row justify-center">
-    //   {loading ? (
-    //     <div>Loading...</div>
-    //   ) : (
-    //     <PostList
-    //       posts={posts}
-    //       title="Community Forum"
-    //     />
-    //   )}
-    // </div>
-
-
   <>
     <h2>Community Forum</h2>
 
+    {loading ? (
+        <Loading />
+      ) : (
       <Card className="janky-card-wrapper">
 
         <div className="forum-toolbar w-100 mb-3 justify-content-between">
@@ -95,7 +88,7 @@ const Forum = () => {
               posts.map((post) => (
               <tr>
                 <td>
-                  <img src={mug} alt="Drawfee Mug Logo" />
+                  <div className="post-icon" />
                 </td>
                 <td className="post-title w-100">
                   <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>
@@ -121,11 +114,7 @@ const Forum = () => {
           </tbody>
         </Table>
       </Card>
-
-
-      
-
-
+    )}
     {/* {posts &&
       posts.map((post) => (
         <Card key={post._id} className="janky-card-wrapper mb-3">

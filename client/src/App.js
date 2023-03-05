@@ -26,6 +26,7 @@ import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
 import Assets from './pages/Assets'
 import Loading from './components/Loading'
+import ToastComponent from './components/ToastComponent'
 
 // const Home = React.lazy(() => import('./pages/Home'))
 // const Signup = React.lazy(() => import('./pages/Signup'))
@@ -69,6 +70,7 @@ const client = new ApolloClient({
 
 const App = () => {
   const [loading, setLoading] = useState(true)
+  const [errors, setErrors] = useState({})
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') || 'light'
   )
@@ -82,7 +84,7 @@ const App = () => {
 
     document.documentElement.setAttribute('data-theme', theme)
     setTimeout(() => setLoading(false), 1000)
-  }, [theme]);
+  }, [theme, errors]);
   
   return (
     <ApolloProvider client={client}>
@@ -99,24 +101,24 @@ const App = () => {
                     <Home />
                   </Route>
                   <Route exact path="/login">
-                    <Login />
+                    <Login setErrors={setErrors} />
                   </Route>
                   <Route exact path="/signup">
-                    <Signup />
+                    <Signup setErrors={setErrors} />
                   </Route>
                   {/*uses image import, QUERY_ALLPETS*/}
                   <Route exact path="/create-pet">
-                    <CreatePet />
+                    <CreatePet setErrors={setErrors} />
                   </Route>
                   {/* uses QUERY_POSTS */}
                   <Route exact path="/community-forums">
-                    <Forum />
+                    <Forum setErrors={setErrors} />
                   </Route>
                   <Route exact path="/posts/:postId">
                     <SinglePost />
                   </Route>
                   <Route exact path="/new-post">
-                    <NewPost />
+                    <NewPost setErrors={setErrors} />
                   </Route>
                   {/* uses QUERY_USER, QUERY_ME */}
                   <Route exact path="/me">
@@ -138,6 +140,7 @@ const App = () => {
                   <Route exact path="/assets">
                     <Assets />
                   </Route>
+                  <ToastComponent toasts={errors} />
                 </Col>
               </Row>
             </Container>

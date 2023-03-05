@@ -9,7 +9,6 @@ import Loading from '../components/Loading'
 
 import { Card } from 'react-bootstrap'
 
-
 const Profile = () => {
   const { username: userParam } = useParams();
 
@@ -29,8 +28,7 @@ const Profile = () => {
   if (!user?.username) {
     return (
       <h4>
-        You need to be logged in to see this. Use the navigation links above to
-        sign up or log in!
+        You need to be logged in to see this!
       </h4>
     );
   }
@@ -68,16 +66,23 @@ const Profile = () => {
                           <div className="col-md-6">
                               <div className="media">
                                   <label>Pets</label>
-                                  <p>3</p>
+                                  <p>{`${user.pets.length}`}</p>
                               </div>
                               <div className="media">
                                   <label>Favourite Pet</label>
-                                  <p>favpet</p>
+                                  <p>{`${user.activePet.petName}`}</p>
                               </div>
                               <div className="media">
                                   <label>Forum Posts</label>
-                                  <p>23</p>
+                                  <p>{`${user.posts.length}`}</p>
                               </div>
+                          </div>
+                          <div className="col-12">
+                            <Link 
+                              className="me-2"
+                              to={`/profile/edit-profile`}>
+                                Edit Profile
+                            </Link>
                           </div>
                       </div>
                     </div>

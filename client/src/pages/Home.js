@@ -3,26 +3,14 @@ import { useQuery } from '@apollo/client'
 import { Link } from 'react-router-dom';
 import { QUERY_PETS, QUERY_USERS } from '../utils/queries'
 import { Container, Row, Col, Button, Card, Image } from 'react-bootstrap'
-
-import PetList from '../components/PetList'
-import PetForm from '../components/PetForm'
-import UserList from '../components/UserList'
 import ImageImport from '../utils/imageimport'
 import Loading from '../components/Loading'
-
-// const PetList = React.lazy(() => import('../components/PetList'));
-// const PetForm = React.lazy(() => import('../components/PetForm'))
-// const UserList = React.lazy(() => import('../components/UserList'))
-// const Loading = React.lazy(() => import('../components/Loading'))
 
 const Home = () => {
   const { loading, data } = useQuery(QUERY_PETS);
   const pets = data?.pets || [];
 
   const images = ImageImport.importAll(require.context('../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
-
-  // const { loading, data } = useQuery(QUERY_USERS);
-  // const users = data?.users || [];
 
   const [previewPet, setPreviewedPet] = useState(0);
 
@@ -51,14 +39,6 @@ const Home = () => {
                 <Card.Body className="janky-card-body">
                   <div className="janky-card-inner-body">
                       <div className="text">
-                        {/* {loading ? (
-                          <div>Loading...</div>
-                        ) : (
-                          <UserList
-                            users={users}
-                            title="Users..."
-                          />
-                        )} */}
                         <Card.Title>January 1, 2021 by Mark</Card.Title>
                         <div>
                           This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, lists, tables, images, code, and more are all supported as expected.
@@ -110,11 +90,6 @@ const Home = () => {
               </div>
             </Card>
           </div>
-
-          {/* <nav className="blog-pagination" aria-label="Pagination">
-            <a className="btn btn-outline-primary">Older</a>
-            <a className="btn btn-outline-secondary disabled" tabIndex="-1" aria-disabled="true">Newer</a>
-          </nav> */}
         </Col>
 
         <Col xl={4}>
@@ -159,43 +134,10 @@ const Home = () => {
                       </span>
                     </>
                   )} */}
-                  {/* <Link
-                    className="btn btn-primary btn-block btn-squared"
-                    to={`/pets/${pet._id}`}
-                  >
-                    View pet profile
-                  </Link> */}
                 </div>
               </Card.Footer>
             </Card>
           )}
-          {/* <Card className="janky-card-wrapper">
-            <Card.Header className="janky-card-header">
-              Status/Development
-            </Card.Header>
-            <div className="janky-card-body-wrapper">
-              <Card.Body className="janky-card-body developement-card">
-                <div className="janky-card-inner-body">
-                  <Card.Title>January 1, 2021 by Mark</Card.Title>
-                  <ol className="list-unstyled mb-0">
-                    <li><a>March 2021</a></li>
-                    <li><a>February 2021</a></li>
-                    <li><a>January 2021</a></li>
-                    <li><a>December 2020</a></li>
-                    <li><a>November 2020</a></li>
-                    <li><a>October 2020</a></li>
-                    <li><a>September 2020</a></li>
-                    <li><a>August 2020</a></li>
-                    <li><a>July 2020</a></li>
-                    <li><a>June 2020</a></li>
-                    <li><a>May 2020</a></li>
-                    <li><a>April 2020</a></li>
-                  </ol>
-                  <Button variant="primary">Go somewhere</Button>
-                </div>
-              </Card.Body>
-            </div>
-          </Card> */}
         </Col>
       </Row>
     </Container>

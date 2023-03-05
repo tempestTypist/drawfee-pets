@@ -4,8 +4,6 @@ import { useMutation } from '@apollo/client'
 import { ADD_USER } from '../utils/mutations'
 import { Card, InputGroup, FormControl } from 'react-bootstrap'
 import JankyButton from '../components/JankyButton'
-import ToastComponent from '../components/ToastComponent'
-
 import Auth from '../utils/auth';
 
 const isUsername = (username) =>
@@ -17,8 +15,7 @@ const isEmail = (email) =>
 const isPassword = (password) =>
   /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/i.test(password);
 
-const Signup = () => {
-  const [errors, setErrors] = useState({});
+const Signup = ({ setErrors }) => {
   const [formState, setFormState] = useState({
     username: '',
     email: '',
@@ -192,7 +189,6 @@ const Signup = () => {
           </div>
         </Card>
       </div>
-      <ToastComponent toasts={errors} />
     </main>
   );
 };

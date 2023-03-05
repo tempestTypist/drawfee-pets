@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CarouselItem from '../CarouselItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import ImageImport from '../../utils/imageimport';
 
 const Carousel = (props) => {
@@ -88,7 +88,7 @@ useEffect(() => {
 			<div
 				onClick={() => moveLeft()}
 				className="controls controls--back">
-					<FontAwesomeIcon icon={faArrowLeft} 
+					<FontAwesomeIcon icon={faAngleLeft} 
 			/>
 			</div>
 
@@ -119,7 +119,7 @@ useEffect(() => {
 			<div
 				onClick={() => moveRight()}
 				className="controls controls--next">
-					<FontAwesomeIcon icon={faArrowRight} 
+					<FontAwesomeIcon icon={faAngleRight} 
 			/>
 			</div>
 		</div>

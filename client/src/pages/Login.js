@@ -4,42 +4,71 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import { Card, InputGroup, FormControl } from 'react-bootstrap';
 import JankyButton from '../components/JankyButton';
-
 import Auth from '../utils/auth';
 
-const Login = () => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+const Login = ({ setErrors }) => {
+  const [formState, setFormState] = useState({ 
+    email: '', 
+    password: '' 
+  });
+
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
-  // update state based on form input changes
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-    setFormState({
-      ...formState,
+    setFormState((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
-  // submit form
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(formState);
-    try {
-      const { data } = await login({
-        variables: { ...formState },
-      });
+  const validateForm = () => {
+    const { email, password } = formState;
+    const errors = {};
+    setErrors();
 
-      Auth.login(data.login.token);
-    } catch (e) {
-      console.error(e);
+    if (email.trim().length === 0) {
+      errors.emailNull = "Please enter your email!"
     }
 
+    if (password.trim().length === 0) {
+      errors.passwordNull = "Please enter your password!"
+    }
+
+    setErrors(errors)
+
+    if (Object.keys(errors).length > 0) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      try {
+        const { data } = await login({
+          variables: { ...formState },
+        });
+
+        Auth.login(data.login.token);
+      } catch (err) {
+        const { name, message } = err;
+    
+        setErrors({
+          [name]: message,
+        });
+      }
+    }
     // clear form values
     setFormState({
       email: '',
       password: '',
     });
+    
   };
 
   return (
@@ -84,22 +113,6 @@ const Login = () => {
                         onChange={handleChange}
                       />
                     </InputGroup>
-                    {/* <input
-                      className="form-input"
-                      placeholder="Your email"
-                      name="email"
-                      type="email"
-                      value={formState.email}
-                      onChange={handleChange}
-                    />
-                    <input
-                      className="form-input"
-                      placeholder="******"
-                      name="password"
-                      type="password"
-                      value={formState.password}
-                      onChange={handleChange}
-                    /> */}
                     
                     <JankyButton 
                       type="submit"
@@ -107,12 +120,6 @@ const Login = () => {
                       variant="theme"
                     />
                   </form>
-                )}
-
-                {error && (
-                  <div className="my-3 p-3 bg-danger text-white">
-                    {error.message}
-                  </div>
                 )}
               </div>
             </Card.Body>

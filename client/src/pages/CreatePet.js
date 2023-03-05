@@ -108,7 +108,7 @@ const handleFormSubmit = async (e) => {
                 ) : (
                 <>
                   <Row>
-                    <Col lg={5} style={{"margin-bottom": "-1rem"}}>
+                    <Col xl={5} style={{"margin-bottom": "-1rem"}}>
                       <div className="pet-preview__wrapper">
                         <div className="pet-preview">
                           <Image 
@@ -120,7 +120,7 @@ const handleFormSubmit = async (e) => {
                       </div>
                     </Col>
 
-                    <Col lg={6} className="flex-grow-1" style={{"margin-bottom": "-1rem"}}>
+                    <Col xl={6} className="flex-grow-1" style={{"margin-bottom": "-1rem"}}>
                       <div className="stacked-screens__wrapper">
                         <div className="stacked-screen d-flex justify-content-center">
                           <InputGroup className="w-75">

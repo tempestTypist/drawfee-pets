@@ -88,12 +88,15 @@ const PetList = ({
   });
 
   const handleRemovePet = async (petId) => {
-    try {
-      const { data } = await removePet({
-        variables: { petId },
-      });
-    } catch (err) {
-      console.error(err);
+    let result = window.confirm("Are you sure you'd like to send this pet to the pound? I haven't made one yet so you can't get them back! Unless you make another one, of course.");
+    if (result) {
+      try {
+        const { data } = await removePet({
+          variables: { petId },
+        });
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -113,7 +116,7 @@ const PetList = ({
       {showTitle && <h3>{title}</h3>}
       {pets &&
         pets.map((pet, index) => (
-          <Card className="janky-card-wrapper key-was-here col-12 col-sm-6 col-lg-4 col-xl-3 p-4 pt-0">
+          <Card className="janky-card-wrapper key-was-here col-12 col-md-6 col-xl-4 p-4 pt-0">
             <Card.Header className="janky-card-header">
               <div className="pet-name">
                 {pet.petName}
@@ -159,13 +162,9 @@ const PetList = ({
                     </span>
                   </>
                 )}
-                {/* <Link
-                  className="btn btn-primary btn-block btn-squared"
-                  to={`/pets/${pet._id}`}
-                >
-                  View pet profile
-                </Link> */}
-                <JankyButton variant="theme" href={`/pets/${pet._id}`} label="View pet profile" />
+                <div className="btn-janky-wrapper">
+                  <Link className="btn-janky btn btn-theme" to={`/pets/${pet._id}`}>View pet profile</Link>
+                </div>
               </div>
             </Card.Footer>
           </Card>

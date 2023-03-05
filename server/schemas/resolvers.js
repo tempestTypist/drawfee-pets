@@ -43,8 +43,14 @@ const resolvers = {
       return { token, user };
     },
     login: async (parent, { email, password }) => {
+
+      if (password === null) {
+        throw new Error('Please enter a password!');
+      }
+
       const user = await User.findOne({ email });
       const correctPw = await user.isCorrectPassword(password);
+
 
       if (!user || !correctPw) {
         throw new AuthenticationError('Incorrect email or password!');
@@ -74,6 +80,8 @@ const resolvers = {
     },
     removePet: async (parent, { petId }, context) => {
       if (context.user) {
+        //wrap this in a confirmation, 'are you sure you wish to delete this pet?'
+        //when we make the change from pets to robots, itll be 'are you sure you wish to scrap this robot?' little less harsh than deleting a pet lmao
         const pet = await Pet.findOneAndDelete({
           _id: petId,
           petOwner: context.user.username,
