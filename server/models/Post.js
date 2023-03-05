@@ -4,15 +4,15 @@ const dateFormat = require('../utils/dateFormat');
 const postSchema = new Schema({
   postTitle: {
     type: String,
-    required: 'Please enter text for your title!',
-    minlength: 1,
+    required: 'Please enter a title!',
+    minlength: 2,
     maxlength: 100,
     trim: true,
   },
   postText: {
     type: String,
     required: 'Please enter text for your post!',
-    minlength: 1,
+    minlength: 2,
     maxlength: 280,
     trim: true,
   },
@@ -31,7 +31,7 @@ const postSchema = new Schema({
       commentText: {
         type: String,
         required: true,
-        minlength: 1,
+        minlength: 2,
         maxlength: 280,
       },
       commentAuthor: {

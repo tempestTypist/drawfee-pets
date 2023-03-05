@@ -5,29 +5,11 @@ import { ADD_COMMENT } from '../../utils/mutations';
 import JankyButton from '../../components/JankyButton';
 import Auth from '../../utils/auth';
 
-const CommentForm = ({ postId }) => {
+const CommentForm = ({ postId, setErrors }) => {
   const [commentText, setCommentText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
   const [addComment, { error }] = useMutation(ADD_COMMENT);
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const { data } = await addComment({
-        variables: {
-          postId,
-          commentText,
-          commentAuthor: Auth.getProfile().data.username,
-        },
-      });
-
-      setCommentText('');
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -36,6 +18,49 @@ const CommentForm = ({ postId }) => {
       setCommentText(value);
       setCharacterCount(value.length);
     }
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    setErrors();
+
+    if (commentText.trim().length === 0 || commentText.trim().length <= 2 ) {
+      errors.commentLen = "Your comment is too short!"
+    } else if (commentText.length > 280) {
+      errors.commentLen = "Your comment cannot exceed 280 characters!"
+    }
+
+    setErrors(errors);
+
+    if (Object.keys(errors).length > 0) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      try {
+        const { data } = await addComment({
+          variables: {
+            postId,
+            commentText,
+            commentAuthor: Auth.getProfile().data.username,
+          },
+        });
+
+        setCommentText('');
+      } catch (err) {
+        const { name, message } = err;
+      
+        setErrors({
+          [name]: message,
+        });
+      }
+   }
   };
 
   return (
@@ -50,7 +75,6 @@ const CommentForm = ({ postId }) => {
             }`}
           >
             Character Count: {characterCount}/280
-            {error && <span className="ml-2">{error.message}</span>}
           </p>
           <form
             className="flex-row justify-center justify-space-between-md align-center"

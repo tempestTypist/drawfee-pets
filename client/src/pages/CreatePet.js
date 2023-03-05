@@ -16,13 +16,12 @@ import ToastComponent from '../components/ToastComponent'
 const isPetname = (username) =>
   /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i.test(username);
 
-const CreatePet = () => {
+const CreatePet = ({ setErrors }) => {
 const { loading, data: allpetsData } = useQuery(QUERY_ALLPETS);
 const allpets = allpetsData?.allpets || [];
 const pets = allpets.map((pet) => (pet.petSpecies))
 const images = ImageImport.importAll(require.context('../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
 
-const [errors, setErrors] = useState({});
 const [petState, setPetState] = useState({
   petSpecies: pets[0],
   petName: '',
@@ -153,8 +152,6 @@ const handleFormSubmit = async (e) => {
                   </Row>
                 </>
                 )}
-
-                <ToastComponent toasts={errors} />
               </Container>
             )
           }

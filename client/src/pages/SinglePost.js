@@ -10,7 +10,7 @@ import Loading from '../components/Loading'
 
 import { QUERY_SINGLE_POST } from '../utils/queries'
 
-const SinglePost = () => {
+const SinglePost = ({ setErrors }) => {
   // `useParams()` to retrieve value of the route parameter `:profileId`
   const { postId } = useParams();
 
@@ -57,7 +57,7 @@ const SinglePost = () => {
             <CommentList comments={post.comments} />
           </div>
           <div className="m-3 p-4" style={{ border: '1px dotted #1a1a1a' }}>
-            <CommentForm postId={post._id} />
+            <CommentForm postId={post._id} setErrors={setErrors} />
           </div>
         </>
       )}

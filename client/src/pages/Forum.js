@@ -6,8 +6,6 @@ import { useQuery } from '@apollo/client'
 // import PostForm from '../components/PostForm';
 import { Container, Row, Col, Button, Card, ButtonGroup, Table, Pagination  } from 'react-bootstrap'
 import JankyButton from '../components/JankyButton'
-import redmug from '../assets/images/drawfee-logos/drawfee-logo-red.png'
-import purplemug from '../assets/images/drawfee-logos/drawfee-logo-purple.png'
 import Loading from '../components/Loading'
 
 import { QUERY_POSTS } from '../utils/queries'
@@ -70,7 +68,6 @@ const Forum = () => {
             </Pagination>
           </div>
         </div>
-
 
         <Table className="table table-hover table-users table-responsive text-nowrap mb-4" cellSpacing="0">
           <thead>

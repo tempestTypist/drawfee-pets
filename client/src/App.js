@@ -112,10 +112,10 @@ const App = () => {
                   </Route>
                   {/* uses QUERY_POSTS */}
                   <Route exact path="/community-forums">
-                    <Forum setErrors={setErrors} />
+                    <Forum />
                   </Route>
                   <Route exact path="/posts/:postId">
-                    <SinglePost />
+                    <SinglePost setErrors={setErrors} />
                   </Route>
                   <Route exact path="/new-post">
                     <NewPost setErrors={setErrors} />
