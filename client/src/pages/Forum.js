@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client'
 // import PostForm from '../components/PostForm';
 import { Container, Row, Col, Button, Card, ButtonGroup, Table, Pagination  } from 'react-bootstrap'
 import JankyButton from '../components/JankyButton'
+import JankyTable from '../components/JankyTable'
 import Loading from '../components/Loading'
 
 import { QUERY_POSTS } from '../utils/queries'
@@ -69,47 +70,35 @@ const Forum = () => {
           </div>
         </div>
 
-        <Table className="table table-hover table-users table-responsive text-nowrap mb-4" cellSpacing="0">
-          <thead>
+        <JankyTable
+          tableHeaders={[<h2>Topic</h2>, "Made By", "Replies", "Last Post"]}
+          tableData={posts.map((post) => (
             <tr>
-              <th></th>
-              <th><h2>Topic</h2></th>
-              <th>Made By</th>
-              <th>Replies</th>
-              <th>Last Post</th>
+              <td>
+                <div className="post-icon" />
+              </td>
+              <td className="post-title w-100">
+                <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>
+              </td>
+              <td>
+                <Link
+                  className=""
+                  to={`/profile/${post.postAuthor}`}
+                  >
+                  {post.postAuthor}
+                </Link>
+              </td>
+              <td className="text-center">{post.comments.length}</td>
+              <td>
+                {post.comments.length > 0 ? (
+                  <>{post.comments[0].createdAt}<br/>by {post.comments[0].commentAuthor}</>
+                ) : (
+                  <>{post.createdAt}<br/>by {post.postAuthor}</>
+                )}
+              </td>
             </tr>
-          </thead>
-
-          <tbody>
-            {posts &&
-              posts.map((post) => (
-              <tr>
-                <td>
-                  <div className="post-icon" />
-                </td>
-                <td className="post-title w-100">
-                  <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>
-                </td>
-                <td>
-                  <Link
-                    className=""
-                    to={`/profile/${post.postAuthor}`}
-                    >
-                    {post.postAuthor}
-                  </Link>
-                </td>
-                <td className="text-center">{post.comments.length}</td>
-                <td>
-                  {post.comments.length > 0 ? (
-                    <>{post.comments[0].createdAt}<br/>by {post.comments[0].commentAuthor}</>
-                  ) : (
-                    <>{post.createdAt}<br/>by {post.postAuthor}</>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+          ))}
+        />
       </Card>
     )}
     {/* {posts &&

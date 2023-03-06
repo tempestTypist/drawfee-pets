@@ -16,6 +16,7 @@ import Signup from './pages/Signup'
 import Login from './pages/Login'
 import CreatePet from './pages/CreatePet'
 import Forum from './pages/Forum'
+import MessageCenter from './pages/MessageCenter'
 import SinglePost from './pages/SinglePost'
 import NewPost from './pages/NewPost'
 import SinglePet from './pages/SinglePet'
@@ -109,6 +110,9 @@ const App = () => {
                   {/*uses image import, QUERY_ALLPETS*/}
                   <Route exact path="/create-pet">
                     <CreatePet setErrors={setErrors} />
+                  </Route>
+                  <Route exact path="/message-center">
+                    <MessageCenter />
                   </Route>
                   {/* uses QUERY_POSTS */}
                   <Route exact path="/community-forums">

@@ -80,7 +80,6 @@ const resolvers = {
     },
     removePet: async (parent, { petId }, context) => {
       if (context.user) {
-        //wrap this in a confirmation, 'are you sure you wish to delete this pet?'
         //when we make the change from pets to robots, itll be 'are you sure you wish to scrap this robot?' little less harsh than deleting a pet lmao
         const pet = await Pet.findOneAndDelete({
           _id: petId,

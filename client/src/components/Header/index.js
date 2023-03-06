@@ -150,10 +150,12 @@ const Header = ({ theme, setTheme }) => {
 
                       <NavDropdown.Divider />
 
-                      <NavDropdown.Item href="#action/3.4">
+                      <NavDropdown.Item>
                         <div className="dropdown-menu-footer">
-                          <a href="javascript:void(0)" className="card-link"> See All <i className="icon icon-arrow-right icon-fw"></i>
-                          </a>
+                          <Link to="/message-center" className="card-link"> 
+                            See All 
+                            <i className="icon icon-arrow-right icon-fw"></i>
+                          </Link>
                         </div>
                       </NavDropdown.Item>
                     </NavDropdown>
@@ -213,8 +215,10 @@ const Header = ({ theme, setTheme }) => {
                       
                       <NavDropdown.Item href="#action/3.4">
                         <div className="dropdown-menu-footer">
-                          <a href="javascript:void(0)" className="card-link"> See All <i className="icon icon-arrow-right icon-fw"></i>
-                          </a>
+                          <Link to="/message-center" className="card-link"> 
+                            See All 
+                            <i className="icon icon-arrow-right icon-fw"></i>
+                          </Link>
                         </div>
                       </NavDropdown.Item>
                     </NavDropdown>
