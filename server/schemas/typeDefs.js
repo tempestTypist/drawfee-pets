@@ -8,6 +8,7 @@ const typeDefs = gql`
     password: String
     activePet: Pet
     pets: [Pet]!
+    inbox: [Message]!
     posts: [Post]!
   }
 
@@ -18,6 +19,16 @@ const typeDefs = gql`
     petColour: String
     createdAt: String
     petOwner: String
+  }
+
+  type Message {
+    _id: ID
+    messageRecipient: String
+    messageTitle: String
+    messageText: String
+    messageAuthor: String
+    read: Boolean!
+    createdAt: String
   }
 
   type Post {
@@ -52,6 +63,8 @@ const typeDefs = gql`
     allpets: [AllPets]
     pets(username: String): [Pet]
     pet(petId: ID!): Pet
+    inbox(username: String): [Message]
+    message(messageId: ID!): Message
     posts(username: String): [Post]
     post(postId: ID!): Post
     me: User
@@ -63,10 +76,12 @@ const typeDefs = gql`
     addPet(petSpecies: String!, petName: String!, petColour: String!): Pet
     favouritePet(petId: String!): Pet
     removePet(petId: String!): Pet
+    sendMessage(messageRecipient: String!, messageTitle: String!, messageText: String!): Message
+    deleteMessage(messageId: String!): Message
     addPost(postTitle: String!, postText: String!): Post
     addComment(postId: ID!, commentText: String!): Post
-    removePost(postId: ID!): Post
-    removeComment(postId: ID!, commentId: ID!): Post
+    removePost(postId: String!): Post
+    removeComment(postId: String!, commentId: String!): Post
   }
 `;
 

@@ -23,9 +23,6 @@ const Forum = () => {
   <>
     <h2>Community Forum</h2>
 
-    {loading ? (
-        <Loading />
-      ) : (
       <Card className="janky-card-wrapper">
 
         <div className="forum-toolbar w-100 mb-3 justify-content-between">
@@ -70,74 +67,40 @@ const Forum = () => {
           </div>
         </div>
 
-        <JankyTable
-          tableHeaders={[<h2>Topic</h2>, "Made By", "Replies", "Last Post"]}
-          tableData={posts.map((post) => (
-            <tr>
-              <td>
-                <div className="post-icon" />
-              </td>
-              <td className="post-title w-100">
-                <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>
-              </td>
-              <td>
-                <Link
-                  className=""
-                  to={`/profile/${post.postAuthor}`}
-                  >
-                  {post.postAuthor}
-                </Link>
-              </td>
-              <td className="text-center">{post.comments.length}</td>
-              <td>
-                {post.comments.length > 0 ? (
-                  <>{post.comments[0].createdAt}<br/>by {post.comments[0].commentAuthor}</>
-                ) : (
-                  <>{post.createdAt}<br/>by {post.postAuthor}</>
-                )}
-              </td>
-            </tr>
-          ))}
-        />
+        {loading ? (
+          <Loading />
+        ) : (
+          <JankyTable
+            tableHeaders={[<h2>Topic</h2>, "Made By", "Replies", "Last Post"]}
+            tableData={posts.map((post) => (
+              <tr>
+                <td>
+                  <div className="janky-table__icon post-icon" />
+                </td>
+                <td className="post-title w-100">
+                  <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>
+                </td>
+                <td>
+                  <Link
+                    className=""
+                    to={`/profile/${post.postAuthor}`}
+                    >
+                    {post.postAuthor}
+                  </Link>
+                </td>
+                <td className="text-center">{post.comments.length}</td>
+                <td>
+                  {post.comments.length > 0 ? (
+                    <>{post.comments[0].createdAt}<br/>by {post.comments[0].commentAuthor}</>
+                  ) : (
+                    <>{post.createdAt}<br/>by {post.postAuthor}</>
+                  )}
+                </td>
+              </tr>
+            ))}
+          />
+        )}
       </Card>
-    )}
-    {/* {posts &&
-      posts.map((post) => (
-        <Card key={post._id} className="janky-card-wrapper mb-3">
-          <Card.Header className="janky-card-header text-light p-2 m-0">
-            {showUsername ? (
-              <>
-                <Link
-                  className=""
-                  to={`/profile/${post.postAuthor}`}
-                >
-                  {post.postAuthor}
-                </Link>
-                <span style={{ fontSize: '1rem' }}>
-                  made this post on {post.createdAt}
-                </span>
-              </>
-            ) : (
-              <span style={{ fontSize: '1rem' }}>
-                You made this post on {post.createdAt}
-              </span>
-            )}
-          </Card.Header>
-          <div className="janky-card-body-wrapper">
-            <Card.Body className="janky-card-body">
-              <div className="janky-card-inner-body">
-                <p>{post.postText}</p>
-                <Link
-                  className="btn btn-primary btn-block btn-squared"
-                  to={`/posts/${post._id}`}
-                >
-                  Join the discussion on this post.
-                </Link>
-              </div>
-            </Card.Body>
-          </div>
-        </Card>
-      ))} */}
   </>
   );
 };

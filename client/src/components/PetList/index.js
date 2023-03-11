@@ -81,8 +81,8 @@ const PetList = ({
           data: { me: removePet },
         });
         console.log({data: { me: removePet }})
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
     },
   });

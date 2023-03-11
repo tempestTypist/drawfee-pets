@@ -70,20 +70,30 @@ const Profile = () => {
                               </div>
                               <div className="media">
                                   <label>Favourite Pet</label>
-                                  <p>{`${user.activePet.petName}`}</p>
+                                  {!user.activePet ? (
+                                    <p>No favourite!</p>
+                                  ) : (
+                                    <p>{`${user.activePet.petName}`}</p>
+                                  )
+
+                                  }
                               </div>
                               <div className="media">
                                   <label>Forum Posts</label>
                                   <p>{`${user.posts.length}`}</p>
                               </div>
                           </div>
-                          <div className="col-12">
-                            <Link 
-                              className="me-2"
-                              to={`/profile/edit-profile`}>
-                                Edit Profile
-                            </Link>
-                          </div>
+                          {userParam ? 
+                            <></>
+                          : 
+                            <div className="col-12">
+                              <Link 
+                                className="me-2"
+                                to={`/profile/edit-profile`}>
+                                  Edit Profile
+                              </Link>
+                            </div>
+                          }
                       </div>
                     </div>
                   </Card.Body>

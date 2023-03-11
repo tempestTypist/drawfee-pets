@@ -54,6 +54,27 @@ export const REMOVE_PET = gql`
   }
 `;
 
+export const SEND_MESSAGE = gql`
+  mutation sendMessage($messageRecipient: String!, $messageTitle: String!, $messageText: String!) {
+    sendMessage(messageRecipient: $messageRecipient, messageTitle: $messageTitle, messageText: $messageText) {
+      _id
+      messageRecipient
+      messageTitle
+      messageText
+      messageAuthor
+      createdAt
+    }
+  }
+`;
+
+export const DELETE_MESSAGE = gql`
+  mutation deleteMessage($messageId: String!) {
+    deleteMessage(messageId: $messageId) {
+      _id
+    }
+  }
+`;
+
 export const ADD_POST = gql`
   mutation addPost($postTitle: String!, $postText: String!) {
     addPost(postTitle: $postTitle, postText: $postText) {
@@ -70,6 +91,14 @@ export const ADD_POST = gql`
   }
 `;
 
+export const REMOVE_POST = gql`
+  mutation removePost($postId: String!) {
+    removePost(postId: $postId) {
+      _id
+    }
+  }
+`;
+
 export const ADD_COMMENT = gql`
   mutation addComment($postId: ID!, $commentText: String!) {
     addComment(postId: $postId, commentText: $commentText) {
@@ -82,6 +111,14 @@ export const ADD_COMMENT = gql`
         commentText
         createdAt
       }
+    }
+  }
+`;
+
+export const REMOVE_COMMENT = gql`
+  mutation removeComment($postId: String!, $commentId: String!) {
+    removeComment(postId: $postId, commentId: $commentId) {
+      _id
     }
   }
 `;

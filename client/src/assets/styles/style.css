@@ -46,6 +46,7 @@ html[data-theme='light'] {
   --forum-bg: #cecece;
   --forum-post-bg: #fff;
   --post-icon: url(../images/drawfee-logos/drawfee-logo-red.png);
+  --unread-icon: url(../images/mail-unread.png);
 }
 
 html[data-theme='dark'] {
@@ -82,6 +83,7 @@ html[data-theme='dark'] {
   --forum-bg: #232a30;
   --forum-post-bg: #525252;
   --post-icon: url(../images/drawfee-logos/drawfee-logo-purple.png);
+  --unread-icon: url(../images/mail-unread.png);
 }
 
 
@@ -2033,17 +2035,25 @@ font-size: 45px;
   --bs-btn-active-bg: var(--btn-primary-active);
 }
 
-.table-users .post-icon {
+.janky-table .janky-table__icon {
   display: inline-block;
-  background-image: var(--post-icon);
   background-size: contain;
+  background-position: center;
   background-repeat: no-repeat;
-  border-radius: 50%;
   height: 60px;
   width: 60px;
 }
 
-.table-users {
+.janky-table .post-icon {
+  background-image: var(--post-icon);
+  border-radius: 50%;
+}
+
+.janky-table .message-icon__unread {
+  background-image: var(--unread-icon)
+}
+
+.janky-table {
   overflow: hidden;
   border-collapse: separate;
   border-spacing: 0 .8rem;
@@ -2051,71 +2061,72 @@ font-size: 45px;
   background-color: var(--forum-bg)
 }
 
-.table-users thead,
-.table-users tr {
+.janky-table thead,
+.janky-table tr {
   border-color: transparent
 }
 
-.table-users thead {
+.janky-table thead {
   height: 4rem;
   vertical-align: middle;
   -webkit-clip-path: polygon(1% 1%, 98.5% 15%, 98% 90%, 1.2% 100%);
   clip-path: polygon(1% 1%, 98.5% 15%, 98% 90%, 1.2% 100%);
 }
 
-.table-users tbody tr {
+.janky-table tbody tr {
   -webkit-clip-path: polygon(1.5% 1%, 98.5% 6%, 99% 95%, 1% 100%);
   clip-path: polygon(1.5% 1%, 98.5% 6%, 99% 95%, 1% 100%);
 }
 
-.table-users tbody tr:nth-child(odd) {
+.janky-table tbody tr:nth-child(odd) {
   -webkit-clip-path: polygon(1.2% 4%, 99% 1%, 98.5% 100%, 1.8% 95%);
   clip-path: polygon(1.2% 4%, 99% 1%, 98.5% 100%, 1.8% 95%);
 }
 
-.table-users tr td:first-child {
+.janky-table tr th:first-child,
+.janky-table tr td:first-child {
   padding-left: 2rem
 }
 
-.table-users tr td:last-child {
+.janky-table tr td:last-child {
   padding-right: 2rem
 }
 
-.table-users tbody tr {
+.janky-table tbody tr {
   background-color: var(--forum-post-bg);
 }
 
-.table-users tbody tr:hover td {
+.janky-table tbody tr:hover td {
   color: var(--primary-font-color)
 }
 
-/* .table-users table td {
+/* .janky-table table td {
   text-align: center;
   vertical-align: middle;
 } */
 
-.table-users td:last-child {
+.janky-table td:last-child {
   font-size: 0.95em;
   line-height: 1.4;
   text-align: left;
 }
 
-.table-users th { 
+.janky-table th { 
   color: white;
   background-color: var(--theme-primary);
   font-family: var(--font-family);
 }
 
-/* .table-users tr:nth-child(2n),
-.table-users tr:nth-child(2n+1) { 
+/* .janky-table tr:nth-child(2n),
+.janky-table tr:nth-child(2n+1) { 
   background-color: white; 
 } */
 
-.table-users .post-title {
+.janky-table .post-title {
   position: relative
 }
 
-.table-users .post-title a {
+.janky-table .post-title a {
   width: 90%;
   height: 100%;
   position:absolute;
@@ -2211,12 +2222,64 @@ font-size: 45px;
   padding: 0;
   }
   
-  .table-users { 
+  .janky-table { 
     border: none; 
     box-shadow: none;
     overflow: visible;
   }
 }
+
+/**** message center ****/
+
+.tab-panel__header {
+  font-family: 'Trebuchet MS';
+  font-size: 12px;
+  position: relative;
+  top: 1px
+}
+
+.tab-panel__content {
+  background-color: #D5D5D5;
+  border: 1px solid #9099A2;
+  height: 400px;
+} 
+
+.tab {
+  background-color: #D5D5D5;
+  border: 1px solid #9099A2;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: #96858F;
+  cursor: pointer;
+  display: inline-block;
+  padding: 6px 24px;
+  position: relative;
+  text-transform: uppercase;
+  z-index: 0;
+}
+
+.tab:nth-child(n+2) {
+    margin-left: -8px;
+}
+
+.tab:hover {
+  color: #6D7993;
+}
+
+.tab--selected {
+  border-bottom: 1px solid #D5D5D5;
+  color: #6D7993;
+  font-size: 14px;
+  font-weight: bold;
+  padding-top: 6px;
+  z-index: 1;
+}
+
+.inbox-toolbar svg:hover {
+  transform: scale(1.1)
+}
+
+
 
 
 

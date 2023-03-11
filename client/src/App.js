@@ -17,10 +17,12 @@ import Login from './pages/Login'
 import CreatePet from './pages/CreatePet'
 import Forum from './pages/Forum'
 import MessageCenter from './pages/MessageCenter'
+import NewMessage from './pages/NewMessage'
 import SinglePost from './pages/SinglePost'
 import NewPost from './pages/NewPost'
 import SinglePet from './pages/SinglePet'
 import Profile from './pages/Profile'
+import EditProfile from './pages/EditProfile'
 import ProfilePets from './pages/ProfilePets'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
@@ -70,7 +72,6 @@ const client = new ApolloClient({
 });
 
 const App = () => {
-  const [loading, setLoading] = useState(true)
   const [errors, setErrors] = useState({})
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') || 'light'
@@ -84,75 +85,74 @@ const App = () => {
     }
 
     document.documentElement.setAttribute('data-theme', theme)
-    setTimeout(() => setLoading(false), 1000)
   }, [theme, errors]);
   
   return (
     <ApolloProvider client={client}>
       <Router>
-        { loading === false ? (
-          <>
-            <Header theme={theme} setTheme={setTheme} />
-            <Container fluid>
-              <Row className="main-content">
-                <Sidebar />
-                <Col lg={{span: 9, offset: 3}} xxl={{span: 10, offset: 2}} className="content">
-                  {/* uses image import, QUERY_PETS */}
-                  <Route exact path="/">
-                    <Home />
-                  </Route>
-                  <Route exact path="/login">
-                    <Login setErrors={setErrors} />
-                  </Route>
-                  <Route exact path="/signup">
-                    <Signup setErrors={setErrors} />
-                  </Route>
-                  {/*uses image import, QUERY_ALLPETS*/}
-                  <Route exact path="/create-pet">
-                    <CreatePet setErrors={setErrors} />
-                  </Route>
-                  <Route exact path="/message-center">
-                    <MessageCenter />
-                  </Route>
-                  {/* uses QUERY_POSTS */}
-                  <Route exact path="/community-forums">
-                    <Forum />
-                  </Route>
-                  <Route exact path="/posts/:postId">
-                    <SinglePost setErrors={setErrors} />
-                  </Route>
-                  <Route exact path="/new-post">
-                    <NewPost setErrors={setErrors} />
-                  </Route>
-                  {/* uses QUERY_USER, QUERY_ME */}
-                  <Route exact path="/me">
-                    <Profile />
-                  </Route>
-                  <Route exact path="/profile/:username">
-                    <Profile />
-                  </Route>
-                  {/* uses QUERY_USER, QUERY_ME */}
-                  <Route exact path="/pets">
-                    <ProfilePets />
-                  </Route>
-                  <Route exact path="/profile/:username/pets">
-                    <ProfilePets />
-                  </Route>
-                  <Route exact path="/pets/:petId">
-                    <SinglePet />
-                  </Route>
-                  <Route exact path="/assets">
-                    <Assets />
-                  </Route>
-                  <ToastComponent toasts={errors} />
-                </Col>
-              </Row>
-            </Container>
-            <Footer />
-          </>
-        ) : (
-          <Loading />
-        )}
+        <Header theme={theme} setTheme={setTheme} />
+        <Container fluid>
+          <Row className="main-content">
+            <Sidebar />
+            <Col lg={{span: 9, offset: 3}} xxl={{span: 10, offset: 2}} className="content">
+              {/* uses image import, QUERY_PETS */}
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route exact path="/login">
+                <Login setErrors={setErrors} />
+              </Route>
+              <Route exact path="/signup">
+                <Signup setErrors={setErrors} />
+              </Route>
+              {/*uses image import, QUERY_ALLPETS*/}
+              <Route exact path="/create-pet">
+                <CreatePet setErrors={setErrors} />
+              </Route>
+              <Route exact path="/message-center">
+                <MessageCenter setErrors={setErrors} />
+              </Route>
+              <Route exact path="/new-message">
+                <NewMessage setErrors={setErrors} />
+              </Route>
+              {/* uses QUERY_POSTS */}
+              <Route exact path="/community-forums">
+                <Forum />
+              </Route>
+              <Route exact path="/posts/:postId">
+                <SinglePost setErrors={setErrors} />
+              </Route>
+              <Route exact path="/new-post">
+                <NewPost setErrors={setErrors} />
+              </Route>
+              {/* uses QUERY_USER, QUERY_ME */}
+              <Route exact path="/profile/edit-profile">
+                <EditProfile />
+              </Route>
+              <Route exact path="/me">
+                <Profile />
+              </Route>
+              <Route exact path="/profile/:username">
+                <Profile />
+              </Route>
+              {/* uses QUERY_USER, QUERY_ME */}
+              <Route exact path="/pets">
+                <ProfilePets />
+              </Route>
+              <Route exact path="/profile/:username/pets">
+                <ProfilePets />
+              </Route>
+              <Route exact path="/pets/:petId">
+                <SinglePet />
+              </Route>
+              <Route exact path="/assets">
+                <Assets />
+              </Route>
+              <ToastComponent toasts={errors} />
+            </Col>
+          </Row>
+        </Container>
+        <Footer />
       </Router>
     </ApolloProvider>
   );

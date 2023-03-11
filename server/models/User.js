@@ -31,6 +31,12 @@ const userSchema = new Schema({
       ref: 'Pet',
     },
   ],
+  inbox: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Message',
+    },
+  ],
   posts: [
     {
       type: Schema.Types.ObjectId,

@@ -22,6 +22,14 @@ export const QUERY_USER = gql`
         createdAt
         petOwner
       }
+      inbox {
+        _id
+        messageRecipient
+        messageTitle
+        messageText
+        messageAuthor
+        createdAt
+      }
       posts {
         _id
         postTitle
@@ -131,6 +139,32 @@ export const QUERY_SINGLE_POST = gql`
   }
 `;
 
+export const QUERY_INBOX = gql`
+  query getInbox {
+    inbox {
+      _id
+      messageRecipient
+      messageTitle
+      messageText
+      messageAuthor
+      createdAt
+    }
+  }
+`;
+
+export const QUERY_SINGLE_MESSAGE = gql`
+  query getSingleMessage($messageId: ID!) {
+    message(messageId: $messageId) {
+      _id
+      messageRecipient
+      messageTitle
+      messageText
+      messageAuthor
+      createdAt
+    }
+  }
+`;
+
 export const QUERY_ME = gql`
   query me {
     me {
@@ -153,8 +187,17 @@ export const QUERY_ME = gql`
         createdAt
         petOwner
       }
+      inbox {
+        _id
+        messageRecipient
+        messageTitle
+        messageText
+        messageAuthor
+        createdAt
+      }
       posts {
         _id
+        postTitle
         postText
         createdAt
       }
