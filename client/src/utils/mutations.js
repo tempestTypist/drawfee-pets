@@ -62,7 +62,16 @@ export const SEND_MESSAGE = gql`
       messageTitle
       messageText
       messageAuthor
+      read
       createdAt
+    }
+  }
+`;
+
+export const TOGGLE_READ = gql`
+  mutation toggleRead($messageId: String!) {
+    toggleRead(messageId: $messageId) {
+      _id
     }
   }
 `;

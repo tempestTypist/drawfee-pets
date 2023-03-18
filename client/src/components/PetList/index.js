@@ -30,40 +30,29 @@ const PetList = ({
     activePet: activePet,
   });
 
-  //this function checks if there is an active pet, and the id of the pet in activepet against the pets in the list, and provides the class name
-  const isFavourite = (index) => { 
-    console.log("index: " + index)
-    console.log("pets index: " + JSON.stringify(pets[index]))
-    console.log("pets index id: " + pets[index]._id)
-    if (activePet && pets[index]._id === activePet._id) {
-      return "pet__favourite"
-    } else {
-      return
-    }
-  };
-
-  //this accesses the favourite pet mutation, which will take whatever pet is starred and update the users activepet with the favourite
   const [favouritePet, { err }] = useMutation(FAVOURITE_PET, {
     update(cache, { data: { favouritePet } }) {
-      // console.log("data: favouritePet", { data: { favouritePet } })
       try {
+        const { me } = cache.readQuery({ query: QUERY_ME })
+
         cache.writeQuery({
           query: QUERY_ME,
-          data: { me: favouritePet },
+          data: { me: { ...me, activePet: favouritePet } },
         });
-        // console.log("me: favouritePet", { me: { favouritePet } })
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
     },
   });
 
-  //this passes the pet ID to the set state above and asyncroniously waits for the favourite pet data to pass to the mutation?
+  //onclick function
   const handleFavePet = async (index) => {
+    //captures id of the pet the star was clicked on
     const petId = pets[index]._id;
-    // console.log("ID passed to handleFavePet", petId);
-    setFavourite({...favourite, activePet: pets[index]});
-    // console.log("setting active pet:", favourite)
+
+    //set favourite to the pet with the matching index 
+    setFavourite({ activePet: pets[index] });
+
     try {
       const { data } = await favouritePet({
         variables: { petId },
@@ -80,7 +69,6 @@ const PetList = ({
           query: QUERY_ME,
           data: { me: removePet },
         });
-        console.log({data: { me: removePet }})
       } catch (err) {
         console.error(err);
       }
@@ -100,12 +88,11 @@ const PetList = ({
     }
   };
 
-  //this sets the favourite when the page loads
   useEffect(() => {
     if (activePet) {
       setFavourite(activePet)
     }
-  }, []);
+  }, [handleFavePet]);
 
   if (!pets.length) {
     return <h3>No Pets Yet</h3>;
@@ -116,7 +103,7 @@ const PetList = ({
       {showTitle && <h3>{title}</h3>}
       {pets &&
         pets.map((pet, index) => (
-          <Card className="janky-card-wrapper key-was-here col-12 col-md-6 col-xl-4 p-4 pt-0">
+          <Card key={pet._id} className="janky-card-wrapper col-12 col-md-6 col-xl-4 p-4 pt-0">
             <Card.Header className="janky-card-header">
               <div className="pet-name">
                 {pet.petName}
@@ -126,8 +113,11 @@ const PetList = ({
                   </>
                 ) : (
                   <div className="pet-toolbar">
-                    <div key={pet._id} onClick={() => handleFavePet(pet._id)} />
-                    <FontAwesomeIcon className={isFavourite(index)} icon={"fa-solid fa-star"} onClick={() => handleFavePet(index)} />
+                    <FontAwesomeIcon 
+                      className={(favourite._id === pet._id) ? "pet__favourite" : ""} 
+                      icon={"fa-solid fa-star"} 
+                      onClick={() => handleFavePet(index)} 
+                    />
                     <button
                       className="btn"
                       onClick={() => handleRemovePet(pet._id)}>
@@ -169,9 +159,6 @@ const PetList = ({
             </Card.Footer>
           </Card>
         ))}
-      {error && (
-        <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
-      )}
     </div>
   );
 };

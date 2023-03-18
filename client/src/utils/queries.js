@@ -12,7 +12,6 @@ export const QUERY_USER = gql`
         petSpecies
         petColour
         createdAt
-        petOwner
       }
       pets {
         _id
@@ -20,7 +19,6 @@ export const QUERY_USER = gql`
         petSpecies
         petColour
         createdAt
-        petOwner
       }
       inbox {
         _id
@@ -28,6 +26,7 @@ export const QUERY_USER = gql`
         messageTitle
         messageText
         messageAuthor
+        read
         createdAt
       }
       posts {
@@ -41,32 +40,10 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_USERS = gql`
-  query allUsers {
+  query getUsers {
     users {
       _id
       username
-      activePet {
-        _id
-        petName
-        petSpecies
-        petColour
-        createdAt
-        petOwner
-      }
-      pets {
-        _id
-        petName
-        petSpecies
-        petColour
-        createdAt
-        petOwner
-      }
-      posts {
-        _id
-        postTitle
-        postText
-        createdAt
-      }
     }
   }
 `;
@@ -140,13 +117,14 @@ export const QUERY_SINGLE_POST = gql`
 `;
 
 export const QUERY_INBOX = gql`
-  query getInbox {
-    inbox {
+  query getInbox($username: String!) {
+    inbox(username: $username) {
       _id
       messageRecipient
       messageTitle
       messageText
       messageAuthor
+      read
       createdAt
     }
   }
@@ -160,6 +138,7 @@ export const QUERY_SINGLE_MESSAGE = gql`
       messageTitle
       messageText
       messageAuthor
+      read
       createdAt
     }
   }
@@ -177,7 +156,6 @@ export const QUERY_ME = gql`
         petSpecies
         petColour
         createdAt
-        petOwner
       }
       pets {
         _id
@@ -185,7 +163,6 @@ export const QUERY_ME = gql`
         petSpecies
         petColour
         createdAt
-        petOwner
       }
       inbox {
         _id
@@ -193,6 +170,7 @@ export const QUERY_ME = gql`
         messageTitle
         messageText
         messageAuthor
+        read
         createdAt
       }
       posts {

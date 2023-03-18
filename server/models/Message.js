@@ -28,6 +28,10 @@ const messageSchema = new Schema({
     required: true,
     trim: true,
   },
+  read: {
+    type: Boolean,
+    default: false
+  },
   createdAt: {
     type: Date,
     default: Date.now,

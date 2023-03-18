@@ -14,10 +14,6 @@ const PostList = ({
     return ( <Link className="btn" to="/new-post">New Topic</Link> )
   }
 
-  // console.log(JSON.stringify(posts))
-
-  // console.log(JSON.stringify(posts[0].comments[0].createdAt))
-
   return (
     <>
       {showTitle && <h2>{title}</h2>}

@@ -13,6 +13,11 @@ const Sidebar = () => {
   const control = useAnimation()
 	const [ref, inView] = useInView()
 
+  const { loading, data } = useQuery(QUERY_ME);
+
+  const user = data?.me || {};
+	const images = ImageImport.importAll(require.context('../../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
+
   const sidebarVariant = {
     offscreen: {
       y: -400
@@ -33,20 +38,14 @@ const Sidebar = () => {
     } 
   }, [control, inView]);
 
-  const { username: userParam } = useParams();
-
-  const { loading, data } = useQuery(QUERY_ME);
-
-  const user = data?.me || {};
-	const images = ImageImport.importAll(require.context('../../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
-
   return (
     <Col 
-    ref={ref}
-    lg={3} 
-    xxl={2} 
-    className="d-none d-lg-flex sidebar" 
-    id="sidebarMenu">
+      ref={ref}
+      lg={3} 
+      xxl={2} 
+      className="d-none d-lg-flex sidebar" 
+      id="sidebarMenu"
+      >
         <motion.div
           variants={sidebarVariant}
           initial="offscreen"
@@ -55,16 +54,6 @@ const Sidebar = () => {
           <div className="hanger-wrapper">
             <div className="hanger"></div>
           </div>
-{/* 
-          <div className="pet-preview__wrapper">
-            <div className="pet-preview">
-              <Image 
-                fluid
-                className="pet-preview__screen" 
-                src={images[`${petState.petSpecies}/${petState.petSpecies}--${petState.petColour}.png`]}
-              />
-            </div>
-          </div> */}
 
           <div className="sidebar-screen">
             {loading ? (

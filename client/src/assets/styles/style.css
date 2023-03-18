@@ -2129,9 +2129,6 @@ font-size: 45px;
 .janky-table .post-title a {
   width: 90%;
   height: 100%;
-  position:absolute;
-  bottom:8;
-  left:8;  
 }
 
 
@@ -2275,8 +2272,18 @@ font-size: 45px;
   z-index: 1;
 }
 
-.inbox-toolbar svg:hover {
+.message-toolbar {
+  display: flex
+}
+
+.inbox-toolbar svg:hover,
+.message-toolbar svg:hover {
   transform: scale(1.1)
+}
+
+.message__read,
+.message__read .post-title a {
+  font-weight: normal
 }
 
 

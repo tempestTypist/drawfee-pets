@@ -17,6 +17,7 @@ import Login from './pages/Login'
 import CreatePet from './pages/CreatePet'
 import Forum from './pages/Forum'
 import MessageCenter from './pages/MessageCenter'
+import SingleMessage from './pages/SingleMessage'
 import NewMessage from './pages/NewMessage'
 import SinglePost from './pages/SinglePost'
 import NewPost from './pages/NewPost'
@@ -30,22 +31,6 @@ import Footer from './components/Footer'
 import Assets from './pages/Assets'
 import Loading from './components/Loading'
 import ToastComponent from './components/ToastComponent'
-
-// const Home = React.lazy(() => import('./pages/Home'))
-// const Signup = React.lazy(() => import('./pages/Signup'))
-// const Login = React.lazy(() => import('./pages/Login'))
-// const CreatePet = React.lazy(() => import('./pages/CreatePet'))
-// const Profile = React.lazy(() => import('./pages/Profile'))
-// const ProfilePets = React.lazy(() => import('./pages/ProfilePets'))
-// const SinglePet = React.lazy(() => import('./pages/SinglePet'))
-// const Forum = React.lazy(() => import('./pages/Forum'))
-// const SinglePost = React.lazy(() => import('./pages/SinglePost'))
-// const NewPost = React.lazy(() => import('./pages/NewPost'))
-// const Assets = React.lazy(() => import('./pages/Assets'))
-// const Header = React.lazy(() => import('./components/Header'))
-// const Sidebar = React.lazy(() => import('./components/Sidebar'))
-// const Footer = React.lazy(() => import('./components/Footer'))
-// const Loading = React.lazy(() => import('./components/Loading'))
 
 // construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -73,11 +58,11 @@ const client = new ApolloClient({
 
 const App = () => {
   const [errors, setErrors] = useState({})
-  const [theme, setTheme] = useState(
+  const [theme, setTheme] = useState(
     localStorage.getItem('theme') || 'light'
   )
 
-  useEffect(() => {
+  useEffect(() => {
     const storedTheme = localStorage.getItem('theme', theme) || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     
     if (storedTheme) { 
@@ -85,7 +70,7 @@ const App = () => {
     }
 
     document.documentElement.setAttribute('data-theme', theme)
-  }, [theme, errors]);
+  }, [theme, errors]);
   
   return (
     <ApolloProvider client={client}>
@@ -111,6 +96,9 @@ const App = () => {
               </Route>
               <Route exact path="/message-center">
                 <MessageCenter setErrors={setErrors} />
+              </Route>
+              <Route exact path="/messages/:messageId">
+                <SingleMessage setErrors={setErrors} />
               </Route>
               <Route exact path="/new-message">
                 <NewMessage setErrors={setErrors} />

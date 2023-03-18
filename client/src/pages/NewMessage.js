@@ -18,19 +18,19 @@ const NewMessage = ({ setErrors }) => {
 
 	const { messageRecipient, messageTitle, messageText } = message;
 
-  const [sendMessage, { error }] = useMutation(SEND_MESSAGE, {
+  const [sendMessage, { error, data }] = useMutation(SEND_MESSAGE, {
     update(cache, { data: { sendMessage } }) {
       try {
 				const { user } = cache.readQuery({ 
 					query: QUERY_USER,
 					variables: { 
-						username: messageRecipient, 
+						username: `${messageRecipient}`, 
 					},
 				});
 
 				cache.writeQuery({
 					query: QUERY_USER,
-					data: { user: { ...user, inbox: [...user.inbox, sendMessage] } },
+					data: { inbox: [sendMessage, ...user.inbox] },
 				});
       } catch (err) {
         const { name, message } = err;
@@ -39,12 +39,6 @@ const NewMessage = ({ setErrors }) => {
           [name]: message,
         });      
       }
-
-      // const { me } = cache.readQuery({ query: QUERY_ME });
-      // cache.writeQuery({
-      //   query: QUERY_ME,
-      //   data: { me: { ...me, inbox: [...me.inbox, sendMessage] } },
-      // });
     },
   });
 
@@ -54,7 +48,6 @@ const NewMessage = ({ setErrors }) => {
 			...prev,
 			[name]: value,
 		}));
-		console.log("Message state: " + JSON.stringify(message))
     // if (name === 'messageTitle' && value.length <= 100) {
     //   setMessage({ ...message, [name]: value });
     // }
@@ -67,7 +60,6 @@ const NewMessage = ({ setErrors }) => {
   const validateForm = () => {
     const { messageRecipient, messageTitle, messageText } = message;
     const errors = {};
-		console.log("Errors cleared, running validation...")
     setErrors();
 
 		if (messageRecipient.trim().length === 0) {
@@ -95,7 +87,6 @@ const NewMessage = ({ setErrors }) => {
     }
 
     setErrors(errors)
-		console.log("Errors set: " + JSON.stringify(errors))
 
     if (Object.keys(errors).length > 0) {
       return false
@@ -115,8 +106,7 @@ const NewMessage = ({ setErrors }) => {
             messageAuthor: Auth.getProfile().data.username,
           },
         });
-				console.log(data)
-        // window.location.assign('/message-center')
+        window.location.assign('/message-center')
       } catch (err) {
         const { name, message } = err;
     
@@ -134,43 +124,49 @@ const NewMessage = ({ setErrors }) => {
 
         <h2 className="mb-4">New Message</h2>
         {Auth.loggedIn() ? (
-					<Form 
-						className="flex-row justify-center justify-space-between-md align-center"
-						onSubmit={handleFormSubmit}
-						>
-						<Form.Group className="mb-3">
-							<Form.Label>Recipient</Form.Label>
-							<Form.Control 
-								type="text" 
-								name="messageRecipient"
-								value={message.messageRecipient}
-								onChange={handleChange} />
-						</Form.Group>
-						<Form.Group className="mb-3">
-							<Form.Label>Title</Form.Label>
-							<Form.Control 
-								type="text" 
-								name="messageTitle"
-								value={message.messageTitle}
-								onChange={handleChange} />
-						</Form.Group>
-						<Form.Group className="mb-3">
-							<Form.Label>Body</Form.Label>
-							<Form.Control 
-								as="textarea" 
-								rows={3}
-								name="messageText"
-								value={message.messageText}
-								style={{ lineHeight: '1.5', resize: 'vertical' }}
-								onChange={handleChange} />
-						</Form.Group>
-						<p>{error}</p>
-						<div className="col-12 col-lg-3">
-							<button className="btn btn-primary btn-block py-3" type="submit">
-								Send Message
-							</button>
-						</div>
-					</Form>
+          <>
+            {data ? (
+              <p>Message sent!</p>
+            ) : (
+              <Form 
+                className="flex-row justify-center justify-space-between-md align-center"
+                onSubmit={handleFormSubmit}
+                >
+                <Form.Group className="mb-3">
+                  <Form.Label>Recipient</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    name="messageRecipient"
+                    value={message.messageRecipient}
+                    onChange={handleChange} />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Title</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    name="messageTitle"
+                    value={message.messageTitle}
+                    onChange={handleChange} />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Body</Form.Label>
+                  <Form.Control 
+                    as="textarea" 
+                    rows={3}
+                    name="messageText"
+                    value={message.messageText}
+                    style={{ lineHeight: '1.5', resize: 'vertical' }}
+                    onChange={handleChange} />
+                </Form.Group>
+                {/* <p>{error}</p> */}
+                <div className="col-12 col-lg-3">
+                  <button className="btn btn-primary btn-block py-3" type="submit">
+                    Send Message
+                  </button>
+                </div>
+              </Form>
+            )}
+          </>
         ) : (
           <p>
             You need to be logged in to make a post. Please{' '}

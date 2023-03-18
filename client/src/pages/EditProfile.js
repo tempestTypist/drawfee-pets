@@ -31,7 +31,6 @@ const EditProfile = ({ setErrors }) => {
   const validateForm = () => {
     const { messageRecipient, messageTitle, messageText } = message;
     const errors = {};
-		console.log("Errors cleared, running validation...")
     setErrors();
 
 		if (messageRecipient.trim().length === 0) {
@@ -59,7 +58,6 @@ const EditProfile = ({ setErrors }) => {
     }
 
     setErrors(errors)
-		console.log("Errors set: " + JSON.stringify(errors))
 
     if (Object.keys(errors).length > 0) {
       return false
@@ -79,7 +77,7 @@ const EditProfile = ({ setErrors }) => {
     //         messageAuthor: Auth.getProfile().data.username,
     //       },
     //     });
-		// 		console.log(data)
+
     //     // window.location.assign('/message-center')
     //   } catch (err) {
     //     const { name, message } = err;

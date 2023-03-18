@@ -93,7 +93,7 @@ const resolvers = {
         });
 
         await User.findOneAndUpdate(
-          { username: context.user.username },
+          { _id: context.user._id },
           { $set: { activePet: pet } }
         );
 
@@ -128,9 +128,28 @@ const resolvers = {
           messageAuthor: context.user.username,
         });
 
-        await User.findOneAndUpdate(
-          { username: messageRecipient },
+        const user = await User.findOneAndUpdate(
+          { username: message.messageRecipient },
           { $addToSet: { inbox: message._id } }
+        );
+
+        if (!user) {
+          throw new AuthenticationError('Invalid recipient! Please check the spelling of the username youre trying to message!');
+        }
+
+        return message;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    toggleRead: async (parent, { messageId }, context) => {
+      if (context.user) {
+        const message = await Message.findOne({
+          _id: messageId,
+        });
+
+        await Message.findOneAndUpdate(
+          { _id: messageId, },
+          { $set: { read: !message.read } }
         );
 
         return message;

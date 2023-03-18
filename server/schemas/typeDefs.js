@@ -77,6 +77,7 @@ const typeDefs = gql`
     favouritePet(petId: String!): Pet
     removePet(petId: String!): Pet
     sendMessage(messageRecipient: String!, messageTitle: String!, messageText: String!): Message
+    toggleRead(messageId: String!): Message
     deleteMessage(messageId: String!): Message
     addPost(postTitle: String!, postText: String!): Post
     addComment(postId: ID!, commentText: String!): Post

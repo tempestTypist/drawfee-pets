@@ -2,20 +2,20 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client'
 import { QUERY_ME } from '../utils/queries'
-import { DELETE_MESSAGE } from '../utils/mutations'
+import { TOGGLE_READ, DELETE_MESSAGE } from '../utils/mutations'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRotateRight, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faRotateRight, faTrashCan, faEnvelope, faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons'
 
 import { Container, Row, Col, Button, Card, Form, Tab, Tabs, Pagination  } from 'react-bootstrap'
 import JankyTable from '../components/JankyTable'
+import Loading from '../components/Loading'
 
 const MessageCenter = ({ setErrors }) => {
 	const { loading, data } = useQuery(QUERY_ME);
 
 	const user = data?.me || {};
 	const inbox = user.inbox;
-  // const messages = data?.inbox || [];
 
   const [key, setKey] = useState('inbox');
 
@@ -37,21 +37,59 @@ const MessageCenter = ({ setErrors }) => {
     },
   });
 
+  const [toggleRead, { err }] = useMutation(TOGGLE_READ, {
+    update(cache, { data: { toggleRead } }) {
+      try {
+				const { me } = cache.readQuery({ query: QUERY_ME });
+        cache.writeQuery({
+          query: QUERY_ME,
+          data: { me: toggleRead },
+        });
+
+			} catch (err) {
+				const { name, message } = err;
+    
+        setErrors({
+          [name]: message,
+        });
+      }
+    },
+  });
+
   const handleDeleteMessage = async (messageId) => {
 		try {
 			const { data } = await deleteMessage({
 				variables: { messageId },
 			});
 		} catch (err) {
-			console.error(err);
+			const { name, message } = err;
+    
+			setErrors({
+				[name]: message,
+			});
 		}
+  };
+
+	const readToggle = async (messageId) => {
+
+		try {
+			const { data } = await toggleRead({
+				variables: { messageId },
+			});
+		} catch (err) {
+			const { name, message } = err;
+    
+			setErrors({
+				[name]: message,
+			});
+		}
+
   };
 
 	const checkbox =
 		(<div key={`default-checkbox`}>
 			<Form.Check 
 				type={`checkbox`}
-				id={`default-checkbox`}
 			/>
 		</div>);
 
@@ -60,7 +98,6 @@ const MessageCenter = ({ setErrors }) => {
 			<FontAwesomeIcon icon={faRotateRight} size={"lg"} className="me-3" />
 			<FontAwesomeIcon icon={faTrashCan} size={"lg"} className="me-3" />
 			<Link
-				className=""
 				to="/new-message"
 				>
 				New Message
@@ -80,60 +117,74 @@ const MessageCenter = ({ setErrors }) => {
 
   return (
 		<>
-		<h2>Message Center</h2>
+			<h2>Message Center</h2>
 
-		<Tabs
-      activeKey={key}
-      onSelect={(k) => setKey(k)}
-      className="my-3"
-    >
-      <Tab eventKey="inbox" title="Inbox">
-				<JankyTable
-					tableHeaders={[checkbox, "", toolbar ]}
-					tableData={inbox.map((message) => (
-						<tr key={message._id}>
-							<td>
-								<div key={`default-checkbox`}>
-									<Form.Check 
-										type={`checkbox`}
-										id={`default-checkbox`}
-									/>
-								</div>
-							</td>
-							<td className="d-flex align-content-center">
-								<div className="janky-table__icon message-icon__unread" />
-							</td>
-							<td className="post-title w-100">
-								<Link to={`/messages/${message._id}`}>{message.messageTitle}</Link>
-							</td>
-							<td>
-								<Link
-									className=""
-									to={`/profile/${message.messageAuthor}`}
-									>
-									{message.messageAuthor}
-								</Link>
-							</td>
-							<td className="text-center">{message.createdAt}</td>
-							<td className="message-toolbar">
-								{/* mark read */}
-								{/* delete */}
-								<button
-									className="btn"
-									onClick={() => handleDeleteMessage(message._id)}>
-									X
-								</button>
-							</td>
-						</tr>
-					))}
-				/>
-      </Tab>
-      <Tab eventKey="notifications" title="Notifications">
+			<Tabs
+				activeKey={key}
+				onSelect={(k) => setKey(k)}
+				className="my-3"
+			>
+				<Tab eventKey="inbox" title="Inbox">
+					{loading ? 
+						<Loading />
+					:
+						<JankyTable
+							tableHeaders={[checkbox, "", toolbar ]}
+							tableData={inbox.map((message) => (
+								<tr key={message._id} className={`message message__${message.read ? "read" : "unread"} align-middle`}>
+									<td>
+										<div key={`default-checkbox`}>
+											<Form.Check 
+												type={`checkbox`}
+											/>
+										</div>
+									</td>
+									<td className="d-flex align-content-center">
+										<div className="janky-table__icon message-icon__unread" />
+									</td>
+									<td 
+										className="post-title w-100"
+										onClick={message.read ? null : () => readToggle(message._id)}>
+										<Link 
+											to={`/messages/${message._id}`}>
+											{message.messageTitle}
+										</Link>
+									</td>
+									<td>
+										<Link
+											to={`/profile/${message.messageAuthor}`}
+											>
+											{message.messageAuthor}
+										</Link>
+									</td>
+									<td className="text-center">{message.createdAt}</td>
+									<td>
+										<div className="message-toolbar">
+											<FontAwesomeIcon 
+												icon={message.read ? faEnvelopeOpen : faEnvelope} 
+												size={"lg"} 
+												onClick={() => readToggle(message._id)}
+												className="me-3" 
+												/>
+											<FontAwesomeIcon 
+												icon={faTrashCan} 
+												size={"lg"} 
+												onClick={() => handleDeleteMessage(message._id)}
+												className="me-3" 
+												/>
+										</div>
+									</td>
+								</tr>
+							))}
+						/>
+					}
+				</Tab>
+				<Tab eventKey="notifications" title="Notifications">
 
-      </Tab>
-    </Tabs>
+				</Tab>
+			</Tabs>
 
-		{/* <Pagination /> */}
+			{/* <Pagination /> */}
 		</>
   );
 };

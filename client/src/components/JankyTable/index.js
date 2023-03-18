@@ -6,7 +6,7 @@ import { Container, Row, Col, Button, Card, ButtonGroup, Table, Pagination  } fr
 
 const JankyTable = (props) => {
 	const { tableHeaders, tableData } = props
-console.log(tableData)
+
 	return (
 		<Table className="table table-hover janky-table text-nowrap mb-4" cellSpacing="0" responsive>
 			{tableHeaders ? 

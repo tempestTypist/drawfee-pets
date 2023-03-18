@@ -17,19 +17,19 @@ const Header = ({ theme, setTheme }) => {
   const user = data?.me || {};
 
   const [isHovered, setHovered] = useState(false)
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(false)
 
-  const toggleTheme = () => {
-    if (checked === false) {
-      setChecked(true)
-      setTheme('dark');
+  const toggleTheme = () => {
+    setChecked((prev) => (!prev));
+
+    if (checked === false) {
+      setTheme('dark');
       localStorage.setItem('theme', 'dark');
-    } else {
-      setChecked(false)
-      setTheme('light');
+    } else {
+      setTheme('light');
       localStorage.setItem('theme', 'light');
-    }
-  };
+    }
+  };
 
   const logout = (event) => {
     event.preventDefault();
@@ -42,7 +42,7 @@ const Header = ({ theme, setTheme }) => {
     } else {
       setChecked(false)
     }
-  }, [theme]);
+  }, [theme]);
   
   return (
     <Navbar collapseOnSelect expand="lg" fixed="top" variant="dark" className="py-0">
@@ -79,21 +79,19 @@ const Header = ({ theme, setTheme }) => {
                       onMouseEnter={() => setHovered(true)}
                       onMouseLeave={() => setHovered(false)}
                       title={<>
-                        {isHovered ? (
-                          <FontAwesomeIcon className="lg-me-2 d-none d-lg-block dropdown-icon" icon={faEnvelopeOpen} />
-                        ) : (
-                          <FontAwesomeIcon className="lg-me-2 d-none d-lg-block dropdown-icon" icon={faEnvelope} />
-                        )}
+                        <FontAwesomeIcon 
+                          className="lg-me-2 d-none d-lg-block dropdown-icon" 
+                          icon={isHovered ? faEnvelopeOpen : faEnvelope} 
+                        />
                         <span className="d-lg-none">Messages</span>
                       </>}
-                      className="" 
                       align="end" 
                       id="messages-dropdown"
                       >
                       <NavDropdown.Header>
-                        <h4 className="title">Messages (6)</h4>
+                        <h4 className="title">Messages ({`${user.inbox.length}`})</h4>
                         <div className="ms-auto action-area">
-                          <a href="javascript:void(0)">Mark All Read</a> <a className="ms-2"><FontAwesomeIcon icon={faGear} /></a>
+                          <a href="javascript:void(0)">Mark All Read</a>
                         </div>
                       </NavDropdown.Header>
 
@@ -238,12 +236,17 @@ const Header = ({ theme, setTheme }) => {
                       <Link className="dropdown-item" to="/me">Profile</Link>
                       <Link className="dropdown-item" to="/pets">Pets</Link>
                       <div className="theme-toggler">
-                        <div class="toggle">
-                          <input class="toggle-input" type="checkbox" checked={checked} onChange={toggleTheme} />
-                          <div class="toggle-bg"></div>
-                          <div class="toggle-switch">
-                            <div class="toggle-switch-figure"></div>
-                            <div class="toggle-switch-figureAlt"></div>
+                        <div className="toggle">
+                          <input 
+                            className="toggle-input" 
+                            type="checkbox" 
+                            checked={checked} 
+                            onChange={toggleTheme} 
+                          />
+                          <div className="toggle-bg"></div>
+                          <div className="toggle-switch">
+                            <div className="toggle-switch-figure"></div>
+                            <div className="toggle-switch-figureAlt"></div>
                           </div>  
                         </div>
                       </div>

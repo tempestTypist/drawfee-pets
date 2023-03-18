@@ -16,8 +16,6 @@ const ProfilePets = () => {
 
   const user = data?.me || data?.user || {};
 
-  console.log("Userdata: " + JSON.stringify(user))
-
   if (!user?.username) {
     return (
       <h4>
@@ -28,25 +26,23 @@ const ProfilePets = () => {
   }
 
   return (
-    <>
-    {loading ? (
-      <Loading />
-    ) : (
       <div className="col-12 mb-5">
         <div className="framed-card-group">
-          <PetList
-            user={user}
-            title={`${user.username}'s pets`}
-            showTitle={false}
-            showUsername={userParam ? true : false}
-          />
+          {loading ? (
+              <Loading />
+            ) : (
+              <PetList
+                user={user}
+                title={`${user.username}'s pets`}
+                showTitle={false}
+                showUsername={userParam ? true : false}
+              />
+            )}
           </div>
       </div>
-    )}
-      {/* <h2 className="col-12 bg-dark text-light p-3 mb-5">
-        {userParam ? `${user.username}'s` : 'Your'} pets
-      </h2> */}
-    </>
+      // {/* <h2 className="col-12 bg-dark text-light p-3 mb-5">
+      //   {userParam ? `${user.username}'s` : 'Your'} pets
+      // </h2> */}
   );
 };
 

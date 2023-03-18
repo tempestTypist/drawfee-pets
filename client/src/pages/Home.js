@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { Link } from 'react-router-dom';
-import { QUERY_PETS, QUERY_USERS } from '../utils/queries'
+import { QUERY_PETS } from '../utils/queries'
 import { Container, Row, Col, Button, Card, Image } from 'react-bootstrap'
 import ImageImport from '../utils/imageimport'
 import Loading from '../components/Loading'
