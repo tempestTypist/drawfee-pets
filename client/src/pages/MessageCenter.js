@@ -10,6 +10,7 @@ import { faRotateRight, faTrashCan, faEnvelope, faEnvelopeOpen } from '@fortawes
 import { Container, Row, Col, Button, Card, Form, Tab, Tabs, Pagination  } from 'react-bootstrap'
 import JankyTable from '../components/JankyTable'
 import Loading from '../components/Loading'
+const dateFormat = require('../utils/dateFormat');
 
 const MessageCenter = ({ setErrors }) => {
 	const { loading, data } = useQuery(QUERY_ME);
@@ -18,6 +19,30 @@ const MessageCenter = ({ setErrors }) => {
 	const inbox = user.inbox;
 
   const [key, setKey] = useState('inbox');
+
+	const getTimestamp = (date) => {
+		const newDate = new Date()
+		const today = dateFormat(newDate)
+		console.log(today)
+		const mmdd = today.split(",", 1)[0]
+		const year = newDate.getFullYear()
+		console.log(year)
+
+		if ( date.split(",", 1)[0] === mmdd) {
+			return date.split("at ")[1]
+		}
+
+		if ( date.split(" ")[2] === year.toString()) {
+			return date.split(",", 1)
+		}
+
+		return date
+		//switch case?
+		//default case, return date as is
+		//if date === today, return just the time it was sent
+		//if date === before today, return the date it was sent
+		//if date === before this year, return DD/MM/YYYY or MM/DD/YYY
+	};
 
   const [deleteMessage, { error }] = useMutation(DELETE_MESSAGE, {
     update(cache, { data: { deleteMessage } }) {
@@ -71,7 +96,6 @@ const MessageCenter = ({ setErrors }) => {
   };
 
 	const readToggle = async (messageId) => {
-
 		try {
 			const { data } = await toggleRead({
 				variables: { messageId },
@@ -83,7 +107,6 @@ const MessageCenter = ({ setErrors }) => {
 				[name]: message,
 			});
 		}
-
   };
 
 	const checkbox =
@@ -157,7 +180,7 @@ const MessageCenter = ({ setErrors }) => {
 											{message.messageAuthor}
 										</Link>
 									</td>
-									<td className="text-center">{message.createdAt}</td>
+									<td className="text-center">{getTimestamp(message.createdAt)}</td>
 									<td>
 										<div className="message-toolbar">
 											<FontAwesomeIcon 

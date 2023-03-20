@@ -61,15 +61,17 @@ const Sidebar = () => {
             ) : (
               <div className="sidebar-screen__inner">
                 {Auth.loggedIn() ? (
-                  [(!user?.activePet) 
-                    ? 
-                    <p>No favourite pet!</p>
-                    : 
-                    <>
-                      <Image src={images[`${user.activePet.petSpecies}/${user.activePet.petSpecies}--${user.activePet.petColour}.png`]} alt="Pet image" fluid />
-                      <p className="font-supersonic text-center fw-bold my-3">{user.activePet.petName}</p>
-                    </>
-                  ]
+                  <>
+                    {(!user?.activePet) 
+                      ? 
+                      <p>No favourite pet!</p>
+                      : 
+                      <>
+                        <Image src={images[`${user.activePet.petSpecies}/${user.activePet.petSpecies}--${user.activePet.petColour}.png`]} alt="Pet image" fluid />
+                        <p className="font-supersonic text-center fw-bold my-3">{user.activePet.petName}</p>
+                      </>
+                    }
+                  </>
                 ) : (
                   <>
                     <Link className="sidebar-screen-btn" to="/login" title="LOGIN">LOGIN</Link>

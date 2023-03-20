@@ -15,6 +15,9 @@ const Header = ({ theme, setTheme }) => {
   const { loading, data } = useQuery(QUERY_ME);
 
   const user = data?.me || {};
+  const inbox = user?.inbox
+  const read = inbox?.map((message) => message.read).filter(Boolean)
+  const unread = inbox?.length - read?.length
 
   const [isHovered, setHovered] = useState(false)
   const [checked, setChecked] = useState(false)
@@ -88,74 +91,39 @@ const Header = ({ theme, setTheme }) => {
                       align="end" 
                       id="messages-dropdown"
                       >
+
                       <NavDropdown.Header>
-                        <h4 className="title">Messages ({`${user.inbox.length}`})</h4>
+                        <h4 className="title">Messages ({`${unread}`})</h4>
                         <div className="ms-auto action-area">
                           <a href="javascript:void(0)">Mark All Read</a>
                         </div>
                       </NavDropdown.Header>
 
                       <NavDropdown.Divider />
+                      {inbox && inbox.map((message) => (
+                        <>
+                          {message.read ? 
+                            <>
+                            </> 
+                          :
+                            <Link to={`/messages/${message._id}`} className="d-flex justify-content-between dropdown-item">
+                              <span className="media-body text-truncate">
+                                <span className="user-name mb-1">{message.messageAuthor}: </span>
+                                <span className="message text-light-gray text-truncate">{message.messageTitle}</span>
+                              </span>
 
-                      <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.1">
-                        <span className="media-body text-truncate">
-                          <span className="user-name mb-1">Chris Mathew: </span>
-                          <span className="message text-light-gray text-truncate">Okay.. I will be waiting for your...</span>
-                        </span>
-
-                        <span className="action-area h-100 min-w-80">
-                          <span className="meta-date ms-2 mb-1">8 hours ago</span>
-                          <span className="toggle-button" data-toggle="tooltip" data-placement="left" title="Mark as read">
-                            <span className="show"><i className="icon icon-dot-o icon-fw f-10 text-light-gray"></i></span>
-                            <span className="hide"><i className="icon icon-dot icon-fw f-10 text-light-gray"></i></span>
-                          </span>
-                        </span>
-                      </NavDropdown.Item>
-
-                      <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.2">
-                        <span className="media-body text-truncate">
-                          <span className="user-name mb-1">Alia Joseph: </span>
-                          <span className="message text-light-gray text-truncate">
-                            Alia Joseph just joined Messenger! Be the first to send a welcome message or sticker.
-                          </span>
-                        </span>
-
-                        <span className="action-area h-100 min-w-80">
-                          <span className="meta-date ms-2 mb-1">9 hours ago</span>
-                          <span className="toggle-button" data-toggle="tooltip" data-placement="left" title="Mark as read">
-                            <span className="show"><i className="icon icon-dot-o icon-fw f-10 text-light-gray"></i></span>
-                            <span className="hide"><i className="icon icon-dot icon-fw f-10 text-light-gray"></i></span>
-                          </span>
-                        </span>
-                      </NavDropdown.Item>
-
-                      <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.3">
-                        <span className="media-body text-truncate">
-                          <span className="user-name mb-1">Joshua Brian: </span>
-                          <span className="message text-light-gray text-truncate">
-                            Alex will explain you how to keep the HTML structure and all that.
-                          </span>
-                        </span>
-
-                        <span className="action-area h-100 min-w-80">
-                          <span className="meta-date ms-2 mb-1">12 hours ago</span>
-                          <span className="toggle-button" data-toggle="tooltip" data-placement="left" title="Mark as read">
-                            <span className="show"><i className="icon icon-dot-o icon-fw f-10 text-light-gray"></i></span>
-                            <span className="hide"><i className="icon icon-dot icon-fw f-10 text-light-gray"></i></span>
-                          </span>
-                        </span>
-                      </NavDropdown.Item>
-
+                              <span className="action-area h-100 min-w-80">
+                                <span className="meta-date ms-2 mb-1">{message.createdAt.split(",", 1)}</span>
+                              </span>
+                            </Link>
+                          }
+                        </>
+                      ))}
                       <NavDropdown.Divider />
 
-                      <NavDropdown.Item>
-                        <div className="dropdown-menu-footer">
-                          <Link to="/message-center" className="card-link"> 
-                            See All 
-                            <i className="icon icon-arrow-right icon-fw"></i>
-                          </Link>
-                        </div>
-                      </NavDropdown.Item>
+                      <Link to="/message-center" className="dropdown-item dropdown-menu-footer card-link">
+                        See All 
+                      </Link>
                     </NavDropdown>
 
                     <NavDropdown 
