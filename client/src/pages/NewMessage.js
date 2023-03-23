@@ -7,7 +7,7 @@ import { QUERY_INBOX, QUERY_ME, QUERY_USER } from '../utils/queries'
 
 import Auth from '../utils/auth'
 
-import { Form } from 'react-bootstrap'
+import { Form, Card } from 'react-bootstrap'
 
 const NewMessage = ({ setErrors }) => {
   const [message, setMessage] = useState({
@@ -118,64 +118,69 @@ const NewMessage = ({ setErrors }) => {
   };
 
   return (
-    <div className="flex-row justify-center">
-      <div
-        className="col-12 col-md-10">
-
-        <h2 className="mb-4">New Message</h2>
-        {Auth.loggedIn() ? (
-          <>
-            {data ? (
-              <p>Message sent!</p>
-            ) : (
-              <Form 
-                className="flex-row justify-center justify-space-between-md align-center"
-                onSubmit={handleFormSubmit}
-                >
-                <Form.Group className="mb-3">
-                  <Form.Label>Recipient</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    name="messageRecipient"
-                    value={message.messageRecipient}
-                    onChange={handleChange} />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Title</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    name="messageTitle"
-                    value={message.messageTitle}
-                    onChange={handleChange} />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Body</Form.Label>
-                  <Form.Control 
-                    as="textarea" 
-                    rows={3}
-                    name="messageText"
-                    value={message.messageText}
-                    style={{ lineHeight: '1.5', resize: 'vertical' }}
-                    onChange={handleChange} />
-                </Form.Group>
-                {/* <p>{error}</p> */}
-                <div className="col-12 col-lg-3">
-                  <button className="btn btn-primary btn-block py-3" type="submit">
-                    Send Message
-                  </button>
-                </div>
-              </Form>
-            )}
-          </>
-        ) : (
-          <p>
-            You need to be logged in to make a post. Please{' '}
-            <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
-          </p>
-        )}
-
-      </div>
-    </div>
+    <>
+      <h2>New Message</h2>
+      <Card className="janky-card-wrapper mb-2">
+        <div className="janky-card-body-wrapper">
+          <Card.Body className="janky-card-body">
+            <div className="janky-card-inner-body">
+                {Auth.loggedIn() ? (
+                  <>
+                    {data ? (
+                      <p>Message sent!</p>
+                    ) : (
+                      <Form 
+                        className="flex-row justify-center align-center mx-4"
+                        onSubmit={handleFormSubmit}
+                        >
+                        <Form.Group className="mb-3">
+                          <Form.Label>Recipient</Form.Label>
+                          <Form.Control 
+                            type="text" 
+                            name="messageRecipient"
+                            value={message.messageRecipient}
+                            onChange={handleChange} />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Title</Form.Label>
+                          <Form.Control 
+                            type="text" 
+                            name="messageTitle"
+                            value={message.messageTitle}
+                            onChange={handleChange} />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Body</Form.Label>
+                          <Form.Control 
+                            as="textarea" 
+                            rows={3}
+                            name="messageText"
+                            value={message.messageText}
+                            style={{ lineHeight: '1.5', resize: 'vertical' }}
+                            onChange={handleChange} />
+                        </Form.Group>
+                        {/* <p>{error}</p> */}
+                        <div className="col-12 col-lg-3">
+                          <div className="btn-janky-wrapper">
+                            <button className="btn-janky btn btn-theme" type="submit">
+                              Send Message
+                            </button>
+                          </div>
+                        </div>
+                      </Form>
+                    )}
+                  </>
+                ) : (
+                  <p>
+                    You need to be logged in to make a post. Please{' '}
+                    <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
+                  </p>
+                )}
+            </div>
+          </Card.Body>
+        </div>
+      </Card>
+    </>
   );
 };
 

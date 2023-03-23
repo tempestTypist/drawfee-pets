@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useQuery } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
 import { QUERY_ME } from '../../utils/queries'
+import { TOGGLE_READ } from '../../utils/mutations'
 import Auth from '../../utils/auth'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,7 +12,7 @@ import { Container, Row, Navbar, Nav, NavDropdown, Button, Offcanvas } from 'rea
 import Logo from '../../assets/images/drawfee-logos/drawfee-light.png'
 import Loading from '../Loading'
 
-const Header = ({ theme, setTheme }) => {
+const Header = ({ theme, setTheme, setErrors }) => {
   const { loading, data } = useQuery(QUERY_ME);
 
   const user = data?.me || {};
@@ -34,6 +35,39 @@ const Header = ({ theme, setTheme }) => {
     }
   };
 
+  const [toggleRead, { err }] = useMutation(TOGGLE_READ, {
+    update(cache, { data: { toggleRead } }) {
+      try {
+				const { me } = cache.readQuery({ query: QUERY_ME });
+        cache.writeQuery({
+          query: QUERY_ME,
+          data: { me: toggleRead },
+        });
+
+			} catch (err) {
+				const { name, message } = err;
+    
+        setErrors({
+          [name]: message,
+        });
+      }
+    },
+  });
+
+	const readToggle = async (messageId) => {
+		try {
+			const { data } = await toggleRead({
+				variables: { messageId },
+			});
+		} catch (err) {
+			const { name, message } = err;
+    
+			setErrors({
+				[name]: message,
+			});
+		}
+  };
+
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
@@ -45,7 +79,7 @@ const Header = ({ theme, setTheme }) => {
     } else {
       setChecked(false)
     }
-  }, [theme]);
+  }, [theme, inbox]);
   
   return (
     <Navbar collapseOnSelect expand="lg" fixed="top" variant="dark" className="py-0">
@@ -100,13 +134,18 @@ const Header = ({ theme, setTheme }) => {
                       </NavDropdown.Header>
 
                       <NavDropdown.Divider />
+
                       {inbox && inbox.map((message) => (
                         <>
                           {message.read ? 
                             <>
                             </> 
                           :
-                            <Link to={`/messages/${message._id}`} className="d-flex justify-content-between dropdown-item">
+                            <Link 
+                              to={`/messages/${message._id}`} 
+                              onClick={message.read ? null : () => readToggle(message._id)}
+                              className="d-flex justify-content-between dropdown-item"
+                              >
                               <span className="media-body text-truncate">
                                 <span className="user-name mb-1">{message.messageAuthor}: </span>
                                 <span className="message text-light-gray text-truncate">{message.messageTitle}</span>
@@ -119,6 +158,7 @@ const Header = ({ theme, setTheme }) => {
                           }
                         </>
                       ))}
+
                       <NavDropdown.Divider />
 
                       <Link to="/message-center" className="dropdown-item dropdown-menu-footer card-link">

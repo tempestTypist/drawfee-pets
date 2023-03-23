@@ -15,6 +15,25 @@ const Forum = () => {
   const { loading, data } = useQuery(QUERY_POSTS);
   const posts = data?.posts || [];
 
+  const theadData = ["", <h2>Topic</h2>, "Made By", "Replies", "Last Post"];
+  const tbodyData = posts.map((post, index) => (
+    { 
+      id: index,
+      items: [
+        <div className="janky-table__icon post-icon" />, 
+        <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>, 
+        <Link to={`/profile/${post.postAuthor}`}>{post.postAuthor}</Link>,
+        post.comments.length,
+        post.comments.length > 0 ? (
+          <>{post.comments[0].createdAt}<br/>by {post.comments[0].commentAuthor}</>
+        ) : (
+          <>{post.createdAt}<br/>by {post.postAuthor}</>
+        ),
+      ],
+    }
+  ));
+  
+
   if (!posts.length) {
     return ( <Link className="btn" to="/new-post">New Topic</Link> )
   }
@@ -70,35 +89,36 @@ const Forum = () => {
         {loading ? (
           <Loading />
         ) : (
-          <JankyTable
-            tableHeaders={[<h2>Topic</h2>, "Made By", "Replies", "Last Post"]}
-            tableData={posts.map((post) => (
-              <tr>
-                <td>
-                  <div className="janky-table__icon post-icon" />
-                </td>
-                <td className="post-title w-100">
-                  <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>
-                </td>
-                <td>
-                  <Link
-                    className=""
-                    to={`/profile/${post.postAuthor}`}
-                    >
-                    {post.postAuthor}
-                  </Link>
-                </td>
-                <td className="text-center">{post.comments.length}</td>
-                <td>
-                  {post.comments.length > 0 ? (
-                    <>{post.comments[0].createdAt}<br/>by {post.comments[0].commentAuthor}</>
-                  ) : (
-                    <>{post.createdAt}<br/>by {post.postAuthor}</>
-                  )}
-                </td>
-              </tr>
-            ))}
-          />
+          <JankyTable theadData={theadData} tbodyData={tbodyData} customClass="forum" />
+          // <JankyTable
+          //   tableHeaders={[<h2>Topic</h2>, "Made By", "Replies", "Last Post"]}
+          //   tableData={posts.map((post) => (
+          //     <tr>
+          //       <td>
+          //         <div className="janky-table__icon post-icon" />
+          //       </td>
+          //       <td className="post-title w-100">
+          //         <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>
+          //       </td>
+          //       <td>
+          //         <Link
+          //           className=""
+          //           to={`/profile/${post.postAuthor}`}
+          //           >
+          //           {post.postAuthor}
+          //         </Link>
+          //       </td>
+          //       <td className="text-center">{post.comments.length}</td>
+          //       <td>
+          //         {post.comments.length > 0 ? (
+          //           <>{post.comments[0].createdAt}<br/>by {post.comments[0].commentAuthor}</>
+          //         ) : (
+          //           <>{post.createdAt}<br/>by {post.postAuthor}</>
+          //         )}
+          //       </td>
+          //     </tr>
+          //   ))}
+          // />
         )}
       </Card>
   </>

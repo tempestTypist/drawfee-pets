@@ -18,7 +18,6 @@ const Profile = () => {
 
   const user = data?.me || data?.user || {};
 
-  // redirect to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Redirect to="/me" />;
   }
@@ -46,25 +45,29 @@ const Profile = () => {
                 <div className="janky-card-body-wrapper">
                   <Card.Body className="janky-card-body">
                     <div className="janky-card-inner-body">
-                      <div className="row about-list mb-4">
-                          <div className="col-md-6">
+                      <div className="row about-list mt-0 m-3">
+                          <div className="col-6">
                               <div className="media">
                                   <label>Joined on</label>
                                   <p>4th april 1998</p>
                               </div>
                               <div className="media">
+                                  <label>I Go By</label>
+                                  <p>She/Her</p>
+                              </div>
+                              <div className="media">
+                                  <label>Pets</label>
+                                  <p>{`${user.pets.length}`}</p>
+                              </div>
+                          </div>
+                          <div className="col-6">
+                              <div className="media">
                                   <label>Birthday</label>
                                   <p>11/11/1111</p>
                               </div>
                               <div className="media">
-                                  <label>I Go By</label>
-                                  <p>She/Her</p>
-                              </div>
-                          </div>
-                          <div className="col-md-6">
-                              <div className="media">
-                                  <label>Pets</label>
-                                  <p>{`${user.pets.length}`}</p>
+                                  <label>Forum Posts</label>
+                                  <p>{`${user.posts.length}`}</p>
                               </div>
                               <div className="media">
                                   <label>Favourite Pet</label>
@@ -75,10 +78,6 @@ const Profile = () => {
                                   )
 
                                   }
-                              </div>
-                              <div className="media">
-                                  <label>Forum Posts</label>
-                                  <p>{`${user.posts.length}`}</p>
                               </div>
                           </div>
                           {userParam ? 
@@ -100,7 +99,7 @@ const Profile = () => {
 
               <Card className="janky-card-wrapper mb-2">
                 <Card.Header className="janky-card-header">
-                  User Description              
+                  Description              
                 </Card.Header>
                 <div className="janky-card-body-wrapper">
                   <Card.Body className="janky-card-body">

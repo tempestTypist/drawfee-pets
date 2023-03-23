@@ -56,21 +56,24 @@ const Sidebar = () => {
           </div>
 
           <div className="sidebar-screen">
-            {loading ? (
-              <Loading />
-            ) : (
               <div className="sidebar-screen__inner">
                 {Auth.loggedIn() ? (
                   <>
-                    {(!user?.activePet) 
-                      ? 
-                      <p>No favourite pet!</p>
-                      : 
-                      <>
-                        <Image src={images[`${user.activePet.petSpecies}/${user.activePet.petSpecies}--${user.activePet.petColour}.png`]} alt="Pet image" fluid />
-                        <p className="font-supersonic text-center fw-bold my-3">{user.activePet.petName}</p>
-                      </>
-                    }
+                  {loading ? (
+                    <Loading />
+                    ) : (
+                    <>
+                      {(!user?.activePet) 
+                        ? 
+                        <p>No favourite pet!</p>
+                        : 
+                        <>
+                          <Image src={images[`${user.activePet.petSpecies}/${user.activePet.petSpecies}--${user.activePet.petColour}.png`]} alt="Pet image" fluid />
+                          <p className="font-supersonic text-center fw-bold my-3">{user.activePet.petName}</p>
+                        </>
+                      }
+                    </>
+                    )}
                   </>
                 ) : (
                   <>
@@ -80,7 +83,6 @@ const Sidebar = () => {
                   </>
                 )}
               </div>
-            )}
           </div>
         </motion.div>
     </Col>

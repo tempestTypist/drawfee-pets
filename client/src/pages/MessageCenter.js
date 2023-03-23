@@ -10,13 +10,32 @@ import { faRotateRight, faTrashCan, faEnvelope, faEnvelopeOpen } from '@fortawes
 import { Container, Row, Col, Button, Card, Form, Tab, Tabs, Pagination  } from 'react-bootstrap'
 import JankyTable from '../components/JankyTable'
 import Loading from '../components/Loading'
+import Auth from '../utils/auth'
 const dateFormat = require('../utils/dateFormat');
 
 const MessageCenter = ({ setErrors }) => {
 	const { loading, data } = useQuery(QUERY_ME);
 
+	const checkbox =
+	(<div key={`default-checkbox`}>
+		<Form.Check 
+			type={`checkbox`}
+		/>
+	</div>);
+
+	const toolbar = 
+	(<div className="inbox-toolbar d-flex flex-row align-items-center">
+		<FontAwesomeIcon icon={faRotateRight} size={"lg"} className="me-3" />
+		<FontAwesomeIcon icon={faTrashCan} size={"lg"} className="me-3" />
+		<Link
+			to="/new-message"
+			>
+			New Message
+		</Link>
+	</div>);
+
 	const user = data?.me || {};
-	const inbox = user.inbox;
+	const inbox = user?.inbox;
 
   const [key, setKey] = useState('inbox');
 
@@ -37,11 +56,6 @@ const MessageCenter = ({ setErrors }) => {
 		}
 
 		return date
-		//switch case?
-		//default case, return date as is
-		//if date === today, return just the time it was sent
-		//if date === before today, return the date it was sent
-		//if date === before this year, return DD/MM/YYYY or MM/DD/YYY
 	};
 
   const [deleteMessage, { error }] = useMutation(DELETE_MESSAGE, {
@@ -109,23 +123,33 @@ const MessageCenter = ({ setErrors }) => {
 		}
   };
 
-	const checkbox =
-		(<div key={`default-checkbox`}>
-			<Form.Check 
-				type={`checkbox`}
-			/>
-		</div>);
-
-	const toolbar = 
-		(<div className="inbox-toolbar d-flex flex-row align-items-center">
-			<FontAwesomeIcon icon={faRotateRight} size={"lg"} className="me-3" />
-			<FontAwesomeIcon icon={faTrashCan} size={"lg"} className="me-3" />
-			<Link
-				to="/new-message"
-				>
-				New Message
-			</Link>
-		</div>);
+	const theadData = [ checkbox, "", toolbar, "", "", "" ];
+  const tbodyData = inbox?.map((message, index) => (
+		{
+			id: index,
+			items: [
+				<Form.Check key={`${message._id}-checkbox`} type={`checkbox`}/>,
+				<div className="janky-table__icon message-icon" />,
+				<Link className={`message__${message.read ? "read" : "unread"}`} onClick={message.read ? null : () => readToggle(message._id)} to={`/messages/${message._id}`}>{message.messageTitle}</Link>,
+				<Link to={`/profile/${message.messageAuthor}`}>{message.messageAuthor}</Link>,
+				getTimestamp(message.createdAt),
+				<div className="message-toolbar">
+				<FontAwesomeIcon 
+					icon={message.read ? faEnvelopeOpen : faEnvelope} 
+					size={"lg"} 
+					onClick={() => readToggle(message._id)}
+					className="me-3" 
+					/>
+				<FontAwesomeIcon 
+					icon={faTrashCan} 
+					size={"lg"} 
+					onClick={() => handleDeleteMessage(message._id)}
+					className="me-3" 
+					/>
+				</div>
+			]
+		}
+	));
 
   if (!user?.inbox) {
     return ( 
@@ -142,71 +166,78 @@ const MessageCenter = ({ setErrors }) => {
 		<>
 			<h2>Message Center</h2>
 
-			<Tabs
-				activeKey={key}
-				onSelect={(k) => setKey(k)}
-				className="my-3"
-			>
-				<Tab eventKey="inbox" title="Inbox">
+			{Auth.loggedIn() ? (
+				<>
 					{loading ? 
 						<Loading />
 					:
-						<JankyTable
-							tableHeaders={[checkbox, "", toolbar ]}
-							tableData={inbox.map((message) => (
-								<tr key={message._id} className={`message message__${message.read ? "read" : "unread"} align-middle`}>
-									<td>
-										<div key={`default-checkbox`}>
-											<Form.Check 
-												type={`checkbox`}
-											/>
-										</div>
-									</td>
-									<td className="d-flex align-content-center">
-										<div className="janky-table__icon message-icon__unread" />
-									</td>
-									<td 
-										className="post-title w-100"
-										onClick={message.read ? null : () => readToggle(message._id)}>
-										<Link 
-											to={`/messages/${message._id}`}>
-											{message.messageTitle}
-										</Link>
-									</td>
-									<td>
-										<Link
-											to={`/profile/${message.messageAuthor}`}
-											>
-											{message.messageAuthor}
-										</Link>
-									</td>
-									<td className="text-center">{getTimestamp(message.createdAt)}</td>
-									<td>
-										<div className="message-toolbar">
-											<FontAwesomeIcon 
-												icon={message.read ? faEnvelopeOpen : faEnvelope} 
-												size={"lg"} 
-												onClick={() => readToggle(message._id)}
-												className="me-3" 
+					<Tabs
+						activeKey={key}
+						onSelect={(k) => setKey(k)}
+						className="my-3"
+						>
+						<Tab eventKey="inbox" title="Inbox">
+
+							<JankyTable theadData={theadData} tbodyData={tbodyData} customClass="inbox" />
+							{/* <JankyTable
+								tableHeaders={[checkbox, "", toolbar ]}
+								tableData={inbox.map((message) => (
+									<tr key={message._id} className={`message message__${message.read ? "read" : "unread"} align-middle`}>
+										<td>
+											<div key={`default-checkbox`}>
+												<Form.Check 
+													type={`checkbox`}
 												/>
-											<FontAwesomeIcon 
-												icon={faTrashCan} 
-												size={"lg"} 
-												onClick={() => handleDeleteMessage(message._id)}
-												className="me-3" 
-												/>
-										</div>
-									</td>
-								</tr>
-							))}
-						/>
+											</div>
+										</td>
+										<td className="d-flex align-content-center">
+											<div className="janky-table__icon message-icon__unread" />
+										</td>
+										<td 
+											className="post-title w-100"
+											onClick={message.read ? null : () => readToggle(message._id)}>
+											<Link 
+												to={`/messages/${message._id}`}>
+												{message.messageTitle}
+											</Link>
+										</td>
+										<td>
+											<Link
+												to={`/profile/${message.messageAuthor}`}
+												>
+												{message.messageAuthor}
+											</Link>
+										</td>
+										<td className="text-center">{getTimestamp(message.createdAt)}</td>
+										<td>
+											<div className="message-toolbar">
+												<FontAwesomeIcon 
+													icon={message.read ? faEnvelopeOpen : faEnvelope} 
+													size={"lg"} 
+													onClick={() => readToggle(message._id)}
+													className="me-3" 
+													/>
+												<FontAwesomeIcon 
+													icon={faTrashCan} 
+													size={"lg"} 
+													onClick={() => handleDeleteMessage(message._id)}
+													className="me-3" 
+													/>
+											</div>
+										</td>
+									</tr>
+								))}
+							/> */}
+						</Tab>
+						<Tab eventKey="notifications" title="Notifications">
+
+						</Tab>
+					</Tabs>
 					}
-				</Tab>
-				<Tab eventKey="notifications" title="Notifications">
-
-				</Tab>
-			</Tabs>
-
+				</>
+				) : (
+					<p>You have to be logged in to see this!</p>
+				)}
 			{/* <Pagination /> */}
 		</>
   );

@@ -75,7 +75,7 @@ const App = () => {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Header theme={theme} setTheme={setTheme} />
+        <Header theme={theme} setTheme={setTheme} setErrors={setErrors} />
         <Container fluid>
           <Row className="main-content">
             <Sidebar />

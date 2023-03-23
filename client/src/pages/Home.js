@@ -92,53 +92,57 @@ const Home = () => {
           </div>
         </Col>
 
-        <Col xl={4}>
-          {loading ? (
-            <Loading />
-          ) : (
-            <Card className="janky-card-wrapper key-was-here p-4 pt-0">
-              <Card.Header className="janky-card-header pt-0">
-                <div className="pet-name">
-                  Featured: {pets[previewPet].petName}!
-                </div>
-              </Card.Header>
-              <div className="janky-card-body-wrapper">
-                <Card.Body className="janky-card-body">
-                  <div className="janky-card-inner-body pet-list__wrapper">
-                    <Image src={images[`${pets[previewPet].petSpecies}/${pets[previewPet].petSpecies}--${pets[previewPet].petColour}.png`]} className="pet-list__image featured-pet" alt="Pet image"/>
+        {data ? (
+          <Col xl={4}>
+            {loading ? (
+              <Loading />
+            ) : (
+              <Card className="janky-card-wrapper key-was-here p-4 pt-0">
+                <Card.Header className="janky-card-header pt-0">
+                  <div className="pet-name">
+                    Featured: {pets[previewPet].petName}!
                   </div>
-                </Card.Body>
-              </div>
-              <Card.Footer className="janky-card-footer">
-                <div className="janky-card-footer__inner">
-                  Made by: 
-                  <Link 
-                    className="user-profile-link me-2"
-                    to={`/profile/${pets[previewPet].petOwner}`}>
-                      {pets[previewPet].petOwner} 
-                  </Link>
-                  {/* {showUsername ? (
-                    <Link
-                      className="text-light"
-                      to={`/profile/${pet.petOwner}`}
-                    >
-                      {pet.petOwner} <br />
-                      <span style={{ fontSize: '1rem' }}>
-                        created this pet on {pet.createdAt}
-                      </span>
-                    </Link>
-                  ) : (
-                    <>
-                      <span style={{ fontSize: '1rem' }}>
-                        You made this pet on xTimestampx
-                      </span>
-                    </>
-                  )} */}
+                </Card.Header>
+                <div className="janky-card-body-wrapper">
+                  <Card.Body className="janky-card-body">
+                    <div className="janky-card-inner-body pet-list__wrapper">
+                      <Image src={images[`${pets[previewPet].petSpecies}/${pets[previewPet].petSpecies}--${pets[previewPet].petColour}.png`]} className="pet-list__image featured-pet" alt="Pet image"/>
+                    </div>
+                  </Card.Body>
                 </div>
-              </Card.Footer>
-            </Card>
-          )}
-        </Col>
+                <Card.Footer className="janky-card-footer">
+                  <div className="janky-card-footer__inner">
+                    Made by: 
+                    <Link 
+                      className="user-profile-link me-2"
+                      to={`/profile/${pets[previewPet].petOwner}`}>
+                        {pets[previewPet].petOwner} 
+                    </Link>
+                    {/* {showUsername ? (
+                      <Link
+                        className="text-light"
+                        to={`/profile/${pet.petOwner}`}
+                      >
+                        {pet.petOwner} <br />
+                        <span style={{ fontSize: '1rem' }}>
+                          created this pet on {pet.createdAt}
+                        </span>
+                      </Link>
+                    ) : (
+                      <>
+                        <span style={{ fontSize: '1rem' }}>
+                          You made this pet on xTimestampx
+                        </span>
+                      </>
+                    )} */}
+                  </div>
+                </Card.Footer>
+              </Card>
+            )}
+          </Col>
+        ) : (
+          <></>
+        )}
       </Row>
     </Container>
   );
