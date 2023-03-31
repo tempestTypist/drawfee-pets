@@ -38,9 +38,13 @@ export const ADD_PET = gql`
 `;
 
 export const FAVOURITE_PET = gql`
-  mutation favouritePet($petId: String!) {
+  mutation favouritePet($petId: ID!) {
     favouritePet(petId: $petId) {
       _id
+      petSpecies
+      petName
+      petColour
+      createdAt
     }
   }
 `;
@@ -69,9 +73,15 @@ export const SEND_MESSAGE = gql`
 `;
 
 export const TOGGLE_READ = gql`
-  mutation toggleRead($messageId: String!) {
+  mutation toggleRead($messageId: ID!) {
     toggleRead(messageId: $messageId) {
       _id
+      messageRecipient
+      messageTitle
+      messageText
+      messageAuthor
+      read
+      createdAt
     }
   }
 `;
@@ -79,6 +89,20 @@ export const TOGGLE_READ = gql`
 export const DELETE_MESSAGE = gql`
   mutation deleteMessage($messageId: String!) {
     deleteMessage(messageId: $messageId) {
+      _id
+      messageRecipient
+      messageTitle
+      messageText
+      messageAuthor
+      read
+      createdAt
+    }
+  }
+`;
+
+export const DELETE_MANY_MESSAGES = gql`
+  mutation deleteManyMessages($messageId: String!) {
+    deleteManyMessages(messageId: $messageId) {
       _id
     }
   }

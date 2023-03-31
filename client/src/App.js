@@ -94,7 +94,7 @@ const App = () => {
               <Route exact path="/create-pet">
                 <CreatePet setErrors={setErrors} />
               </Route>
-              <Route exact path="/message-center">
+              <Route exact path="/message-center/:tab">
                 <MessageCenter setErrors={setErrors} />
               </Route>
               <Route exact path="/messages/:messageId">
@@ -114,7 +114,7 @@ const App = () => {
                 <NewPost setErrors={setErrors} />
               </Route>
               {/* uses QUERY_USER, QUERY_ME */}
-              <Route exact path="/profile/edit-profile">
+              <Route exact path="/edit-profile">
                 <EditProfile />
               </Route>
               <Route exact path="/me">

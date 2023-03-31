@@ -15,10 +15,10 @@ const Forum = () => {
   const { loading, data } = useQuery(QUERY_POSTS);
   const posts = data?.posts || [];
 
-  const theadData = ["", <h2>Topic</h2>, "Made By", "Replies", "Last Post"];
+  const theadData = ["", "Topic", "Made By", "Replies", "Last Post"];
   const tbodyData = posts.map((post, index) => (
     { 
-      id: index,
+      id: post._id,
       items: [
         <div className="janky-table__icon post-icon" />, 
         <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>, 
@@ -33,7 +33,6 @@ const Forum = () => {
     }
   ));
   
-
   if (!posts.length) {
     return ( <Link className="btn" to="/new-post">New Topic</Link> )
   }

@@ -50,7 +50,6 @@ useEffect(() => {
 	let listItems = []
 	let level
 	let className
-	console.log("currentIndex pre-card generation is: " + currentIndex)
 
 	for (let i = currentIndex - 2; i < currentIndex + 3; i++) {
 			let index = i

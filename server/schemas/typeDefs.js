@@ -74,11 +74,12 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addPet(petSpecies: String!, petName: String!, petColour: String!): Pet
-    favouritePet(petId: String!): Pet
+    favouritePet(petId: ID!): Pet
     removePet(petId: String!): Pet
     sendMessage(messageRecipient: String!, messageTitle: String!, messageText: String!): Message
-    toggleRead(messageId: String!): Message
+    toggleRead(messageId: ID!): Message
     deleteMessage(messageId: String!): Message
+    deleteManyMessages(messageId: String!): Message
     addPost(postTitle: String!, postText: String!): Post
     addComment(postId: ID!, commentText: String!): Post
     removePost(postId: String!): Post

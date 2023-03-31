@@ -11,6 +11,7 @@ import { faBell, faEnvelope, faEnvelopeOpen, faGear } from '@fortawesome/free-so
 import { Container, Row, Navbar, Nav, NavDropdown, Button, Offcanvas } from 'react-bootstrap' 
 import Logo from '../../assets/images/drawfee-logos/drawfee-light.png'
 import Loading from '../Loading'
+const dateFormat = require('../../utils/dateFormat');
 
 const Header = ({ theme, setTheme, setErrors }) => {
   const { loading, data } = useQuery(QUERY_ME);
@@ -68,6 +69,29 @@ const Header = ({ theme, setTheme, setErrors }) => {
 		}
   };
 
+  const markAllRead = async () => {
+
+  }
+
+	const getTimestamp = (date) => {
+		const newDate = new Date()
+		const today = dateFormat(newDate)
+		// console.log(today)
+		const mmdd = today.split(",", 1)[0]
+		const year = newDate.getFullYear()
+		// console.log(year)
+
+		if ( date.split(",", 1)[0] === mmdd) {
+			return date.split("at ")[1]
+		}
+
+		if ( date.split(" ")[2] === year.toString()) {
+			return date.split(",", 1)
+		}
+
+		return date
+	};
+
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
@@ -101,16 +125,13 @@ const Header = ({ theme, setTheme, setErrors }) => {
               <Nav className="justify-content-end align-items-lg-center flex-grow-1 pe-3">
                 {Auth.loggedIn() ? (
                   <>
-                    <Nav.Item>
-                      <Link to="/community-forums" className="nav-link">
-                        Community
-                      </Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Link to="/create-pet" className="nav-link">
-                        Create a Pet
-                      </Link>
-                    </Nav.Item>
+                    <Link to="/community-forums" className="nav-link">
+                      Community
+                    </Link>
+                    
+                    <Link to="/create-pet" className="nav-link">
+                      Create a Pet
+                    </Link>
 
                     <NavDropdown 
                       onMouseEnter={() => setHovered(true)}
@@ -129,19 +150,18 @@ const Header = ({ theme, setTheme, setErrors }) => {
                       <NavDropdown.Header>
                         <h4 className="title">Messages ({`${unread}`})</h4>
                         <div className="ms-auto action-area">
-                          <a href="javascript:void(0)">Mark All Read</a>
+                          <a onClick={() => markAllRead()}>Mark All Read</a>
                         </div>
                       </NavDropdown.Header>
 
                       <NavDropdown.Divider />
 
                       {inbox && inbox.map((message) => (
-                        <>
-                          {message.read ? 
-                            <>
-                            </> 
+                          [message.read ? 
+                            null
                           :
                             <Link 
+                              key={message._id}
                               to={`/messages/${message._id}`} 
                               onClick={message.read ? null : () => readToggle(message._id)}
                               className="d-flex justify-content-between dropdown-item"
@@ -152,16 +172,15 @@ const Header = ({ theme, setTheme, setErrors }) => {
                               </span>
 
                               <span className="action-area h-100 min-w-80">
-                                <span className="meta-date ms-2 mb-1">{message.createdAt.split(",", 1)}</span>
+                                <span className="meta-date ms-2 mb-1">{getTimestamp(message.createdAt)}</span>
                               </span>
                             </Link>
-                          }
-                        </>
+                          ]
                       ))}
 
                       <NavDropdown.Divider />
 
-                      <Link to="/message-center" className="dropdown-item dropdown-menu-footer card-link">
+                      <Link to="/message-center/inbox" className="dropdown-item dropdown-menu-footer card-link">
                         See All 
                       </Link>
                     </NavDropdown>
@@ -171,7 +190,6 @@ const Header = ({ theme, setTheme, setErrors }) => {
                         <FontAwesomeIcon className="lg-me-2 d-none d-lg-block dropdown-icon" icon={faBell} />
                         <span className="d-lg-none">Notifications</span>
                       </>} 
-                      className="" 
                       align="end" 
                       id="notifications-dropdown"
                       >
@@ -184,7 +202,7 @@ const Header = ({ theme, setTheme, setErrors }) => {
 
                       <NavDropdown.Divider />
 
-                      <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.1">
+                      <NavDropdown.Item className="d-flex justify-content-between">
                         <span className="media-body text-truncate">
                           <img className="dt-avatar me-2" src="https://via.placeholder.com/36x36" alt="User"></img>
                           <span className="message">
@@ -195,38 +213,11 @@ const Header = ({ theme, setTheme, setErrors }) => {
                         <span className="meta-date ms-2">8 hours ago</span>
                       </NavDropdown.Item>
 
-                      <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.2">
-                        <span className="media-body text-truncate">
-                          <img className="dt-avatar me-2" src="https://via.placeholder.com/36x36" alt="User" />
-                          <span className="message">
-                            <span className="user-name">Jonathan Madano</span> commented on your post.
-                          </span>
-                        </span>
-                        <span className="meta-date ms-2">9 hours ago</span>
-                      </NavDropdown.Item>
-
-                      <NavDropdown.Item className="d-flex justify-content-between" href="#action/3.3">
-                        <span className="media-body text-truncate">
-                          <img className="dt-avatar me-2" src="https://via.placeholder.com/36x36" alt="User" />
-                          <span className="message">
-                            <span className="user-name">Chelsea Brown</span> sent a video recomendation.
-                          </span>
-                        </span>
-                        <span className="meta-date ms-2">
-                          13 hours ago
-                        </span>
-                      </NavDropdown.Item>
-
                       <NavDropdown.Divider />
                       
-                      <NavDropdown.Item href="#action/3.4">
-                        <div className="dropdown-menu-footer">
-                          <Link to="/message-center" className="card-link"> 
-                            See All 
-                            <i className="icon icon-arrow-right icon-fw"></i>
-                          </Link>
-                        </div>
-                      </NavDropdown.Item>
+                      <Link to="/message-center/notifications" className="dropdown-item dropdown-menu-footer card-link">
+                        See All 
+                      </Link>
                     </NavDropdown>
 
                     <NavDropdown 
@@ -266,19 +257,23 @@ const Header = ({ theme, setTheme, setErrors }) => {
                   </>
                 ) : (
                   <>
+                    <Nav.Item>
                     <Link className="nav-link m-2" to="/login">
                       Login
                     </Link>
+                    </Nav.Item>
+                    <Nav.Item>
                     <Link className="nav-link m-2" to="/signup">
                       Signup
                     </Link>
+                    </Nav.Item>
                     <div className="theme-toggler ms-2">
-                      <div class="toggle">
-                        <input class="toggle-input" type="checkbox" checked={checked} onChange={toggleTheme} />
-                        <div class="toggle-bg"></div>
-                        <div class="toggle-switch">
-                          <div class="toggle-switch-figure"></div>
-                          <div class="toggle-switch-figureAlt"></div>
+                      <div className="toggle">
+                        <input className="toggle-input" type="checkbox" checked={checked} onChange={toggleTheme} />
+                        <div className="toggle-bg"></div>
+                        <div className="toggle-switch">
+                          <div className="toggle-switch-figure"></div>
+                          <div className="toggle-switch-figureAlt"></div>
                         </div>  
                       </div>
                     </div>

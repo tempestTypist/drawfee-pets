@@ -22,10 +22,10 @@ const Profile = () => {
     return <Redirect to="/me" />;
   }
 
-  if (!user?.username) {
+  if (!user.username) {
     return (
       <h4>
-        You need to be logged in to see this!
+        No user by that name!
       </h4>
     );
   }
@@ -57,7 +57,11 @@ const Profile = () => {
                               </div>
                               <div className="media">
                                   <label>Pets</label>
-                                  <p>{`${user.pets.length}`}</p>
+                                  {!user.pets ? (
+                                    <p>No pets!</p>
+                                  ) : (
+                                    <p>{`${user.pets.length}`}</p>
+                                  )}
                               </div>
                           </div>
                           <div className="col-6">
@@ -67,7 +71,11 @@ const Profile = () => {
                               </div>
                               <div className="media">
                                   <label>Forum Posts</label>
-                                  <p>{`${user.posts.length}`}</p>
+                                  {!user.posts ? (
+                                    <p>No posts!</p>
+                                  ) : (
+                                    <p>{`${user.posts.length}`}</p>
+                                  )}
                               </div>
                               <div className="media">
                                   <label>Favourite Pet</label>
@@ -75,18 +83,22 @@ const Profile = () => {
                                     <p>No favourite!</p>
                                   ) : (
                                     <p>{`${user.activePet.petName}`}</p>
-                                  )
-
-                                  }
+                                  )}
                               </div>
                           </div>
                           {userParam ? 
-                            <></>
+                            <div className="col-12">
+                            <Link 
+                              className="me-2"
+                              to={`/new-message`}>
+                                Send message
+                            </Link>
+                          </div>
                           : 
                             <div className="col-12">
                               <Link 
                                 className="me-2"
-                                to={`/profile/edit-profile`}>
+                                to={`/edit-profile`}>
                                   Edit Profile
                               </Link>
                             </div>

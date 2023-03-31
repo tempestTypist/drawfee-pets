@@ -11,11 +11,9 @@ import Loading from '../components/Loading'
 import { QUERY_SINGLE_POST } from '../utils/queries'
 
 const SinglePost = ({ setErrors }) => {
-  // `useParams()` to retrieve value of the route parameter `:profileId`
   const { postId } = useParams();
 
   const { loading, data } = useQuery(QUERY_SINGLE_POST, {
-    // pass URL parameter
     variables: { postId: postId },
   });
 
@@ -27,7 +25,7 @@ const SinglePost = ({ setErrors }) => {
         <Loading />
       ) : (
         <>
-          <h3 className="card-header bg-dark text-light p-2 m-0">
+          <h3 className="card-header p-2 m-0">
             <Link
               className=""
               to={`/profile/${post.postAuthor}`}
@@ -39,15 +37,9 @@ const SinglePost = ({ setErrors }) => {
               had this thought on {post.createdAt}
             </span>
           </h3>
-          <div className="bg-light py-4">
+          <div className="py-4">
             <blockquote
               className="p-4"
-              style={{
-                fontSize: '1.5rem',
-                fontStyle: 'italic',
-                border: '2px dotted #1a1a1a',
-                lineHeight: '1.5',
-              }}
             >
               {post.postText}
             </blockquote>
@@ -56,7 +48,7 @@ const SinglePost = ({ setErrors }) => {
           <div className="my-5">
             <CommentList comments={post.comments} />
           </div>
-          <div className="m-3 p-4" style={{ border: '1px dotted #1a1a1a' }}>
+          <div className="m-3 p-4">
             <CommentForm postId={post._id} setErrors={setErrors} />
           </div>
         </>

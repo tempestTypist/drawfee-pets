@@ -10,12 +10,15 @@ import { QUERY_SINGLE_MESSAGE } from '../utils/queries'
 
 const SingleMessage = ({ setErrors }) => {
   const { messageId } = useParams();
+  console.log("message ID: " + messageId)
 
   const { loading, data } = useQuery(QUERY_SINGLE_MESSAGE, {
     variables: { messageId: messageId },
   });
 
   const message = data?.message || {};
+
+  console.log(message)
 
   return (
     <div className="my-3">

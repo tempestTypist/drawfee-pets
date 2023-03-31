@@ -1,51 +1,69 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import ReactDOM from 'react-dom';
+import { Link, useParams } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client'
-import { QUERY_ME } from '../utils/queries'
-import { TOGGLE_READ, DELETE_MESSAGE } from '../utils/mutations'
+import { QUERY_ME, QUERY_INBOX, QUERY_SINGLE_MESSAGE } from '../utils/queries'
+import { TOGGLE_READ, DELETE_MESSAGE, DELETE_MANY_MESSAGES } from '../utils/mutations'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRotateRight, faTrashCan, faEnvelope, faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons'
 
 import { Container, Row, Col, Button, Card, Form, Tab, Tabs, Pagination  } from 'react-bootstrap'
 import JankyTable from '../components/JankyTable'
+import Checkbox from '../components/Checkbox'
 import Loading from '../components/Loading'
 import Auth from '../utils/auth'
 const dateFormat = require('../utils/dateFormat');
 
 const MessageCenter = ({ setErrors }) => {
-	const { loading, data } = useQuery(QUERY_ME);
+	const { tab: tabParam } = useParams();
 
-	const checkbox =
-	(<div key={`default-checkbox`}>
-		<Form.Check 
-			type={`checkbox`}
-		/>
-	</div>);
+	const username = Auth.getProfile().data.username 
+	console.log(typeof(username))
 
-	const toolbar = 
-	(<div className="inbox-toolbar d-flex flex-row align-items-center">
-		<FontAwesomeIcon icon={faRotateRight} size={"lg"} className="me-3" />
-		<FontAwesomeIcon icon={faTrashCan} size={"lg"} className="me-3" />
-		<Link
-			to="/new-message"
-			>
-			New Message
-		</Link>
-	</div>);
+	const { loading, data, refetch } = useQuery(QUERY_INBOX, { 
+		variables: username
+	});
 
-	const user = data?.me || {};
-	const inbox = user?.inbox;
+	// const { loading, data, refetch } = 
+	// 	tabParam ? 
+	// 		useQuery(`QUERY_${tabParam.toUpperCase()}`, { variables: { username: Auth.getProfile().data.username }})
+	// 	: 
+	// 		useQuery(QUERY_INBOX, { variables: { username: Auth.getProfile().data.username }})
 
-  const [key, setKey] = useState('inbox');
+  const [key, setKey] = useState(tabParam ? tabParam : 'inbox');
+	const [isCheckAll, setIsCheckAll] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
+
+	// const user = data?.me || {};
+	// const inbox = user?.inbox;
+	const inbox = data?.inbox || [];
+
+	console.log(inbox)
+
+	const handleSelectAll = (e) => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(inbox?.map(message => message._id));
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
+  };
+
+  const handleClick = (e) => {
+    const { id, checked } = e.target;
+    setIsCheck([...isCheck, id]);
+    if (!checked) {
+      setIsCheck(isCheck.filter(item => item !== id));
+    }
+  };
 
 	const getTimestamp = (date) => {
 		const newDate = new Date()
 		const today = dateFormat(newDate)
-		console.log(today)
+		// console.log(today)
 		const mmdd = today.split(",", 1)[0]
 		const year = newDate.getFullYear()
-		console.log(year)
+		// console.log(year)
 
 		if ( date.split(",", 1)[0] === mmdd) {
 			return date.split("at ")[1]
@@ -61,28 +79,11 @@ const MessageCenter = ({ setErrors }) => {
   const [deleteMessage, { error }] = useMutation(DELETE_MESSAGE, {
     update(cache, { data: { deleteMessage } }) {
       try {
-        cache.writeQuery({
-          query: QUERY_ME,
-          data: { me: deleteMessage },
-        });
+				const { inbox } = cache.readQuery({query: QUERY_INBOX});
 
-			} catch (err) {
-				const { name, message } = err;
-    
-        setErrors({
-          [name]: message,
-        });
-      }
-    },
-  });
-
-  const [toggleRead, { err }] = useMutation(TOGGLE_READ, {
-    update(cache, { data: { toggleRead } }) {
-      try {
-				const { me } = cache.readQuery({ query: QUERY_ME });
         cache.writeQuery({
-          query: QUERY_ME,
-          data: { me: toggleRead },
+          query: QUERY_INBOX,
+          data: { inbox: deleteMessage },
         });
 
 			} catch (err) {
@@ -107,7 +108,57 @@ const MessageCenter = ({ setErrors }) => {
 				[name]: message,
 			});
 		}
+		console.log("delete: " + JSON.stringify(data))
   };
+
+	// const [deleteManyMessages, { errror }] = useMutation(DELETE_MANY_MESSAGES, {
+  //   update(cache, { data: { deleteManyMessages } }) {
+  //     try {
+  //       cache.writeQuery({
+  //         query: QUERY_INBOX,
+  //         data: { me: deleteManyMessages },
+  //       });
+
+	// 		} catch (err) {
+	// 			const { name, message } = err;
+    
+  //       setErrors({
+  //         [name]: message,
+  //       });
+  //     }
+  //   },
+  // });
+
+	// const handleDeleteMany = async (messageId) => {
+	// 	try {
+	// 		const { data } = await deleteManyMessages({
+	// 			variables: { messageId },
+	// 		});
+	// 	} catch (err) {
+	// 		const { name, message } = err;
+    
+	// 		setErrors({
+	// 			[name]: message,
+	// 		});
+	// 	}
+  // };
+
+  const [toggleRead, { err }] = useMutation(TOGGLE_READ, {
+    update(cache, { data: { toggleRead } }) {
+      try {
+				cache.writeQuery({
+          query: QUERY_SINGLE_MESSAGE,
+          data: { message: {...toggleRead, read: !toggleRead.read} },
+        });
+			} catch (err) {
+				const { name, message } = err;
+    
+        setErrors({
+          [name]: message,
+        });
+      }
+    },
+  });
 
 	const readToggle = async (messageId) => {
 		try {
@@ -123,35 +174,45 @@ const MessageCenter = ({ setErrors }) => {
 		}
   };
 
-	const theadData = [ checkbox, "", toolbar, "", "", "" ];
+	const toolbar = 
+	(<div className="inbox-toolbar d-flex flex-row align-items-center">
+		<FontAwesomeIcon icon={faRotateRight} size={"lg"} className="me-3" onClick={() => refetch()} />
+		<FontAwesomeIcon icon={faTrashCan} size={"lg"} className="me-3" />
+		{/* onClick={() => handleDeleteMany(isCheck)} */}
+		<Link to="/new-message" >
+			New Message
+		</Link>
+	</div>);
+
+	const theadData = [ <Checkbox type="checkbox" name="selectAll" id="selectAll" handleClick={handleSelectAll} isChecked={isCheckAll}/>, "", toolbar, "", "", "" ];
   const tbodyData = inbox?.map((message, index) => (
 		{
 			id: index,
 			items: [
-				<Form.Check key={`${message._id}-checkbox`} type={`checkbox`}/>,
+				<Checkbox type="checkbox" id={`${message._id}`} handleClick={handleClick} isChecked={isCheck.includes(`${message._id}`)}/>,
 				<div className="janky-table__icon message-icon" />,
 				<Link className={`message__${message.read ? "read" : "unread"}`} onClick={message.read ? null : () => readToggle(message._id)} to={`/messages/${message._id}`}>{message.messageTitle}</Link>,
 				<Link to={`/profile/${message.messageAuthor}`}>{message.messageAuthor}</Link>,
 				getTimestamp(message.createdAt),
 				<div className="message-toolbar">
-				<FontAwesomeIcon 
-					icon={message.read ? faEnvelopeOpen : faEnvelope} 
-					size={"lg"} 
-					onClick={() => readToggle(message._id)}
-					className="me-3" 
-					/>
-				<FontAwesomeIcon 
-					icon={faTrashCan} 
-					size={"lg"} 
-					onClick={() => handleDeleteMessage(message._id)}
-					className="me-3" 
-					/>
+					<FontAwesomeIcon 
+						icon={message.read ? faEnvelopeOpen : faEnvelope} 
+						size={"lg"} 
+						onClick={() => readToggle(message._id)}
+						className="me-3" 
+						/>
+					<FontAwesomeIcon 
+						icon={faTrashCan} 
+						size={"lg"} 
+						onClick={() => handleDeleteMessage(message._id)}
+						className="me-3" 
+						/>
 				</div>
 			]
 		}
 	));
 
-  if (!user?.inbox) {
+  if (!inbox) {
     return ( 
 			<>
 			<h2>Message Center</h2>
@@ -171,68 +232,18 @@ const MessageCenter = ({ setErrors }) => {
 					{loading ? 
 						<Loading />
 					:
-					<Tabs
-						activeKey={key}
-						onSelect={(k) => setKey(k)}
-						className="my-3"
-						>
-						<Tab eventKey="inbox" title="Inbox">
-
-							<JankyTable theadData={theadData} tbodyData={tbodyData} customClass="inbox" />
-							{/* <JankyTable
-								tableHeaders={[checkbox, "", toolbar ]}
-								tableData={inbox.map((message) => (
-									<tr key={message._id} className={`message message__${message.read ? "read" : "unread"} align-middle`}>
-										<td>
-											<div key={`default-checkbox`}>
-												<Form.Check 
-													type={`checkbox`}
-												/>
-											</div>
-										</td>
-										<td className="d-flex align-content-center">
-											<div className="janky-table__icon message-icon__unread" />
-										</td>
-										<td 
-											className="post-title w-100"
-											onClick={message.read ? null : () => readToggle(message._id)}>
-											<Link 
-												to={`/messages/${message._id}`}>
-												{message.messageTitle}
-											</Link>
-										</td>
-										<td>
-											<Link
-												to={`/profile/${message.messageAuthor}`}
-												>
-												{message.messageAuthor}
-											</Link>
-										</td>
-										<td className="text-center">{getTimestamp(message.createdAt)}</td>
-										<td>
-											<div className="message-toolbar">
-												<FontAwesomeIcon 
-													icon={message.read ? faEnvelopeOpen : faEnvelope} 
-													size={"lg"} 
-													onClick={() => readToggle(message._id)}
-													className="me-3" 
-													/>
-												<FontAwesomeIcon 
-													icon={faTrashCan} 
-													size={"lg"} 
-													onClick={() => handleDeleteMessage(message._id)}
-													className="me-3" 
-													/>
-											</div>
-										</td>
-									</tr>
-								))}
-							/> */}
-						</Tab>
-						<Tab eventKey="notifications" title="Notifications">
-
-						</Tab>
-					</Tabs>
+						<Tabs
+							activeKey={key}
+							onSelect={(k) => setKey(k)}
+							className="my-3"
+							>
+							<Tab eventKey="inbox" title="Inbox">
+								<JankyTable theadData={theadData} tbodyData={tbodyData} customClass="inbox" />
+							</Tab>
+							<Tab eventKey="notifications" title="Notifications">
+								{/* <JankyTable theadData={notiHead} tbodyData={notiBody} customClass="notifications" /> */}
+							</Tab>
+						</Tabs>
 					}
 				</>
 				) : (

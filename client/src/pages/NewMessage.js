@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { useMutation } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
 
 import { SEND_MESSAGE } from '../utils/mutations'
 import { QUERY_INBOX, QUERY_ME, QUERY_USER } from '../utils/queries'
@@ -18,19 +18,24 @@ const NewMessage = ({ setErrors }) => {
 
 	const { messageRecipient, messageTitle, messageText } = message;
 
+  // const { loading, data } = useQuery(QUERY_INBOX, { 
+  //   variables: { username: messageRecipient } 
+  // });
+  // const inbox = data?.inbox || [];
+  // console.log(inbox)
+
   const [sendMessage, { error, data }] = useMutation(SEND_MESSAGE, {
     update(cache, { data: { sendMessage } }) {
       try {
-				const { user } = cache.readQuery({ 
-					query: QUERY_USER,
+				const inbox = cache.readQuery({ 
+					query: QUERY_INBOX,
 					variables: { 
-						username: `${messageRecipient}`, 
+						username: messageRecipient
 					},
 				});
-
 				cache.writeQuery({
-					query: QUERY_USER,
-					data: { inbox: [sendMessage, ...user.inbox] },
+					query: QUERY_INBOX,
+					data: { inbox: [sendMessage, inbox] },
 				});
       } catch (err) {
         const { name, message } = err;
@@ -106,7 +111,7 @@ const NewMessage = ({ setErrors }) => {
             messageAuthor: Auth.getProfile().data.username,
           },
         });
-        window.location.assign('/message-center')
+        window.location.assign('/message-center/inbox')
       } catch (err) {
         const { name, message } = err;
     
@@ -127,7 +132,7 @@ const NewMessage = ({ setErrors }) => {
                 {Auth.loggedIn() ? (
                   <>
                     {data ? (
-                      <p>Message sent!</p>
+                      <p className="text-center">Message sent!</p>
                     ) : (
                       <Form 
                         className="flex-row justify-center align-center mx-4"
@@ -168,7 +173,7 @@ const NewMessage = ({ setErrors }) => {
                           </div>
                         </div>
                       </Form>
-                    )}
+                    )}  
                   </>
                 ) : (
                   <p>

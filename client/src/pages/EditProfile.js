@@ -10,52 +10,25 @@ import Auth from '../utils/auth'
 import { Form } from 'react-bootstrap'
 
 const EditProfile = ({ setErrors }) => {
-  const [message, setMessage] = useState({
-		messageRecipient: '',
-    messageTitle: '',
-    messageText: ''
+  const [profile, updateProfile] = useState({
+    description: ''
   });
 
-	const { messageRecipient, messageTitle, messageText } = message;
-
-
+	const { description } = profile;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-		setMessage((prev) => ({
+		updateProfile((prev) => ({
 			...prev,
 			[name]: value,
 		}));
   };
 
   const validateForm = () => {
-    const { messageRecipient, messageTitle, messageText } = message;
+    const { description } = profile;
     const errors = {};
     setErrors();
 
-		if (messageRecipient.trim().length === 0) {
-      errors.recipientNull = "Please enter a Recipient!"
-    } else if (messageRecipient.trim().length < 2) {
-      errors.recipientLen = "Your Recipient is too short!"
-    } else if (messageRecipient.length > 100) {
-      errors.recipientLen = "Recipient cannot exceed 100 characters!"
-    }
-
-    if (messageTitle.trim().length === 0) {
-      errors.titleNull = "Please enter a title!"
-    } else if (messageTitle.trim().length < 2) {
-      errors.titleLen = "Your title is too short!"
-    } else if (messageTitle.length > 100) {
-      errors.titleLen = "Title cannot exceed 100 characters!"
-    }
-
-    if (messageText.trim().length === 0) {
-      errors.bodyNull = "Please enter text for your message!"
-    } else if (messageText.trim().length < 2) {
-      errors.bodyLen = "Your message is too short!"
-    } else if (messageText.length > 280) {
-      errors.bodyLen = "Please shorten your message, it cannot exceed 280 characters!"
-    }
 
     setErrors(errors)
 
@@ -91,8 +64,7 @@ const EditProfile = ({ setErrors }) => {
 
   return (
     <div className="flex-row justify-center">
-      <div
-        className="col-12 col-md-10">
+      <div className="col-12 col-md-10">
 
         <h2 className="mb-4">Edit Profile</h2>
 
@@ -102,35 +74,21 @@ const EditProfile = ({ setErrors }) => {
 						onSubmit={handleFormSubmit}
 						>
 						<Form.Group className="mb-3">
-							<Form.Label>Recipient</Form.Label>
-							<Form.Control 
-								type="text" 
-								name="messageRecipient"
-								value={message.messageRecipient}
-								onChange={handleChange} />
-						</Form.Group>
-						<Form.Group className="mb-3">
-							<Form.Label>Title</Form.Label>
-							<Form.Control 
-								type="text" 
-								name="messageTitle"
-								value={message.messageTitle}
-								onChange={handleChange} />
-						</Form.Group>
-						<Form.Group className="mb-3">
-							<Form.Label>Description</Form.Label>
+							<Form.Label>Description (optional)</Form.Label>
 							<Form.Control 
 								as="textarea" 
 								rows={3}
-								name="messageText"
-								value={message.messageText}
+								name="description"
+								value={profile.description}
 								style={{ lineHeight: '1.5', resize: 'vertical' }}
 								onChange={handleChange} />
 						</Form.Group>
 						<div className="col-12 col-lg-3">
-							<button className="btn btn-primary btn-block py-3" type="submit">
-								Send Message
-							</button>
+              <div className="btn-janky-wrapper">
+                <button className="btn-janky btn btn-theme" type="submit">
+                  Save
+                </button>
+              </div>
 						</div>
 					</Form>
         ) : (

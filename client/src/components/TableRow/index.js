@@ -1,11 +1,11 @@
 import React from "react";
 
 const TableRow = ({ data }) => {
-console.log(data)
-    return (
+
+	return (
         <tr>
-            {data?.map((item) => {
-                return <td key={item}>{item}</td>;
+            {data?.map((item, index) => {
+                return <td key={`cell-${index}`}>{item}</td>;
             })}
         </tr>
     );

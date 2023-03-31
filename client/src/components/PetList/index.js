@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
 import { REMOVE_PET, FAVOURITE_PET } from '../../utils/mutations';
-import { QUERY_ME } from '../../utils/queries';
+import { QUERY_ME, QUERY_SINGLE_PET } from '../../utils/queries';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -25,7 +25,6 @@ const PetList = ({
 	const images = ImageImport.importAll(require.context('../../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
   const { pets, activePet } = user
 
-  //this sets the state of favourite to the activepet
   const [favourite, setFavourite] = useState({
     activePet: activePet,
   });
@@ -45,12 +44,8 @@ const PetList = ({
     },
   });
 
-  //onclick function
   const handleFavePet = async (index) => {
-    //captures id of the pet the star was clicked on
     const petId = pets[index]._id;
-
-    //set favourite to the pet with the matching index 
     setFavourite({ activePet: pets[index] });
 
     try {

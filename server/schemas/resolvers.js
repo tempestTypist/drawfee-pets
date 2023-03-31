@@ -8,7 +8,7 @@ const resolvers = {
       return User.find().populate('pets');
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('pets');
+      return User.findOne({ username }).populate('pets').populate({path: 'inbox', options: { sort: { createdAt: -1 }}});
     },
     allpets: async () => {
       return AllPets.find().populate('allpets');
@@ -27,8 +27,7 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     inbox: async (parent, { username }) => {
-      const params = username ? { username } : {};
-      return Message.find(params).sort({ createdAt: -1 });
+      return Message.find({ messageRecipient: username }).sort({ createdAt: -1 })
     },
     message: async (parent, { messageId }) => {
       return Message.findOne({ _id: messageId });
@@ -94,7 +93,7 @@ const resolvers = {
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $set: { activePet: pet } }
+          { $set: { activePet: {...pet} } }
         );
 
         return pet;
@@ -167,6 +166,17 @@ const resolvers = {
         );
 
         return message;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    deleteManyMessages: async (parent, { messageId }, context) => {
+      if (context.user) {
+        await Message.deleteMany(
+          {
+            _id: {
+              $in: [...messageId]
+            },
+          })
       }
       throw new AuthenticationError('You need to be logged in!');
     },

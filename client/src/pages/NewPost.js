@@ -145,9 +145,11 @@ const NewPost = ({ setErrors }) => {
               Character Count: {characterCount}/280
             </p>
             <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
-                Add Post
-              </button>
+              <div className="btn-janky-wrapper">
+                <button className="btn-janky btn btn-theme" type="submit">
+                  Add Post
+                </button>
+              </div>
             </div>
           </Form>
         ) : (

@@ -117,7 +117,7 @@ export const QUERY_SINGLE_POST = gql`
 `;
 
 export const QUERY_INBOX = gql`
-  query getInbox($username: String!) {
+  query getInbox($username: String) {
     inbox(username: $username) {
       _id
       messageRecipient
