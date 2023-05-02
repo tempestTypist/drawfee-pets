@@ -166,7 +166,6 @@ export const QUERY_ME = gql`
       }
       inbox {
         _id
-        messageRecipient
         messageTitle
         messageText
         messageAuthor

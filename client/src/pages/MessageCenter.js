@@ -8,7 +8,7 @@ import { TOGGLE_READ, DELETE_MESSAGE, DELETE_MANY_MESSAGES } from '../utils/muta
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRotateRight, faTrashCan, faEnvelope, faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons'
 
-import { Container, Row, Col, Button, Card, Form, Tab, Tabs, Pagination  } from 'react-bootstrap'
+import { Container, Row, Col, Button, Card, Form, Tab, Tabs, Spinner, Pagination  } from 'react-bootstrap'
 import JankyTable from '../components/JankyTable'
 import Checkbox from '../components/Checkbox'
 import Loading from '../components/Loading'
@@ -19,11 +19,13 @@ const MessageCenter = ({ setErrors }) => {
 	const { tab: tabParam } = useParams();
 
 	const username = Auth.getProfile().data.username 
-	console.log(typeof(username))
 
 	const { loading, data, refetch } = useQuery(QUERY_INBOX, { 
-		variables: username
+		variables: { username: username }
 	});
+
+	const inbox = data?.inbox || [];
+
 
 	// const { loading, data, refetch } = 
 	// 	tabParam ? 
@@ -34,12 +36,6 @@ const MessageCenter = ({ setErrors }) => {
   const [key, setKey] = useState(tabParam ? tabParam : 'inbox');
 	const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
-
-	// const user = data?.me || {};
-	// const inbox = user?.inbox;
-	const inbox = data?.inbox || [];
-
-	console.log(inbox)
 
 	const handleSelectAll = (e) => {
     setIsCheckAll(!isCheckAll);
@@ -79,13 +75,11 @@ const MessageCenter = ({ setErrors }) => {
   const [deleteMessage, { error }] = useMutation(DELETE_MESSAGE, {
     update(cache, { data: { deleteMessage } }) {
       try {
-				const { inbox } = cache.readQuery({query: QUERY_INBOX});
-
         cache.writeQuery({
           query: QUERY_INBOX,
           data: { inbox: deleteMessage },
         });
-
+				refetch()
 			} catch (err) {
 				const { name, message } = err;
     
@@ -108,7 +102,6 @@ const MessageCenter = ({ setErrors }) => {
 				[name]: message,
 			});
 		}
-		console.log("delete: " + JSON.stringify(data))
   };
 
 	// const [deleteManyMessages, { errror }] = useMutation(DELETE_MANY_MESSAGES, {
@@ -176,7 +169,21 @@ const MessageCenter = ({ setErrors }) => {
 
 	const toolbar = 
 	(<div className="inbox-toolbar d-flex flex-row align-items-center">
-		<FontAwesomeIcon icon={faRotateRight} size={"lg"} className="me-3" onClick={() => refetch()} />
+		{loading ? 
+			(<Spinner
+				as="span"
+				className="me-3" 
+				animation="border"
+				size="sm"
+				role="status"
+				aria-hidden="true" />) 
+		:
+			(<FontAwesomeIcon 
+				icon={faRotateRight} 
+				size={"lg"} 
+				className="me-3" 
+				onClick={() => refetch()} />) 
+		}
 		<FontAwesomeIcon icon={faTrashCan} size={"lg"} className="me-3" />
 		{/* onClick={() => handleDeleteMany(isCheck)} */}
 		<Link to="/new-message" >

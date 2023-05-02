@@ -16,8 +16,6 @@ const NewMessage = ({ setErrors }) => {
     messageText: ''
   });
 
-	const { messageRecipient, messageTitle, messageText } = message;
-
   // const { loading, data } = useQuery(QUERY_INBOX, { 
   //   variables: { username: messageRecipient } 
   // });
@@ -27,15 +25,15 @@ const NewMessage = ({ setErrors }) => {
   const [sendMessage, { error, data }] = useMutation(SEND_MESSAGE, {
     update(cache, { data: { sendMessage } }) {
       try {
-				const inbox = cache.readQuery({ 
+				const { inbox } = cache.readQuery({ 
 					query: QUERY_INBOX,
 					variables: { 
-						username: messageRecipient
+						username: sendMessage.messageRecipient
 					},
 				});
 				cache.writeQuery({
 					query: QUERY_INBOX,
-					data: { inbox: [sendMessage, inbox] },
+					data: { inbox: [sendMessage, ...inbox] },
 				});
       } catch (err) {
         const { name, message } = err;
