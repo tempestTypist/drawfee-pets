@@ -698,6 +698,11 @@ a:hover:not(.navbar-brand a):not(.nav-link):not(a.dropdown-menu):not(.dropdown-i
   box-shadow: 3px 3px 0 var(--drop-shadow);
 }
 
+.form-control::placeholder {
+  color: var(--input-color);
+  opacity: .5
+}
+
 .form-floating>.form-select {
   height: calc(3.5rem + 3px);
   padding-bottom: .375rem;
@@ -1209,6 +1214,10 @@ using methods found in https://www.sitepoint.com/css-path-function-squeaky-portr
   text-shadow: 3px 2px #000
 }
 
+.colour-chooser label:hover .color-label {
+  transform: scale(1.1);
+}
+
 .colour-chooser input[type="radio"] {
 	position: absolute;
 	opacity: 0;
@@ -1312,6 +1321,7 @@ input[class="color-yellow"]:focus + .paint-color {
 
 .pet-chooser {
   display: flex;
+  position: relative;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
@@ -2050,6 +2060,10 @@ font-size: 45px;
   clip-path: polygon(1.5% 1%, 98.5% 6%, 99% 95%, 1% 100%);
 }
 
+.janky-table tbody tr {
+  box-shadow: 4px 4px 0 var(--drop-shadow);
+}
+
 .janky-table tbody tr:nth-child(odd) {
   -webkit-clip-path: polygon(1.2% 4%, 99% 1%, 98.5% 100%, 1.8% 95%);
   clip-path: polygon(1.2% 4%, 99% 1%, 98.5% 100%, 1.8% 95%);
@@ -2064,8 +2078,10 @@ font-size: 45px;
   padding-right: 2rem
 }
 
-.janky-table tbody tr {
+.janky-table tbody tr,
+.table>:not(caption)>*>* {
   background-color: var(--forum-post-bg);
+  color: var(--primary-font-color)
 }
 
 .janky-table tbody td > * {
@@ -2074,9 +2090,6 @@ font-size: 45px;
   white-space: nowrap;
 }
 
-.janky-table tbody tr:hover td {
-  color: var(--primary-font-color)
-}
 
 /* .janky-table table td {
   text-align: center;
@@ -2164,6 +2177,7 @@ font-size: 45px;
 .nav-tabs .nav-link {
   border: 0;
   border-radius: 0;
+  font-family: var(--font-family);
   color: var(--primary-font-color);
   transition: none
 }

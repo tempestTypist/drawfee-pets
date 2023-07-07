@@ -23,45 +23,39 @@ const SinglePet = () => {
       {loading ? (
         <Loading />
       ) : (
-        <>
-          <Row>
-            <Col xl={5} style={{"margin-bottom": "-1rem"}}>
-              <div className="pet-preview__wrapper">
-                <div className="pet-preview">
-                  <Image 
-                    fluid
-                    className="pet-preview__screen" 
-                    src={images[`${pet.petSpecies}/${pet.petSpecies}--${pet.petColour}.png`]}
-                  />
-                </div>
+        <Row className="flex-column flex-xl-row align-items-center">
+          <Col xs={10} lg={8} xl={6} style={{"margin-bottom": "-1rem"}}>
+            <div className="pet-preview__wrapper">
+              <div className="pet-preview">
+                <Image 
+                  fluid
+                  className="pet-preview__screen mb-4" 
+                  src={images[`${pet.petSpecies}/${pet.petSpecies}--${pet.petColour}.png`]}
+                />
               </div>
-            </Col>
-          </Row>
+            </div>
+          </Col>
 
-          <Row>
-            <Col xl={6}>
-              <div className="stacked-screens__wrapper">
-                <div className="stacked-screen d-flex justify-content-center">
-                  <h2>{pet.petName}</h2>
-                </div>
+          <Col lg={9} xl={6}>
+            <div className="stacked-screens__wrapper">
+              <div className="stacked-screen d-flex justify-content-center">
+                <h2 className="mt-3 ps-5">{pet.petName}</h2>
               </div>
-            </Col>
-          </Row>
+            </div>
 
-          <Row>
-            <Col xs={6} className="pet-chooser">
+            <div className="pet-chooser justify-content-center">
               <Link
                 to={`/profile/${pet.petOwner}`}
+                className="me-1"
                 >
                 {pet.petOwner}
               </Link>
-              <br />
               <span>
                 created this pet on {pet.createdAt}
               </span>
-            </Col>
-          </Row>
-        </>
+            </div>
+          </Col>
+        </Row>
       )}
     </Container>
   );
