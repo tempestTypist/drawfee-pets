@@ -73,6 +73,13 @@ const EditProfile = ({ setErrors }) => {
 						className="flex-row justify-center justify-space-between-md align-center"
 						onSubmit={handleFormSubmit}
 						>
+            <p>Profile picture upload</p>
+            <Form.Control type="file" />
+
+            <p>Birthday</p>
+            <p>I Go By</p>
+            <Form.Control type="text" placeholder="They/Them" />
+
 						<Form.Group className="mb-3">
 							<Form.Label>Description (optional)</Form.Label>
 							<Form.Control 

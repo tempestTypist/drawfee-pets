@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/client'
 import CommentList from '../components/CommentList'
 import CommentForm from '../components/CommentForm'
 import Loading from '../components/Loading'
+import { Card } from 'react-bootstrap'
 
 import { QUERY_SINGLE_POST } from '../utils/queries'
 
@@ -25,25 +26,28 @@ const SinglePost = ({ setErrors }) => {
         <Loading />
       ) : (
         <>
-          <h3 className="card-header p-2 m-0">
-            <Link
-              className=""
-              to={`/profile/${post.postAuthor}`}
-              >
-              {post.postAuthor}
-            </Link>
-            <br />
-            <span style={{ fontSize: '1rem' }}>
-              had this thought on {post.createdAt}
+        <Card className="flex-row">
+          <Card.Header>
+            <p>Profile picture</p>
+            <p>User info box with: Username, number of posts, send message, maybe small pet image</p>
+          </Card.Header>
+          <Card.Body>
+            <p>Post subject</p>
+            <span>by </span>
+            <span>
+              <Link
+                to={`/profile/${post.postAuthor}`}
+                >
+                {post.postAuthor}, 
+              </Link>
+              {post.createdAt}
             </span>
-          </h3>
-          <div className="py-4">
-            <blockquote
-              className="p-4"
-            >
-              {post.postText}
-            </blockquote>
-          </div>
+            
+            <br />
+            <br />
+            {post.postText}
+          </Card.Body>
+        </Card>
 
           <div className="my-5">
             <CommentList comments={post.comments} />

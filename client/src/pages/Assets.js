@@ -46,13 +46,11 @@ const Assets = () => {
 	const handleClick = () => setLoading(true);
 
   return (
-    <main className="">
-			<div className="bd-cheatsheet container-fluid bg-body">
+    <main>
+			<div>
 				<section id="content">
-					<h2 className="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Contents</h2>
-
 					<article className="my-3" id="typography">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Typography</h3>
 						</div>
 
@@ -125,8 +123,9 @@ const Assets = () => {
 							</div>
 						</div>
 					</article>
+
 					<article className="my-3" id="images">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Images</h3>
 						</div>
 						<div className="bd-example">
@@ -142,8 +141,9 @@ const Assets = () => {
 							<Image src={March} className="bd-placeholder-img" height="250" style={{background: "gray"}} fluid />
 						</div>
 					</article>
+
 					<article className="my-3" id="tables">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Tables</h3>
 						</div>
 
@@ -340,8 +340,9 @@ const Assets = () => {
 								</Table>
 							</div>
 					</article>
+					
 					<article className="my-3" id="figures">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Figures</h3>
 						</div>
 
@@ -362,10 +363,10 @@ const Assets = () => {
 				</section>
 
 				<section id="forms">
-					<h2 className="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Forms</h2>
+					<h2 className="fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Forms</h2>
 
 					<article className="my-3" id="overview">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Overview</h3>
 						</div>
 
@@ -576,7 +577,7 @@ const Assets = () => {
 									<br />
 									<h5>Input Group Buttons</h5>
 									<InputGroup className="mb-3">
-										<Button variant="outline-dark" id="button-addon1">
+										<Button id="button-addon1">
 											Button
 										</Button>
 										<FormControl
@@ -591,14 +592,14 @@ const Assets = () => {
 											aria-label="Recipient's username"
 											aria-describedby="basic-addon2"
 										/>
-										<Button variant="outline-dark" id="button-addon2">
+										<Button id="button-addon2">
 											Button
 										</Button>
 									</InputGroup>
 
 									<InputGroup className="mb-3">
-										<Button variant="outline-dark">Button</Button>
-										<Button variant="outline-dark">Button</Button>
+										<Button>Button</Button>
+										<Button>Button</Button>
 										<FormControl aria-label="Example text with two button addons" />
 									</InputGroup>
 
@@ -607,13 +608,12 @@ const Assets = () => {
 											placeholder="Recipient's username"
 											aria-label="Recipient's username with two button addons"
 										/>
-										<Button variant="outline-dark">Button</Button>
-										<Button variant="outline-dark">Button</Button>
+										<Button>Button</Button>
+										<Button>Button</Button>
 									</InputGroup>
 
 									<InputGroup className="mb-3">
 										<DropdownButton
-											variant="outline-dark"
 											title="Dropdown"
 											id="input-group-dropdown-1"
 										>
@@ -630,7 +630,6 @@ const Assets = () => {
 										<FormControl aria-label="Text input with dropdown button" />
 
 										<DropdownButton
-											variant="outline-dark"
 											title="Dropdown"
 											id="input-group-dropdown-2"
 											align="end"
@@ -645,7 +644,6 @@ const Assets = () => {
 
 									<InputGroup className="mb-3">
 										<DropdownButton
-											variant="outline-dark"
 											title="Dropdown"
 											id="input-group-dropdown-3"
 										>
@@ -657,7 +655,6 @@ const Assets = () => {
 										</DropdownButton>
 										<FormControl aria-label="Text input with 2 dropdown buttons" />
 										<DropdownButton
-											variant="outline-dark"
 											title="Dropdown"
 											id="input-group-dropdown-4"
 											align="end"
@@ -672,7 +669,6 @@ const Assets = () => {
 
 									<InputGroup className="mb-3">
 										<SplitButton
-											variant="outline-dark"
 											title="Action"
 											id="segmented-button-dropdown-1"
 										>
@@ -688,7 +684,6 @@ const Assets = () => {
 									<InputGroup className="mb-3">
 										<FormControl aria-label="Text input with dropdown button" />
 										<SplitButton
-											variant="outline-dark"
 											title="Action"
 											id="segmented-button-dropdown-2"
 											alignRight
@@ -834,10 +829,10 @@ const Assets = () => {
 				</section>
 
 				<section id="components">
-					<h2 className="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Components</h2>
+					<h2 className="fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Components</h2>
 
 					<article className="my-3" id="accordion">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Accordion</h3>
 						</div>
 
@@ -870,7 +865,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="alerts">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Alerts</h3>
 						</div>
 
@@ -884,7 +879,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="badge">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Badges</h3>
 						</div>
 
@@ -932,7 +927,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="breadcrumb">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Breadcrumb</h3>
 						</div>
 
@@ -946,7 +941,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="buttons">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Buttons</h3>
 						</div>
 
@@ -999,7 +994,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="button-group">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Button group</h3>
 						</div>
 
@@ -1041,7 +1036,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="buttons">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Janky Buttons</h3>
 						</div>
 
@@ -1076,7 +1071,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="janky-button-group">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Janky Button group</h3>
 						</div>
 
@@ -1118,7 +1113,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="card">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Card</h3>
 						</div>
 
@@ -1407,7 +1402,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="carousel">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Carousel</h3>
 						</div>
 
@@ -1449,7 +1444,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="close-buttons">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Close Buttons</h3>
 						</div>
 
@@ -1462,7 +1457,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="dropdowns">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Dropdowns</h3>
 						</div>
 
@@ -1580,7 +1575,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="list-group">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>List group</h3>
 						</div>
 
@@ -1611,10 +1606,8 @@ const Assets = () => {
 					</ListGroup>
 					</article>
 					
-
-					/*do this one later*/
 					<article className="my-3" id="modal">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Modal</h3>
 							<a className="d-flex align-items-center" href="../components/modal/">Documentation</a>
 						</div>
@@ -1639,9 +1632,8 @@ const Assets = () => {
 						</div>
 					</article>
 
-
 					<article className="my-3" id="navs">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Navs</h3>
 						</div>
 
@@ -1741,7 +1733,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="navbar">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Navbar</h3>
 						</div>
 
@@ -1832,7 +1824,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="pagination">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Pagination</h3>
 						</div>
 
@@ -1855,9 +1847,8 @@ const Assets = () => {
 						</Pagination>
 					</article>
 
-/*do this one later too*/
 					<article className="my-3" id="popovers">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Popovers</h3>
 						</div>
 
@@ -1884,7 +1875,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="progress">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Progress</h3>
 						</div>
 
@@ -1906,7 +1897,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="scrollspy">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Scrollspy</h3>
 							<a className="d-flex align-items-center" href="../components/scrollspy/">Documentation</a>
 						</div>
@@ -1950,7 +1941,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="spinners">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Spinners</h3>
 						</div>
 
@@ -2004,7 +1995,7 @@ const Assets = () => {
 					</article>
 
 					<article className="my-3" id="toasts">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Toasts</h3>
 						</div>
 
@@ -2017,9 +2008,9 @@ const Assets = () => {
 							<Toast.Body>Hello, world! This is a toast message.</Toast.Body>
 						</Toast>
 					</article>
-					/* do later ig*/
+
 					<article className="mt-3 mb-5 pb-5" id="tooltips">
-						<div className="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<div className="bd-heading align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
 							<h3>Tooltips</h3>
 							<a className="d-flex align-items-center" href="../components/tooltips/">Documentation</a>
 						</div>
@@ -2106,6 +2097,7 @@ const Assets = () => {
 					</div>
 				</div>
 			</div>
+			
     </main>
   );
 };
