@@ -16,5 +16,9 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^7.0.0"
+  },
+  "dependencies": {
+    "graphql-request": "^6.1.0",
+    "react-paginate": "^8.2.0"
   }
 }

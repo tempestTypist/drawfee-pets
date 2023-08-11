@@ -65,7 +65,7 @@ const typeDefs = gql`
     pet(petId: ID!): Pet
     inbox(username: String): [Message]
     message(messageId: ID!): Message
-    posts(username: String): [Post]
+    posts(username: String, offset: Int, limit: Int): [Post!]
     post(postId: ID!): Post
     me: User
   }

@@ -26,20 +26,20 @@ const ProfilePets = () => {
   }
 
   return (
-      <div className="col-12 mb-5">
-        <div className="framed-card-group">
-          {loading ? (
-              <Loading />
-            ) : (
-              <PetList
-                user={user}
-                title={`${user.username}'s pets`}
-                showTitle={false}
-                showUsername={userParam ? true : false}
-              />
-            )}
-          </div>
-      </div>
+    <div className="col-12 mb-5">
+      <div className="framed-card-group">
+        {loading ? (
+            <Loading />
+          ) : (
+            <PetList
+              user={user}
+              title={`${user.username}'s pets`}
+              showTitle={false}
+              showUsername={userParam ? true : false}
+            />
+          )}
+        </div>
+    </div>
       // {/* <h2 className="col-12 bg-dark text-light p-3 mb-5">
       //   {userParam ? `${user.username}'s` : 'Your'} pets
       // </h2> */}

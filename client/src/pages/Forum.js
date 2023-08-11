@@ -42,7 +42,6 @@ const Forum = () => {
     <h2>Community Forum</h2>
 
       <Card className="janky-card-wrapper">
-
         <div className="forum-toolbar w-100 mb-3 justify-content-between">
           <div className="btn-janky-wrapper">
             <Link className="btn-janky btn btn-theme" to="/new-post">New Topic</Link>
@@ -89,35 +88,6 @@ const Forum = () => {
           <Loading />
         ) : (
           <JankyTable theadData={theadData} tbodyData={tbodyData} customClass="forum" />
-          // <JankyTable
-          //   tableHeaders={[<h2>Topic</h2>, "Made By", "Replies", "Last Post"]}
-          //   tableData={posts.map((post) => (
-          //     <tr>
-          //       <td>
-          //         <div className="janky-table__icon post-icon" />
-          //       </td>
-          //       <td className="post-title w-100">
-          //         <Link to={`/posts/${post._id}`}>{post.postTitle}</Link>
-          //       </td>
-          //       <td>
-          //         <Link
-          //           className=""
-          //           to={`/profile/${post.postAuthor}`}
-          //           >
-          //           {post.postAuthor}
-          //         </Link>
-          //       </td>
-          //       <td className="text-center">{post.comments.length}</td>
-          //       <td>
-          //         {post.comments.length > 0 ? (
-          //           <>{post.comments[0].createdAt}<br/>by {post.comments[0].commentAuthor}</>
-          //         ) : (
-          //           <>{post.createdAt}<br/>by {post.postAuthor}</>
-          //         )}
-          //       </td>
-          //     </tr>
-          //   ))}
-          // />
         )}
       </Card>
   </>

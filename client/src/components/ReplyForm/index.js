@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_COMMENT } from '../../utils/mutations';
-import JankyButton from '../../components/JankyButton';
+import JankyButton from '../JankyButton';
 import Auth from '../../utils/auth';
 
-const CommentForm = ({ postId, setErrors }) => {
+const ReplyForm = ({ postId, setErrors }) => {
   const [commentText, setCommentText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
@@ -25,9 +25,9 @@ const CommentForm = ({ postId, setErrors }) => {
     setErrors();
 
     if (commentText.trim().length === 0 || commentText.trim().length <= 2 ) {
-      errors.commentLen = "Your comment is too short!"
+      errors.commentLen = "Your reply is too short!"
     } else if (commentText.length > 280) {
-      errors.commentLen = "Your comment cannot exceed 280 characters!"
+      errors.commentLen = "Your reply cannot exceed 280 characters!"
     }
 
     setErrors(errors);
@@ -65,7 +65,7 @@ const CommentForm = ({ postId, setErrors }) => {
 
   return (
     <div>
-      <h4>Write a comment...</h4>
+      <h4>Post a Reply!</h4>
 
       {Auth.loggedIn() ? (
         <>
@@ -83,7 +83,7 @@ const CommentForm = ({ postId, setErrors }) => {
             <div className="col-12 col-lg-9">
               <textarea
                 name="commentText"
-                placeholder="Add your comment..."
+                placeholder="Add your comment"
                 value={commentText}
                 className="form-input w-100"
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
@@ -92,7 +92,7 @@ const CommentForm = ({ postId, setErrors }) => {
             </div>
 
             <div className="col-12 col-lg-3">
-              <JankyButton type="submit" variant="theme" label="Add Comment" />
+              <JankyButton type="submit" variant="theme" label="Post Comment" />
             </div>
           </form>
         </>
@@ -106,4 +106,4 @@ const CommentForm = ({ postId, setErrors }) => {
   );
 };
 
-export default CommentForm;
+export default ReplyForm;
