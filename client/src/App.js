@@ -62,6 +62,26 @@ const App = () => {
     localStorage.getItem('theme') || 'light'
   )
 
+  const routes = [
+    { path: '/', component: Home, exact: true },
+    { path: '/login', component: Login, exact: true },
+    { path: '/signup', component: Signup, exact: true },
+    { path: '/create-pet', component: CreatePet, exact: true },
+    { path: '/message-center/:tab', component: MessageCenter, exact: true },
+    { path: '/messages/:messageId', component: SingleMessage, exact: true },
+    { path: '/new-message', component: NewMessage, exact: true },
+    { path: '/community-forums', component: Forum, exact: true },
+    { path: '/posts/:postId', component: SinglePost, exact: true },
+    { path: '/new-post', component: NewPost, exact: true },
+    { path: '/edit-profile', component: EditProfile, exact: true },
+    { path: '/me', component: Profile, exact: true },
+    { path: '/profile/:username', component: Profile, exact: true },
+    { path: '/pets', component: ProfilePets, exact: true },
+    { path: '/profile/:username/pets', component: ProfilePets, exact: true },
+    { path: '/pets/:petId', component: SinglePet, exact: true },
+    { path: '/assets', component: Assets, exact: true }
+  ];
+
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme', theme) || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     
@@ -80,62 +100,9 @@ const App = () => {
           <Row className="main-content">
             <Sidebar />
             <Col lg={{span: 9, offset: 3}} xxl={{span: 10, offset: 2}} className="content">
-              {/* uses image import, QUERY_PETS */}
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/login">
-                <Login setErrors={setErrors} />
-              </Route>
-              <Route exact path="/signup">
-                <Signup setErrors={setErrors} />
-              </Route>
-              {/*uses image import, QUERY_ALLPETS*/}
-              <Route exact path="/create-pet">
-                <CreatePet setErrors={setErrors} />
-              </Route>
-              <Route exact path="/message-center/:tab">
-                <MessageCenter setErrors={setErrors} />
-              </Route>
-              <Route exact path="/messages/:messageId">
-                <SingleMessage setErrors={setErrors} />
-              </Route>
-              <Route exact path="/new-message">
-                <NewMessage setErrors={setErrors} />
-              </Route>
-              {/* uses QUERY_POSTS */}
-              <Route exact path="/community-forums">
-                <Forum />
-              </Route>
-              <Route exact path="/posts/:postId">
-                <SinglePost setErrors={setErrors} />
-              </Route>
-              <Route exact path="/new-post">
-                <NewPost setErrors={setErrors} />
-              </Route>
-              {/* uses QUERY_USER, QUERY_ME */}
-              <Route exact path="/edit-profile">
-                <EditProfile />
-              </Route>
-              <Route exact path="/me">
-                <Profile />
-              </Route>
-              <Route exact path="/profile/:username">
-                <Profile />
-              </Route>
-              {/* uses QUERY_USER, QUERY_ME */}
-              <Route exact path="/pets">
-                <ProfilePets />
-              </Route>
-              <Route exact path="/profile/:username/pets">
-                <ProfilePets />
-              </Route>
-              <Route exact path="/pets/:petId">
-                <SinglePet />
-              </Route>
-              <Route exact path="/assets">
-                <Assets />
-              </Route>
+              {routes.map(({ path, component, exact }) => (
+                <Route key={path} exact={exact} path={path} component={component} />
+              ))}
               <ToastComponent toasts={errors} />
             </Col>
           </Row>
