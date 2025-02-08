@@ -1,6 +1,14 @@
 [
 	{
-		"_id": "Wattafren",
-    "chassis": "Wattafren"
+		"_id": "CU-83",
+    "chassis": "CU-83"
+  },
+  {
+		"_id": "0-V4L",
+    "chassis": "0-V4L"
+  },
+  {
+		"_id": "SPH-3R3",
+    "chassis": "SPH-3R3"
   }
 ]

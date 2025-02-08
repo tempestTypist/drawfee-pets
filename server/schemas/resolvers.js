@@ -1,34 +1,34 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Pet, Message, Post, AllPets } = require('../models');
+const { User, Pet, Bot, Message, Post, AllPets, Bots } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('pets');
+      return User.find().populate('userbots');
     },
     
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('pets').populate({ path: 'inbox', options: { sort: { createdAt: -1 } } });
+      return User.findOne({ username }).populate('userbots').populate({ path: 'inbox', options: { sort: { createdAt: -1 } } });
     },
 
-    allpets: async () => {
-      return AllPets.find().populate('allpets');
+    bots: async () => {
+      return Bots.find().populate('bots');
     },
 
-    pets: async (parent, { username }) => {
+    bot: async (parent, { botId }) => {
+      return Bot.findOne({ _id: botId });
+    },
+
+    userbots: async (parent, { username }) => {
       const params = username ? { username } : {};  // If a username is provided, filter by username
-      return Pet.find(params).sort({ createdAt: -1 });  // Sort pets by creation date, descending
-    },
-
-    pet: async (parent, { petId }) => {
-      return Pet.findOne({ _id: petId });
+      return Bot.find(params).sort({ createdAt: -1 });  // Sort pets by creation date, descending
     },
 
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id })
-          .populate('pets')
+          .populate('userbots')
           .populate({ path: 'inbox', options: { sort: { createdAt: -1 } } });
       }
       throw new AuthenticationError('You need to be logged in!');
@@ -75,52 +75,102 @@ const resolvers = {
       return { token, user };
     },
 
-    addPet: async (parent, { petSpecies, petName, petColour }, context) => {
+    // addPet: async (parent, { petSpecies, petName, petColour }, context) => {
+    //   if (context.user) {
+    //     const pet = await Pet.create({
+    //       petSpecies,
+    //       petName,
+    //       petColour,
+    //       petOwner: context.user.username,
+    //     });
+
+    //     await User.findOneAndUpdate(
+    //       { _id: context.user._id },
+    //       { $addToSet: { pets: pet._id } }
+    //     );
+
+    //     return pet;
+    //   }
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
+
+    addBot: async (parent, { chassis, botName, botColour }, context) => {
       if (context.user) {
-        const pet = await Pet.create({
-          petSpecies,
-          petName,
-          petColour,
-          petOwner: context.user.username,
+        const bot = await Bot.create({
+          chassis,
+          botName,
+          botColour,
+          botInventor: context.user.username,
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { pets: pet._id } }
+          { $addToSet: { userbots: bot._id } }
         );
 
-        return pet;
+        return bot;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    favouritePet: async (parent, { petId }, context) => {
+    // favouritePet: async (parent, { petId }, context) => {
+    //   if (context.user) {
+    //     const pet = await Pet.findOne({ _id: petId, petOwner: context.user.username });
+
+    //     await User.findOneAndUpdate(
+    //       { _id: context.user._id },
+    //       { $set: { activePet: { ...pet } } }
+    //     );
+
+    //     return pet;
+    //   }
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
+
+    favouriteBot: async (parent, { botId }, context) => {
       if (context.user) {
-        const pet = await Pet.findOne({ _id: petId, petOwner: context.user.username });
+        const bot = await Bot.findOne({ _id: botId, botInventor: context.user.username });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $set: { activePet: { ...pet } } }
+          { $set: { activeBot: { ...bot } } }
         );
 
-        return pet;
+        return bot;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    removePet: async (parent, { petId }, context) => {
+    // removePet: async (parent, { petId }, context) => {
+    //   if (context.user) {
+    //     const pet = await Pet.findOneAndDelete({
+    //       _id: petId,
+    //       petOwner: context.user.username,
+    //     });
+
+    //     await User.findOneAndUpdate(
+    //       { username: context.user.username },
+    //       { $pull: { pets: pet._id } }
+    //     );
+
+    //     return pet;
+    //   }
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
+
+    removeBot: async (parent, { botId }, context) => {
       if (context.user) {
-        const pet = await Pet.findOneAndDelete({
-          _id: petId,
-          petOwner: context.user.username,
+        const bot = await Bot.findOneAndDelete({
+          _id: botId,
+          botInventor: context.user.username,
         });
 
         await User.findOneAndUpdate(
           { username: context.user.username },
-          { $pull: { pets: pet._id } }
+          { $pull: { pets: bot._id } }
         );
 
-        return pet;
+        return bot;
       }
       throw new AuthenticationError('You need to be logged in!');
     },

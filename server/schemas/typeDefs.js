@@ -6,8 +6,8 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    activePet: Pet
-    pets: [Pet]!
+    activeBot: Bot
+    userbots: [Bot]!
     inbox: [Message]!
     posts: [Post]!
   }
@@ -19,6 +19,15 @@ const typeDefs = gql`
     petColour: String
     createdAt: String
     petOwner: String
+  }
+
+  type Bot {
+    _id: ID
+    chassis: String
+    botName: String
+    botColour: String
+    createdAt: String
+    botInventor: String
   }
 
   type Message {
@@ -52,6 +61,11 @@ const typeDefs = gql`
     petSpecies: String!
   }
 
+  type Bots {
+    _id: String
+    chassis: String!
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -60,9 +74,9 @@ const typeDefs = gql`
   type Query {
     users: [User]
     user(username: String!): User
-    allpets: [AllPets]
-    pets(username: String): [Pet]
-    pet(petId: ID!): Pet
+    bots: [Bots]
+    userbots(username: String): [Bot]
+    bot(botId: ID!): Bot
     inbox(username: String): [Message]
     message(messageId: ID!): Message
     posts(username: String, offset: Int, limit: Int): [Post!]
@@ -73,9 +87,9 @@ const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addPet(petSpecies: String!, petName: String!, petColour: String!): Pet
-    favouritePet(petId: ID!): Pet
-    removePet(petId: String!): Pet
+    addBot(chassis: String!, botName: String!, botColour: String!): Bot
+    favouriteBot(botId: ID!): Bot
+    removeBot(botId: String!): Bot
     sendMessage(messageRecipient: String!, messageTitle: String!, messageText: String!): Message
     toggleRead(messageId: ID!): Message
     deleteMessage(messageId: String!): Message
