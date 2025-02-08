@@ -7,18 +7,9 @@ const typeDefs = gql`
     email: String
     password: String
     activeBot: Bot
-    userbots: [Bot]!
+    userBots: [Bot]!
     inbox: [Message]!
     posts: [Post]!
-  }
-
-  type Pet {
-    _id: ID
-    petSpecies: String
-    petName: String
-    petColour: String
-    createdAt: String
-    petOwner: String
   }
 
   type Bot {
@@ -27,7 +18,7 @@ const typeDefs = gql`
     botName: String
     botColour: String
     createdAt: String
-    botInventor: String
+    inventor: String
   }
 
   type Message {
@@ -56,11 +47,6 @@ const typeDefs = gql`
     createdAt: String
   }
 
-  type AllPets {
-    _id: String
-    petSpecies: String!
-  }
-
   type Bots {
     _id: String
     chassis: String!
@@ -75,7 +61,7 @@ const typeDefs = gql`
     users: [User]
     user(username: String!): User
     bots: [Bots]
-    userbots(username: String): [Bot]
+    userBots(username: String): [Bot]
     bot(botId: ID!): Bot
     inbox(username: String): [Message]
     message(messageId: ID!): Message

@@ -33,7 +33,7 @@ const ProfilePets = () => {
           ) : (
             <PetList
               user={user}
-              title={`${user.username}'s pets`}
+              title={`${user.username}'s bots`}
               showTitle={false}
               showUsername={userParam ? true : false}
             />

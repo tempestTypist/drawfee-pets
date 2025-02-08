@@ -18,7 +18,7 @@ const botSchema = new Schema({
     required: 'Please pick a colour for your bot!',
     trim: true,
   },
-  botInventor: {
+  inventor: {
     type: String,
     // required: true,
     trim: true,

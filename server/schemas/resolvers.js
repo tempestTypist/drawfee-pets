@@ -5,11 +5,11 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('userbots');
+      return User.find().populate('userBots');
     },
     
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('userbots').populate({ path: 'inbox', options: { sort: { createdAt: -1 } } });
+      return User.findOne({ username }).populate('userBots').populate({ path: 'inbox', options: { sort: { createdAt: -1 } } });
     },
 
     bots: async () => {
@@ -20,7 +20,7 @@ const resolvers = {
       return Bot.findOne({ _id: botId });
     },
 
-    userbots: async (parent, { username }) => {
+    userBots: async (parent, { username }) => {
       const params = username ? { username } : {};  // If a username is provided, filter by username
       return Bot.find(params).sort({ createdAt: -1 });  // Sort pets by creation date, descending
     },
@@ -28,7 +28,7 @@ const resolvers = {
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id })
-          .populate('userbots')
+          .populate('userBots')
           .populate({ path: 'inbox', options: { sort: { createdAt: -1 } } });
       }
       throw new AuthenticationError('You need to be logged in!');
@@ -100,12 +100,12 @@ const resolvers = {
           chassis,
           botName,
           botColour,
-          botInventor: context.user.username,
+          inventor: context.user.username,
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { userbots: bot._id } }
+          { $addToSet: { userBots: bot._id } }
         );
 
         return bot;
@@ -129,7 +129,7 @@ const resolvers = {
 
     favouriteBot: async (parent, { botId }, context) => {
       if (context.user) {
-        const bot = await Bot.findOne({ _id: botId, botInventor: context.user.username });
+        const bot = await Bot.findOne({ _id: botId, inventor: context.user.username });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -162,7 +162,7 @@ const resolvers = {
       if (context.user) {
         const bot = await Bot.findOneAndDelete({
           _id: botId,
-          botInventor: context.user.username,
+          inventor: context.user.username,
         });
 
         await User.findOneAndUpdate(

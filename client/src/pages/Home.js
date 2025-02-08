@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { Link } from 'react-router-dom';
-import { QUERY_PETS } from '../utils/queries'
+import { QUERY_BOTS } from '../utils/queries'
 import { Container, Row, Col, Button, Card, Image } from 'react-bootstrap'
 import ImageImport from '../utils/imageimport'
 import Loading from '../components/Loading'
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_PETS);
-  const pets = data?.pets || [];
+  const { loading, data } = useQuery(QUERY_BOTS);
+  const bots = data?.bots || [];
 
   const images = ImageImport.importAll(require.context('../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
 
-  const [previewPet, setPreviewedPet] = useState(0);
+  const [previewBot, setPreviewedBot] = useState(0);
 
   useEffect(() => {
-    const len = pets.length;
-    setPreviewedPet(Math.floor(Math.random() * len));
-  }, [pets]);
+    const len = bots.length;
+    setPreviewedBot(Math.floor(Math.random() * len));
+  }, [bots]);
 
   return (
     <Container fluid>
@@ -100,13 +100,13 @@ const Home = () => {
               <Card className="janky-card-wrapper key-was-here p-4 pt-0">
                 <Card.Header className="janky-card-header pt-0">
                   <div className="pet-name">
-                    Featured: {pets[previewPet].petName}!
+                    Featured: {bots[previewBot].botName}!
                   </div>
                 </Card.Header>
                 <div className="janky-card-body-wrapper">
                   <Card.Body className="janky-card-body">
                     <div className="janky-card-inner-body pet-list__wrapper">
-                      <Image src={images[`${pets[previewPet].petSpecies}/${pets[previewPet].petSpecies}--${pets[previewPet].petColour}.png`]} className="pet-list__image featured-pet" alt="Pet image"/>
+                      <Image src={images[`${bots[previewBot].chassis}/${bots[previewBot].chassis}--${bots[previewBot].botColour}.png`]} className="pet-list__image featured-pet" alt="Pet image"/>
                     </div>
                   </Card.Body>
                 </div>
@@ -115,8 +115,8 @@ const Home = () => {
                     Made by: 
                     <Link 
                       className="user-profile-link me-2"
-                      to={`/profile/${pets[previewPet].petOwner}`}>
-                        {pets[previewPet].petOwner} 
+                      to={`/profile/${bots[previewBot].inventor}`}>
+                        {bots[previewBot].inventor} 
                     </Link>
                     {/* {showUsername ? (
                       <Link

@@ -14,14 +14,14 @@ import './assets/styles/style.css'
 import Home from './pages/Home'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
-import CreatePet from './pages/CreatePet'
+import BotBuilder from './pages/BotBuilder'
 import Forum from './pages/Forum'
 import MessageCenter from './pages/MessageCenter'
 import SingleMessage from './pages/SingleMessage'
 import NewMessage from './pages/NewMessage'
 import SinglePost from './pages/SinglePost'
 import NewPost from './pages/NewPost'
-import SinglePet from './pages/SinglePet'
+import SingleBot from './pages/SingleBot'
 import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
 import ProfilePets from './pages/ProfilePets'
@@ -66,7 +66,7 @@ const App = () => {
     { path: '/', component: Home, exact: true },
     { path: '/login', component: Login, exact: true },
     { path: '/signup', component: Signup, exact: true },
-    { path: '/create-pet', component: CreatePet, exact: true },
+    { path: '/bot-builder', component: BotBuilder, exact: true },
     { path: '/message-center/:tab', component: MessageCenter, exact: true },
     { path: '/messages/:messageId', component: SingleMessage, exact: true },
     { path: '/new-message', component: NewMessage, exact: true },
@@ -76,9 +76,9 @@ const App = () => {
     { path: '/edit-profile', component: EditProfile, exact: true },
     { path: '/me', component: Profile, exact: true },
     { path: '/profile/:username', component: Profile, exact: true },
-    { path: '/pets', component: ProfilePets, exact: true },
-    { path: '/profile/:username/pets', component: ProfilePets, exact: true },
-    { path: '/pets/:petId', component: SinglePet, exact: true },
+    { path: '/bots', component: ProfilePets, exact: true },
+    { path: '/profile/:username/bots', component: ProfilePets, exact: true },
+    { path: '/bots/:botId', component: SingleBot, exact: true },
     { path: '/assets', component: Assets, exact: true }
   ];
 

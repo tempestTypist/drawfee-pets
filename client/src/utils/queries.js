@@ -6,18 +6,18 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      activePet {
+      activeBot {
         _id
-        petName
-        petSpecies
-        petColour
+        botName
+        chassis
+        botColour
         createdAt
       }
-      pets {
+      userBots {
         _id
-        petName
-        petSpecies
-        petColour
+        botName
+        chassis
+        botColour
         createdAt
       }
       inbox {
@@ -48,36 +48,36 @@ export const QUERY_USERS = gql`
   }
 `;
 
-export const QUERY_ALLPETS = gql`
-  query getAllPets {
-    allpets {
-      petSpecies
+export const QUERY_BOTS = gql`
+  query getBots {
+    bots {
+      chassis
     }
   }
 `;
 
-export const QUERY_PETS = gql`
-  query getPets {
-    pets {
+export const QUERY_USERBOTS = gql`
+  query getuserBots {
+    userBots {
       _id
-      petSpecies
-      petName
-      petColour
+      chassis
+      botName
+      botColour
       createdAt
-      petOwner
+      inventor
     }
   }
 `;
 
-export const QUERY_SINGLE_PET = gql`
-  query getSinglePet($petId: ID!) {
-    pet(petId: $petId) {
+export const QUERY_SINGLE_BOT = gql`
+  query getSingleBot($botId: ID!) {
+    bot(botId: $botId) {
       _id
-      petSpecies
-      petName
-      petColour
+      chassis
+      botName
+      botColour
       createdAt
-      petOwner
+      inventor
     }
   }
 `;
@@ -150,18 +150,18 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      activePet {
+      activeBot {
         _id
-        petName
-        petSpecies
-        petColour
+        botName
+        chassis
+        botColour
         createdAt
       }
       pets {
         _id
-        petName
-        petSpecies
-        petColour
+        botName
+        chassis
+        botColour
         createdAt
       }
       inbox {

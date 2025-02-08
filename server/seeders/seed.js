@@ -1,17 +1,12 @@
 const db = require('../config/connection');
-const { AllPets, Bots, Pet, User } = require('../models');
-const allpetSeeds = require('./allpetSeeds.json');
+const { Bots, User } = require('../models');
 const botSeeds = require('./botSeeds.json');
 
 db.once('open', async () => {
   try {
-    await AllPets.deleteMany({});
-    await Pet.deleteMany({});
     await User.deleteMany({});
     await Bots.deleteMany({});
 
-
-    // await AllPets.create(allpetSeeds);
     await Bots.create(botSeeds);
 
     // for (let i = 0; i < petSeeds.length; i++) {

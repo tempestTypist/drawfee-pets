@@ -24,36 +24,36 @@ export const LOGIN_USER = gql`
   }
 `;
 
-export const ADD_PET = gql`
-  mutation addPet($petSpecies: String!, $petName: String!, $petColour: String!) {
-    addPet(petSpecies: $petSpecies, petName: $petName, petColour: $petColour) {
+export const ADD_BOT = gql`
+  mutation addBot($chassis: String!, $botName: String!, $botColour: String!) {
+    addPet(chassis: $chassis, botName: $botName, botColour: $botColour) {
       _id
-      petSpecies
-      petName
-      petColour
+      chassis
+      botName
+      botColour
       createdAt
-      petOwner
+      inventor
     }
   }
 `;
 
-export const FAVOURITE_PET = gql`
-  mutation favouritePet($petId: ID!) {
-    favouritePet(petId: $petId) {
+export const FAVOURITE_BOT = gql`
+  mutation favouriteBot($botId: ID!) {
+    favouriteBot(botId: $botId) {
       _id
-      petSpecies
-      petName
-      petColour
+      chassis
+      botName
+      botColour
       createdAt
     }
   }
 `;
 
-export const REMOVE_PET = gql`
-  mutation removePet($petId: String!) {
-    removePet(petId: $petId) {
+export const REMOVE_BOT = gql`
+  mutation removeBot($botId: String!) {
+    removeBot(botId: $botId) {
       _id
-      petName
+      botName
     }
   }
 `;
