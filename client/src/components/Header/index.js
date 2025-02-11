@@ -129,8 +129,8 @@ const Header = ({ theme, setTheme, setErrors }) => {
                       Community
                     </Link>
                     
-                    <Link to="/create-pet" className="nav-link">
-                      Create a Pet
+                    <Link to="/bot-builder" className="nav-link">
+                      Build a Bot
                     </Link>
 
                     <NavDropdown 

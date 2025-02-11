@@ -31,6 +31,7 @@ import Footer from './components/Footer'
 import Assets from './pages/Assets'
 import Loading from './components/Loading'
 import ToastComponent from './components/ToastComponent'
+import { useError } from './components/ErrorContext'
 
 // construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -57,7 +58,7 @@ const client = new ApolloClient({
 });
 
 const App = () => {
-  const [errors, setErrors] = useState({})
+  const { error } = useError();
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') || 'light'
   )
@@ -90,26 +91,28 @@ const App = () => {
     }
 
     document.documentElement.setAttribute('data-theme', theme)
-  }, [theme, errors]);
+  }, [theme]);
   
   return (
-    <ApolloProvider client={client}>
-      <Router>
-        <Header theme={theme} setTheme={setTheme} setErrors={setErrors} />
-        <Container fluid>
-          <Row className="main-content">
-            <Sidebar />
-            <Col lg={{span: 9, offset: 3}} xxl={{span: 10, offset: 2}} className="content">
-              {routes.map(({ path, component, exact }) => (
-                <Route key={path} exact={exact} path={path} component={component} />
-              ))}
-              <ToastComponent toasts={errors} />
-            </Col>
-          </Row>
-        </Container>
-        <Footer />
-      </Router>
-    </ApolloProvider>
+      <ApolloProvider client={client}>
+        <Router>
+            <Header theme={theme} setTheme={setTheme} />
+            <Container fluid>
+              <Row className="main-content">
+                <Sidebar />
+                <Col lg={{span: 9, offset: 3}} xxl={{span: 10, offset: 2}} className="content">
+                  {routes.map(({ path, component, exact }) => (
+                    <Route key={path} exact={exact} path={path} component={component} />
+                  ))}
+                  {error && (
+                    <ToastComponent toasts={error} />
+                  )}
+                </Col>
+              </Row>
+            </Container>
+            <Footer />
+        </Router>
+      </ApolloProvider>
   );
 }
 

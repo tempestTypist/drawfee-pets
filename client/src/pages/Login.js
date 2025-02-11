@@ -5,12 +5,15 @@ import { LOGIN_USER } from '../utils/mutations';
 import { Card, InputGroup, FormControl } from 'react-bootstrap';
 import JankyButton from '../components/JankyButton';
 import Auth from '../utils/auth';
+import { useError } from '../components/ErrorContext'
 
-const Login = ({ setErrors }) => {
+const Login = () => {
   const [formState, setFormState] = useState({ 
     email: '', 
     password: '' 
   });
+
+  const { setError } = useError();
 
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
@@ -26,7 +29,7 @@ const Login = ({ setErrors }) => {
   const validateForm = () => {
     const { email, password } = formState;
     const errors = {};
-    setErrors();
+    setError();
 
     if (email.trim().length === 0) {
       errors.emailNull = "Please enter your email!"
@@ -36,7 +39,7 @@ const Login = ({ setErrors }) => {
       errors.passwordNull = "Please enter your password!"
     }
 
-    setErrors(errors)
+    setError(errors)
 
     if (Object.keys(errors).length > 0) {
       return false
@@ -58,7 +61,7 @@ const Login = ({ setErrors }) => {
       } catch (err) {
         const { name, message } = err;
     
-        setErrors({
+        setError({
           [name]: message,
         });
       }

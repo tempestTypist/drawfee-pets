@@ -5,7 +5,7 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import ImageImport from '../../utils/imageimport';
 
 const Carousel = (props) => {
-	const { carouselItems, heading, selectPet, importImages } = props 
+	const { carouselItems, heading, selectBot, importImages } = props 
 	const headingId = `${heading.replace(/\s+/g, '-').toLowerCase()}`
 
 	const [app, updateApp] = useState({
@@ -50,6 +50,7 @@ useEffect(() => {
 	let listItems = []
 	let level
 	let className
+	console.log(currentItems)
 
 	for (let i = currentIndex - 2; i < currentIndex + 3; i++) {
 			let index = i
@@ -79,7 +80,7 @@ useEffect(() => {
 			listItems.push({ "index": index, "id": items[index], "class": className })
 	}
 	updateApp({ ...app, currentItems: [...listItems] });
-	selectPet(items[currentIndex])
+	selectBot(items[currentIndex])
 }, [currentIndex]);
 
 	return (
@@ -94,9 +95,9 @@ useEffect(() => {
 			<ul className="item-list__wrapper">
 				<h3 id={headingId} className="visuallyhidden">{heading}</h3>
 
-				{currentItems.map((item) => (
+				{currentItems.map((item, index) => (
 					<li 
-						key={item.index}
+						key={index}
 						className={item.class}
 						onClick={() => handleSlideClick(item.index)} >
 						<div className="item__image-wrapper">

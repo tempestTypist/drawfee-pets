@@ -11,7 +11,6 @@ import Auth from '../utils/auth'
 import Loading from '../components/Loading'
 import Carousel from '../components/Carousel'
 import ColourSelect from '../components/ColourSelect'
-import ToastComponent from '../components/ToastComponent'
 
 const isBotname = (username) =>
   /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i.test(username);
@@ -143,7 +142,7 @@ const handleFormSubmit = async (e) => {
 
                   <Row>
                     <Col xs={12} className="pet-chooser">
-                      <Carousel heading="Bot Chooser" carouselItems={bots} selectBot={selectBot} />
+                      <Carousel heading="Bot Chooser" carouselItems={allbots} selectBot={selectBot} />
                     </Col>
 
                     <div className="screen-btn-wrapper">

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { ToastContainer, Toast } from 'react-bootstrap'
 import { motion, useAnimation, AnimatePresence } from 'framer-motion'
+import { useError } from '../ErrorContext';
 
 const ToastComponent = (props) => {
   const { toasts } = props
   const [showToast, setToast] = useState(false)
 
   const [notifications, setNotifications] = useState(toasts);
-
+  const { error, setError } = useError();
+  
   useEffect(() => {
     setToast(true)
     setNotifications(toasts)
@@ -32,7 +34,7 @@ const ToastComponent = (props) => {
               bg="danger"
               className="p-2 mt-2"
               show={showToast}
-              onClose={() => setNotifications({})}  
+              onClose={() => setError(null)}
               delay={4000} 
               autohide 
               >

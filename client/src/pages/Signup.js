@@ -5,6 +5,7 @@ import { ADD_USER } from '../utils/mutations'
 import { Card, InputGroup, FormControl } from 'react-bootstrap'
 import JankyButton from '../components/JankyButton'
 import Auth from '../utils/auth';
+import { useError } from '../components/ErrorContext'
 
 const isUsername = (username) =>
   /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i.test(username);
@@ -15,13 +16,14 @@ const isEmail = (email) =>
 const isPassword = (password) =>
   /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/i.test(password);
 
-const Signup = ({ setErrors }) => {
+const Signup = () => {
   const [formState, setFormState] = useState({
     username: '',
     email: '',
     password: '',
     confirmpass: '',
   });
+  const { setError } = useError();
 
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
@@ -37,33 +39,42 @@ const Signup = ({ setErrors }) => {
   const validateForm = () => {
     const { username, email, password, confirmpass } = formState;
     const errors = {};
-    setErrors();
-
+    setError();
+    
     if (username.trim().length === 0) {
       errors.usernameNull = "Please choose your username!"
+      // throw new Error('Please choose your username!');
     } else if ((username.trim().length >= 1 && username.trim().length < 5) || username.trim().length > 30) {
       errors.usernameReq = "Username has to be between 5-30 characters long."
+      // throw new Error('Username has to be between 5-30 characters long.');
     } else if (!isUsername(username)) {
       errors.validUsername = "Please enter a valid username! Usernames can contain characters a-z, 0-9, underscores and periods. The username cannot start or end with a period. It must also not have more than one period sequentially. Max length is 30 chars."
+      // throw new Error('Please enter a valid username! Usernames can contain characters a-z, 0-9, underscores and periods. The username cannot start or end with a period. It must also not have more than one period sequentially. Max length is 30 chars.');
     }
 
     if (email.trim().length === 0) {
       errors.emailNull = "Please enter your email!"
+      // throw new Error('Please enter your email!');
     } else if (!isEmail(email)) {
       errors.validEmail = "Please enter a valid email address!"
+      // throw new Error('Please enter a valid email address!');
     }
 
     if (password.trim().length === 0 || confirmpass.trim().length === 0) {
       errors.passwordNull = "Please pick and confirm a password!"
+      // throw new Error('Please pick and confirm a password!');
     } else if (!isPassword(password)) {
       errors.validPassword = "Password must be at least 8 characters long and have at least one uppercase letter, one number, and one symbol."
+      // throw new Error('Password must be at least 8 characters long and have at least one uppercase letter, one number, and one symbol.');
     }
 
     if (password !== confirmpass) {
       errors.passwordMismatch = "Password mismatch! Please try again."
+      // throw new Error('Password mismatch! Please try again.');
     }
+    
 
-    setErrors(errors);
+    setError(errors);
 
     if (Object.keys(errors).length > 0) {
       return false
@@ -82,11 +93,11 @@ const Signup = ({ setErrors }) => {
         });
   
         Auth.login(data.addUser.token);
-        window.location.assign('/create-pet')
+        window.location.assign('/bot-builder')
       } catch (err) {
         const { name, message } = err;
   
-        setErrors({
+        setError({
           [name]: message,
         });
       }
@@ -107,7 +118,7 @@ const Signup = ({ setErrors }) => {
                 {data ? (
                   <p>
                     Success! Onto the{' '}
-                    <Link to="/create-pet">next step.</Link>
+                    <Link to="/bot-builder">next step.</Link>
                   </p>
                 ) : (
                   <form className="my-3" onSubmit={handleFormSubmit}>
