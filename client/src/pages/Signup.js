@@ -8,13 +8,13 @@ import Auth from '../utils/auth';
 import { useError } from '../components/ErrorContext'
 
 const isUsername = (username) =>
-  /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i.test(username);
+  /^[a-zA-Z0-9](?!.*\.\.)(?!.*\.$)[\w.]{0,29}$/i.test(username);
 
 const isEmail = (email) => 
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i.test(email);
 
 const isPassword = (password) =>
-  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/i.test(password);
+  /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,}$/i.test(password);
 
 const Signup = () => {
   const [formState, setFormState] = useState({
@@ -38,50 +38,42 @@ const Signup = () => {
 
   const validateForm = () => {
     const { username, email, password, confirmpass } = formState;
-    const errors = {};
-    setError();
-    
+    setError(null);
+
     if (username.trim().length === 0) {
-      errors.usernameNull = "Please choose your username!"
-      // throw new Error('Please choose your username!');
+      setError({ message: 'Please choose your username!' });
+      return false;
     } else if ((username.trim().length >= 1 && username.trim().length < 5) || username.trim().length > 30) {
-      errors.usernameReq = "Username has to be between 5-30 characters long."
-      // throw new Error('Username has to be between 5-30 characters long.');
+      setError({ message: 'Username has to be between 5-30 characters long.' });
+      return false;
     } else if (!isUsername(username)) {
-      errors.validUsername = "Please enter a valid username! Usernames can contain characters a-z, 0-9, underscores and periods. The username cannot start or end with a period. It must also not have more than one period sequentially. Max length is 30 chars."
-      // throw new Error('Please enter a valid username! Usernames can contain characters a-z, 0-9, underscores and periods. The username cannot start or end with a period. It must also not have more than one period sequentially. Max length is 30 chars.');
+      setError({ message: 'Please enter a valid username! Usernames can contain characters a-z, 0-9, underscores and periods. The username cannot start or end with a period. It must also not have more than one period sequentially. Max length is 30 chars.' });
+      return false;
     }
 
     if (email.trim().length === 0) {
-      errors.emailNull = "Please enter your email!"
-      // throw new Error('Please enter your email!');
+      setError({ message: 'Please enter your email!' });
+      return false;
     } else if (!isEmail(email)) {
-      errors.validEmail = "Please enter a valid email address!"
-      // throw new Error('Please enter a valid email address!');
+      setError({ message: 'Please enter a valid email address!' });
+      return false;
     }
 
     if (password.trim().length === 0 || confirmpass.trim().length === 0) {
-      errors.passwordNull = "Please pick and confirm a password!"
-      // throw new Error('Please pick and confirm a password!');
+      setError({ message: 'Please pick and confirm a password!' });
+      return false;
     } else if (!isPassword(password)) {
-      errors.validPassword = "Password must be at least 8 characters long and have at least one uppercase letter, one number, and one symbol."
-      // throw new Error('Password must be at least 8 characters long and have at least one uppercase letter, one number, and one symbol.');
+      setError({ message: 'Password must be at least 8 characters long and have at least one uppercase letter, one number, and one symbol.' });
+      return false;
     }
 
     if (password !== confirmpass) {
-      errors.passwordMismatch = "Password mismatch! Please try again."
-      // throw new Error('Password mismatch! Please try again.');
+      setError({ message: 'Password mismatch! Please try again.' });
+      return false;
     }
-    
 
-    setError(errors);
-
-    if (Object.keys(errors).length > 0) {
-      return false
-    } else {
-      return true
-    }
-  }
+    return true;
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -91,18 +83,13 @@ const Signup = () => {
         const { data } = await addUser({
           variables: { ...formState },
         });
-  
+
         Auth.login(data.addUser.token);
-        window.location.assign('/bot-builder')
+        window.location.assign('/bot-builder');
       } catch (err) {
-        const { name, message } = err;
-  
-        setError({
-          [name]: message,
-        });
+        setError({ message: err.message });
       }
     }
-
   };
 
   return (

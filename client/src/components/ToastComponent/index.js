@@ -1,53 +1,53 @@
-import React, { useState, useEffect } from 'react'
-import { ToastContainer, Toast } from 'react-bootstrap'
-import { motion, useAnimation, AnimatePresence } from 'framer-motion'
+import React, { useState, useEffect } from 'react';
+import { ToastContainer, Toast } from 'react-bootstrap';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useError } from '../ErrorContext';
 
-const ToastComponent = (props) => {
-  const { toasts } = props
-  const [showToast, setToast] = useState(false)
+const ToastComponent = () => {
+  const { error, setError } = useError(); // Get the error from the context
+  const [showToast, setShowToast] = useState(false);
 
-  const [notifications, setNotifications] = useState(toasts);
-  const { error, setError } = useError();
-  
   useEffect(() => {
-    setToast(true)
-    setNotifications(toasts)
-  }, [toasts]);
+    if (error) {
+      setShowToast(true); // Show the toast when an error is set
+    }
+  }, [error]);
+
+  const handleClose = () => {
+    setShowToast(false);
+    setError(null); // Clear the error once the toast is dismissed
+  };
 
   return (
-    <ToastContainer 
-      position="bottom-end"
-      className="p-3 position-fixed"
-      >
-      <AnimatePresence initial={false}>
-        {Object.entries(notifications).map(([key, err]) => (
+    <ToastContainer position="bottom-end" className="p-3 position-fixed">
+      <AnimatePresence>
+        {error && (
           <motion.div
-            positionTransition
-            key={`${key}`}
+            key={error.message}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50, transition: { duration: 0.2 } }}
-            >
-            <Toast 
-              key={`${key}: ${err}`}
+          >
+            <Toast
               bg="danger"
               className="p-2 mt-2"
               show={showToast}
-              onClose={() => setError(null)}
+              onClose={handleClose}
               delay={4000} 
-              autohide 
-              >
-              <Toast.Body>{err}</Toast.Body>
+              autohide
+            >
+              <Toast.Body>{error.message}</Toast.Body>
             </Toast>
           </motion.div>
-        ))}
+        )}
       </AnimatePresence>
     </ToastContainer>
-  )
-}
+  );
+};
 
 export default ToastComponent;
+
+
 
 
 

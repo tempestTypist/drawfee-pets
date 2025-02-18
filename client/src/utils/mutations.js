@@ -26,7 +26,7 @@ export const LOGIN_USER = gql`
 
 export const ADD_BOT = gql`
   mutation addBot($chassis: String!, $botName: String!, $botColour: String!) {
-    addPet(chassis: $chassis, botName: $botName, botColour: $botColour) {
+    addBot(chassis: $chassis, botName: $botName, botColour: $botColour) {
       _id
       chassis
       botName

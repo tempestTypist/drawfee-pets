@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Pet, Bot, Message, Post, AllPets, Bots } = require('../models');
+const { User, Bot, Message, Post, Bots } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -61,13 +61,16 @@ const resolvers = {
 
     login: async (parent, { email, password }) => {
       if (password === null) {
-        throw new Error('Please enter a password!');
+        throw new Error('Please enter your password!');
       }
 
       const user = await User.findOne({ email });
+      if (!user) {
+        throw new AuthenticationError('Incorrect email or password!');
+      }
+      
       const correctPw = await user.isCorrectPassword(password);
-
-      if (!user || !correctPw) {
+      if (!correctPw) {
         throw new AuthenticationError('Incorrect email or password!');
       }
 

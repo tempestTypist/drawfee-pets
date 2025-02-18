@@ -58,7 +58,6 @@ const client = new ApolloClient({
 });
 
 const App = () => {
-  const { error } = useError();
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') || 'light'
   )
@@ -104,9 +103,7 @@ const App = () => {
                   {routes.map(({ path, component, exact }) => (
                     <Route key={path} exact={exact} path={path} component={component} />
                   ))}
-                  {error && (
-                    <ToastComponent toasts={error} />
-                  )}
+                    <ToastComponent />
                 </Col>
               </Row>
             </Container>

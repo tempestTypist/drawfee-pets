@@ -28,24 +28,19 @@ const Login = () => {
 
   const validateForm = () => {
     const { email, password } = formState;
-    const errors = {};
-    setError();
+    setError(null);
 
     if (email.trim().length === 0) {
-      errors.emailNull = "Please enter your email!"
+      setError({ message: 'Please enter your email!' });
+      return false;
     }
 
     if (password.trim().length === 0) {
-      errors.passwordNull = "Please enter your password!"
+      setError({ message: 'Please enter your password!' });
+      return false;
     }
 
-    setError(errors)
-
-    if (Object.keys(errors).length > 0) {
-      return false
-    } else {
-      return true
-    }
+    return true;
   }
 
   const handleFormSubmit = async (e) => {
@@ -59,19 +54,9 @@ const Login = () => {
 
         Auth.login(data.login.token);
       } catch (err) {
-        const { name, message } = err;
-    
-        setError({
-          [name]: message,
-        });
+        setError({ message: err.message });
       }
-    }
-    // clear form values
-    setFormState({
-      email: '',
-      password: '',
-    });
-    
+    }    
   };
 
   return (

@@ -21,14 +21,20 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  activePet: {
+  activeBot: {
     type: Schema.Types.ObjectId,
-    ref: 'Pet'
+    ref: 'Bot'
   },
-  pets: [
+  // pets: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'Pet',
+  //   },
+  // ],
+  userbots: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Pet',
+      ref: 'Bot',
     },
   ],
   inbox: [
@@ -59,10 +65,10 @@ userSchema.methods.isCorrectPassword = async function (password) {
 
 userSchema.post('save', function(error, doc, next) {
   if (error.name === 'MongoError' && error.code === 11000) {
-    if (Object.keys(error.keyValue)[0] === 'email') {
-      next(new Error('That email is already in use!'));
-    } else if (Object.keys(error.keyValue)[0] === 'username') {
+    if (Object.keys(error.keyValue)[0] === 'username') {
       next(new Error('That username is already in use!'));
+    } else if (Object.keys(error.keyValue)[0] === 'email') {
+      next(new Error('That email is already in use!'));
     }
     next(new Error('Username or Email already in use!'));
   } else {
