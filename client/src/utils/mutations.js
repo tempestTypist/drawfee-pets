@@ -58,6 +58,26 @@ export const REMOVE_BOT = gql`
   }
 `;
 
+export const GET_CHIP = gql`
+
+`;
+
+export const EQUIP_CHIP = gql`
+  mutation equipChip($chipId: ID!, $botId: ID!) {
+    equipChip(chipId: $chipId, botId: $botId) {
+      _id
+      repository {
+        _id
+        name
+      }
+      appearance {
+        antenna
+        legs
+      }
+    }
+  }
+`;
+
 export const SEND_MESSAGE = gql`
   mutation sendMessage($messageRecipient: String!, $messageTitle: String!, $messageText: String!) {
     sendMessage(messageRecipient: $messageRecipient, messageTitle: $messageTitle, messageText: $messageText) {

@@ -37,6 +37,12 @@ const userSchema = new Schema({
       ref: 'Bot',
     },
   ],
+  inventory: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Chip',
+    }
+  ],
   inbox: [
     {
       type: Schema.Types.ObjectId,

@@ -18,6 +18,24 @@ const botSchema = new Schema({
     required: 'Please pick a colour for your bot!',
     trim: true,
   },
+  appearance: {
+    antenna: null,
+    eyes: 'default',
+    mouth: 'default',
+    arms: 'default',
+    legs: 'default',
+    accessories: [{      
+      pos1: null,
+      pos2: null,
+      pos3: null
+    }]
+  },
+  modules: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Chip',
+    }
+  ],
   inventor: {
     type: String,
     // required: true,

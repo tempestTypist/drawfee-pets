@@ -8,6 +8,7 @@ const typeDefs = gql`
     password: String
     activeBot: Bot
     userBots: [Bot]!
+    inventory: [Chip]!
     inbox: [Message]!
     posts: [Post]!
   }
@@ -19,6 +20,7 @@ const typeDefs = gql`
     botColour: String
     createdAt: String
     inventor: String
+    modules: [Chip]!
   }
 
   type Message {
@@ -52,6 +54,12 @@ const typeDefs = gql`
     chassis: String!
   }
 
+  type Chip {
+    _id: ID
+    type: String
+    name: String
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -63,6 +71,7 @@ const typeDefs = gql`
     bots: [Bots]
     userBots(username: String): [Bot]
     bot(botId: ID!): Bot
+    inventory(username: String): [Chip]
     inbox(username: String): [Message]
     message(messageId: ID!): Message
     posts(username: String, offset: Int, limit: Int): [Post!]
@@ -76,6 +85,8 @@ const typeDefs = gql`
     addBot(chassis: String!, botName: String!, botColour: String!): Bot
     favouriteBot(botId: ID!): Bot
     removeBot(botId: String!): Bot
+    getChip(chipType: String!, chipName: String!, chipDesc: String!, chipEffect: String! ): Chip
+    equipChip(chipId: ID!, botId: ID!): Chip
     sendMessage(messageRecipient: String!, messageTitle: String!, messageText: String!): Message
     toggleRead(messageId: ID!): Message
     deleteMessage(messageId: String!): Message

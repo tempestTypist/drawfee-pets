@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Bot, Message, Post, Bots } = require('../models');
+const { User, Bot, Message, Post, Bots, Chip } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -176,6 +176,29 @@ const resolvers = {
         return bot;
       }
       throw new AuthenticationError('You need to be logged in!');
+    },
+
+    getChip: async (parent, { chipType, chipName, chipDesc, chipEffect }, context) => {
+      if (context.user) {
+        const chip = await Chip.create({
+          chipType,
+          chipName,
+          chipDesc,
+          chipEffect
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { inventory: chip._id } }
+        );
+
+        return chip;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    equipChip: async (parent, { botId, chipId }, context) => {
+
     },
 
     sendMessage: async (parent, { messageRecipient, messageTitle, messageText }, context) => {
