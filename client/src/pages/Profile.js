@@ -4,13 +4,18 @@ import { useQuery } from '@apollo/client'
 import { QUERY_USER, QUERY_ME } from '../utils/queries'
 
 import Auth from '../utils/auth'
-import PetList from '../components/PetList'
+import BotList from '../components/BotList'
 import Loading from '../components/Loading'
 
 import { Card } from 'react-bootstrap'
 
 const Profile = () => {
   const { username: userParam } = useParams();
+  console.log("Logged in? " + Auth.loggedIn())
+
+  if (Auth.loggedIn()) {
+    console.log("Logged in profile: " + JSON.stringify(Auth.getProfile()))
+  }
 
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },

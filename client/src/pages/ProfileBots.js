@@ -4,15 +4,18 @@ import { useQuery } from '@apollo/client'
 import { QUERY_USER, QUERY_ME } from '../utils/queries'
 
 import Auth from '../utils/auth'
-import PetList from '../components/PetList'
+import BotList from '../components/BotList'
 import Loading from '../components/Loading'
 
-const ProfilePets = () => {
+const ProfileBots = () => {
   const { username: userParam } = useParams();
+  console.log(userParam)
 
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+  const { loading, error, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
+
+  console.log(error)
 
   const user = data?.me || data?.user || {};
 
@@ -31,7 +34,7 @@ const ProfilePets = () => {
         {loading ? (
             <Loading />
           ) : (
-            <PetList
+            <BotList
               user={user}
               title={`${user.username}'s bots`}
               showTitle={false}
@@ -46,4 +49,4 @@ const ProfilePets = () => {
   );
 };
 
-export default ProfilePets;
+export default ProfileBots;

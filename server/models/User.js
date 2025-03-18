@@ -25,12 +25,6 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Bot'
   },
-  // pets: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: 'Pet',
-  //   },
-  // ],
   userbots: [
     {
       type: Schema.Types.ObjectId,

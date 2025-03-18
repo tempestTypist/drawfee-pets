@@ -7,7 +7,7 @@ const typeDefs = gql`
     email: String
     password: String
     activeBot: Bot
-    userBots: [Bot]!
+    userBots: [Bot]
     inventory: [Chip]!
     inbox: [Message]!
     posts: [Post]!
@@ -19,8 +19,8 @@ const typeDefs = gql`
     botName: String
     botColour: String
     createdAt: String
-    inventor: String
     modules: [Chip]!
+    inventor: String
   }
 
   type Message {

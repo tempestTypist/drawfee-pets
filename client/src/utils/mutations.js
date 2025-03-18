@@ -59,7 +59,15 @@ export const REMOVE_BOT = gql`
 `;
 
 export const GET_CHIP = gql`
-
+  mutation getChip($chipType: String!, $chipName: String!, $chipDesc: String!, $chipEffect: String!) {
+    getChip(chipType: $chipType, chipName: $chipName, chipDesc: $chipDesc, chipEffect: $chipEffect) {
+      _id
+      chipType
+      chipName
+      chipDesc
+      chipEffect
+    }
+  }
 `;
 
 export const EQUIP_CHIP = gql`

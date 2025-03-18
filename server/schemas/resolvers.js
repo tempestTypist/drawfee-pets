@@ -78,25 +78,6 @@ const resolvers = {
       return { token, user };
     },
 
-    // addPet: async (parent, { petSpecies, petName, petColour }, context) => {
-    //   if (context.user) {
-    //     const pet = await Pet.create({
-    //       petSpecies,
-    //       petName,
-    //       petColour,
-    //       petOwner: context.user.username,
-    //     });
-
-    //     await User.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $addToSet: { pets: pet._id } }
-    //     );
-
-    //     return pet;
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
-
     addBot: async (parent, { chassis, botName, botColour }, context) => {
       if (context.user) {
         const bot = await Bot.create({
@@ -116,20 +97,6 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    // favouritePet: async (parent, { petId }, context) => {
-    //   if (context.user) {
-    //     const pet = await Pet.findOne({ _id: petId, petOwner: context.user.username });
-
-    //     await User.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $set: { activePet: { ...pet } } }
-    //     );
-
-    //     return pet;
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
-
     favouriteBot: async (parent, { botId }, context) => {
       if (context.user) {
         const bot = await Bot.findOne({ _id: botId, inventor: context.user.username });
@@ -143,23 +110,6 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-
-    // removePet: async (parent, { petId }, context) => {
-    //   if (context.user) {
-    //     const pet = await Pet.findOneAndDelete({
-    //       _id: petId,
-    //       petOwner: context.user.username,
-    //     });
-
-    //     await User.findOneAndUpdate(
-    //       { username: context.user.username },
-    //       { $pull: { pets: pet._id } }
-    //     );
-
-    //     return pet;
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
 
     removeBot: async (parent, { botId }, context) => {
       if (context.user) {

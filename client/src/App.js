@@ -24,7 +24,7 @@ import NewPost from './pages/NewPost'
 import SingleBot from './pages/SingleBot'
 import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
-import ProfilePets from './pages/ProfilePets'
+import ProfileBots from './pages/ProfileBots'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
@@ -63,23 +63,23 @@ const App = () => {
   )
 
   const routes = [
-    { path: '/', component: Home, exact: true },
-    { path: '/login', component: Login, exact: true },
-    { path: '/signup', component: Signup, exact: true },
-    { path: '/bot-builder', component: BotBuilder, exact: true },
-    { path: '/message-center/:tab', component: MessageCenter, exact: true },
-    { path: '/messages/:messageId', component: SingleMessage, exact: true },
-    { path: '/new-message', component: NewMessage, exact: true },
-    { path: '/community-forums', component: Forum, exact: true },
-    { path: '/posts/:postId', component: SinglePost, exact: true },
-    { path: '/new-post', component: NewPost, exact: true },
-    { path: '/edit-profile', component: EditProfile, exact: true },
-    { path: '/me', component: Profile, exact: true },
-    { path: '/profile/:username', component: Profile, exact: true },
-    { path: '/bots', component: ProfilePets, exact: true },
-    { path: '/profile/:username/bots', component: ProfilePets, exact: true },
-    { path: '/bots/:botId', component: SingleBot, exact: true },
-    { path: '/assets', component: Assets, exact: true }
+    { path: '/', component: <Home/>, exact: true },
+    { path: '/login', component: <Login/>, exact: true },
+    { path: '/signup', component: <Signup/>, exact: true },
+    { path: '/bot-builder', component: <BotBuilder/>, exact: true },
+    { path: '/message-center/:tab', component: <MessageCenter/>, exact: true },
+    { path: '/messages/:messageId', component: <SingleMessage/>, exact: true },
+    { path: '/new-message', component: <NewMessage/>, exact: true },
+    { path: '/community-forums', component: <Forum/>, exact: true },
+    { path: '/posts/:postId', component: <SinglePost/>, exact: true },
+    { path: '/new-post', component: <NewPost/>, exact: true },
+    { path: '/edit-profile', component: <EditProfile/>, exact: true },
+    { path: '/me', component: <Profile/>, exact: true },
+    { path: '/profile/:username', component: <Profile/>, exact: true },
+    { path: '/bots', component: <ProfileBots/>, exact: true },
+    { path: '/profile/:username/bots', component: <ProfileBots/>, exact: true },
+    { path: '/bots/:botId', component: <SingleBot/>, exact: true },
+    { path: '/assets', component: <Assets/>, exact: true }
   ];
 
   useEffect(() => {
@@ -101,9 +101,11 @@ const App = () => {
                 <Sidebar />
                 <Col lg={{span: 9, offset: 3}} xxl={{span: 10, offset: 2}} className="content">
                   {routes.map(({ path, component, exact }) => (
-                    <Route key={path} exact={exact} path={path} component={component} />
+                    <Route key={path} exact={exact} path={path}>
+                      {component}
+                    </Route>
                   ))}
-                    <ToastComponent />
+                  <ToastComponent />
                 </Col>
               </Row>
             </Container>

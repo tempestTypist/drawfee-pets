@@ -157,7 +157,7 @@ export const QUERY_ME = gql`
         botColour
         createdAt
       }
-      pets {
+      userBots {
         _id
         botName
         chassis

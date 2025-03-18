@@ -221,7 +221,7 @@ const Header = ({ theme, setTheme, setErrors }) => {
                     </NavDropdown>
 
                     <NavDropdown 
-                      title={ <><img className="lm-avatar size-30 me-2 d-none d-lg-block" src="https://via.placeholder.com/150x150" alt="Profile Picture" />
+                      title={ <><img className="lm-avatar size-30 me-2 d-none d-lg-block" src="https://placehold.co/150x150/png" alt="Profile Picture" />
                                 <span className="lm-avatar-info d-sm-block">
                                   <span className="lm-avatar-name">
                                     {/* {Auth.getProfile().data.username} */}
@@ -233,7 +233,7 @@ const Header = ({ theme, setTheme, setErrors }) => {
                       align="end"
                       >
                       <Link className="dropdown-item" to="/me">Profile</Link>
-                      <Link className="dropdown-item" to="/pets">Pets</Link>
+                      <Link className="dropdown-item" to="/bots">Bots</Link>
                       <div className="theme-toggler">
                         <div className="toggle">
                           <input 

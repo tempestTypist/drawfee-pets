@@ -11,12 +11,12 @@ import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
 import { ButtonGroup, Card, Image, ToggleButton } from 'react-bootstrap';
-import JankyButton from '../../components/JankyButton';
+import JankyButton from '../JankyButton';
 import ImageImport from '../../utils/imageimport';
 
 library.add(fasStar, farStar)
 
-const PetList = ({
+const BotList = ({
   user,
   title,
   showTitle = true,
@@ -24,6 +24,7 @@ const PetList = ({
 }) => {  
 	const images = ImageImport.importAll(require.context('../../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
   const { userBots, activeBot } = user
+  console.log(user)
 
   const [favourite, setFavourite] = useState({
     activeBot: activeBot,
@@ -89,8 +90,8 @@ const PetList = ({
     }
   }, [handleFaveBot]);
 
-  if (!userBots.length) {
-    return <h3>No Pets Yet</h3>;
+  if (!userBots) {
+    return <h3>No Bots Invented Yet!</h3>;
   }
 
   return (
@@ -124,7 +125,7 @@ const PetList = ({
             <div className="janky-card-body-wrapper">
               <Card.Body className="janky-card-body">
                 <div className="janky-card-inner-body">
-                    <Image src={images[`${bot.chassis}/${bot.chassis}--${bot.botColour}.png`]} className="pet-list__image" alt="Pet image"/>
+                    <Image src={images[`${bot.chassis}/${bot.chassis}--${bot.botColour}.png`]} className="pet-list__image" alt="Bot image"/>
                 </div>
               </Card.Body>
             </div>
@@ -158,4 +159,4 @@ const PetList = ({
   );
 };
 
-export default PetList;
+export default BotList;
