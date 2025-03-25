@@ -1261,9 +1261,19 @@ using methods found in https://www.sitepoint.com/css-path-function-squeaky-portr
 	opacity: 0;
 }
 
+.colour-chooser input[type="radio"] ~ .color-label {
+  color: #ccc
+}
+
+.colour-chooser input[type="radio"]:checked ~ .color-label,
+.colour-chooser label:hover .color-label,
+.colour-chooser label:focus .color-label {
+  color: #fff
+}
+
 .paint-color {
   width: 58px;
-  height: 58px;
+  height: 60px;
   margin: 20px 22px;
   background: rgb(0, 0, 0);
   -webkit-clip-path: path(var(--clip, var(--splat)));
@@ -1274,7 +1284,7 @@ using methods found in https://www.sitepoint.com/css-path-function-squeaky-portr
 .colour-chooser label:hover .paint-color {
   --clip: var(--splat);
   --scale: 1.1;
-  --rotate: 10deg;
+  --rotate: 5deg;
 }
 
 .colour-chooser label:active .paint-color {
@@ -1308,16 +1318,6 @@ input[class="color-yellow"]:checked + .paint-color {
   margin: 10px 11px 10px 11px
 }
 
-input[type="radio"] ~ .color-label {
-  color: #ccc
-}
-
-input[type="radio"]:checked ~ .color-label,
-.colour-chooser label:hover .color-label,
-.colour-chooser label:focus .color-label {
-  color: #fff
-}
-
 input[class="color-red"]:hover + .paint-color,
 input[class="color-red"]:checked + .paint-color,
 input[class="color-red"]:focus + .paint-color {
@@ -1337,7 +1337,6 @@ input[class="color-green"]:focus + .paint-color {
 	background: rgb(45, 199, 6);
   color: rgb(45, 199, 6);
 }
-
 
 input[class="color-yellow"]:hover + .paint-color,
 input[class="color-yellow"]:checked + .paint-color,
