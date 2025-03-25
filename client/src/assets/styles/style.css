@@ -1232,16 +1232,28 @@ using methods found in https://www.sitepoint.com/css-path-function-squeaky-portr
   font-family: var(--font-family);
   font-size: 1.4rem;
   font-weight: bold;
+  -webkit-transition: all 1s;
+	transition: all 1s;
 }
 
 .colour-chooser label .color-label {
   position: absolute;
   top: 33%;
-  text-shadow: 3px 2px #000
+  text-shadow: 3px 2px #000;
+  transform: scale(1);
 }
 
-.colour-chooser label:hover .color-label {
+.colour-chooser label:hover .color-label,
+.colour-chooser label input[type="radio"]:checked ~ .color-label {
   transform: scale(1.1);
+}
+
+.colour-chooser label .color-label,
+.colour-chooser label:hover .color-label,
+.colour-chooser label > .paint-color,
+.colour-chooser label:hover > .paint-color {
+  -webkit-transition: all .2s;
+	transition: all .2s;
 }
 
 .colour-chooser input[type="radio"] {
@@ -1249,20 +1261,13 @@ using methods found in https://www.sitepoint.com/css-path-function-squeaky-portr
 	opacity: 0;
 }
 
-.colour-chooser input[type="radio"] + .paint-color, 
-.colour-chooser input[type="radio"] + .color-label {
-	-webkit-transition: all 0.2s;
-	transition: all 0.2s;
-}
-
 .paint-color {
-  width: 60px;
+  width: 58px;
   height: 58px;
   margin: 20px 22px;
   background: rgb(0, 0, 0);
   -webkit-clip-path: path(var(--clip, var(--splat)));
           clip-path: path(var(--clip, var(--splat)));
-  transition: clip-path 0.2s;
   transform: scale(var(--scale, 1)) rotate(var(--rotate, 0deg));
 }
 
@@ -1307,17 +1312,16 @@ input[type="radio"] ~ .color-label {
   color: #ccc
 }
 
+input[type="radio"]:checked ~ .color-label,
+.colour-chooser label:hover .color-label,
+.colour-chooser label:focus .color-label {
+  color: #fff
+}
+
 input[class="color-red"]:hover + .paint-color,
 input[class="color-red"]:checked + .paint-color,
 input[class="color-red"]:focus + .paint-color {
 	background: rgb(216, 35, 11);
-}
-
-.colour-chooser label:hover .color-label,
-.colour-chooser label:focus .color-label,
-.colour-chooser input[type="radio"]:checked ~ .color-label {
-  color: #fff;
-  transition: color 0.2s
 }
 
 input[class="color-blue"]:hover + .paint-color,
@@ -1326,7 +1330,6 @@ input[class="color-blue"]:focus + .paint-color {
 	background: rgb(5, 46, 228);
   color: rgb(5, 46, 228);
 }
-
 
 input[class="color-green"]:hover + .paint-color,
 input[class="color-green"]:checked + .paint-color,
@@ -1972,7 +1975,7 @@ color: #FFEB3B;
   justify-content: center;
 }
 
-.footer::before {    
+/* .footer::before {    
   content: "";
   background-image: url(../images/footer-pets.png);
   background-size: contain;
@@ -1983,7 +1986,7 @@ color: #FFEB3B;
   bottom: 0px;
   left: 0px;
   opacity: 0.2;
-}
+} */
 
 .footer > p,
 .footer > a {

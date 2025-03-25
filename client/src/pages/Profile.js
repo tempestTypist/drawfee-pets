@@ -61,11 +61,11 @@ const Profile = () => {
                                   <p>She/Her</p>
                               </div>
                               <div className="media">
-                                  <label>Pets</label>
-                                  {!user.pets ? (
-                                    <p>No pets!</p>
+                                  <label>Bots</label>
+                                  {!user.userBots ? (
+                                    <p>No bots!</p>
                                   ) : (
-                                    <p>{`${user.pets.length}`}</p>
+                                    <p>{`${user.userBots.length}`}</p>
                                   )}
                               </div>
                           </div>
@@ -83,7 +83,7 @@ const Profile = () => {
                                   )}
                               </div>
                               <div className="media">
-                                  <label>Favourite Pet</label>
+                                  <label>Favourite Bot</label>
                                   {!user.activeBot ? (
                                     <p>No favourite!</p>
                                   ) : (
