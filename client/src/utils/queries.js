@@ -1,10 +1,50 @@
 import { gql } from '@apollo/client';
 
+export const QUERY_ME = gql`
+  query me {
+    me {
+      _id
+      username
+      birthday
+      email
+      activeBot {
+        _id
+        botName
+        chassis
+        botColour
+        createdAt
+      }
+      userBots {
+        _id
+        botName
+        chassis
+        botColour
+        createdAt
+      }
+      inbox {
+        _id
+        messageTitle
+        messageText
+        messageAuthor
+        read
+        createdAt
+      }
+      posts {
+        _id
+        postTitle
+        postText
+        createdAt
+      }
+    }
+  }
+`;
+
 export const QUERY_USER = gql`
   query user($username: String!) {
     user(username: $username) {
       _id
       username
+      birthday
       email
       activeBot {
         _id
@@ -140,44 +180,6 @@ export const QUERY_SINGLE_MESSAGE = gql`
       messageAuthor
       read
       createdAt
-    }
-  }
-`;
-
-export const QUERY_ME = gql`
-  query me {
-    me {
-      _id
-      username
-      email
-      activeBot {
-        _id
-        botName
-        chassis
-        botColour
-        createdAt
-      }
-      userBots {
-        _id
-        botName
-        chassis
-        botColour
-        createdAt
-      }
-      inbox {
-        _id
-        messageTitle
-        messageText
-        messageAuthor
-        read
-        createdAt
-      }
-      posts {
-        _id
-        postTitle
-        postText
-        createdAt
-      }
     }
   }
 `;

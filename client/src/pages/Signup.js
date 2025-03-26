@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { ADD_USER } from '../utils/mutations'
-import { Card, InputGroup, FormControl } from 'react-bootstrap'
-import JankyButton from '../components/JankyButton'
 import Auth from '../utils/auth';
 import { useError } from '../components/ErrorContext'
+import { Card, InputGroup, FormControl } from 'react-bootstrap'
+import JankyButton from '../components/JankyButton'
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+const dateFormat = require('../utils/dateFormat');
 
 const isUsername = (username) =>
   /^[a-zA-Z0-9](?!.*\.\.)(?!.*\.$)[\w.]{0,29}$/i.test(username);
@@ -19,6 +22,7 @@ const isPassword = (password) =>
 const Signup = () => {
   const [formState, setFormState] = useState({
     username: '',
+    birthday: null,
     email: '',
     password: '',
     confirmpass: '',
@@ -29,16 +33,25 @@ const Signup = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+    console.log(formState)
     setFormState((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
+  // const handleDate = (date) => {
+  //   setFormState((prevData) => ({
+  //     ...prevData,
+  //     birthday: date,
+  //   }));
+  //   console.log(formState)
+  // };
+
   const validateForm = () => {
     const { username, email, password, confirmpass } = formState;
     setError(null);
+    console.log("validating.......")
 
     if (username.trim().length === 0) {
       setError({ message: 'Please choose your username!' });
@@ -71,13 +84,13 @@ const Signup = () => {
       setError({ message: 'Password mismatch! Please try again.' });
       return false;
     }
-
+    console.log("returned true!")
     return true;
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("submitting.......")
     if (validateForm()) {
       try {
         const { data } = await addUser({
@@ -87,6 +100,7 @@ const Signup = () => {
         Auth.login(data.addUser.token);
         window.location.assign('/bot-builder');
       } catch (err) {
+        console.log("failed to submit!")
         setError({ message: err.message });
       }
     }
@@ -120,6 +134,23 @@ const Signup = () => {
                         type="text"
                         value={formState.username}
                         onChange={handleChange}
+                      />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                      <InputGroup.Text id="birthday-input">Birthday</InputGroup.Text>
+                      <DatePicker
+                        aria-label="Birthday"
+                        aria-describedby="birthday-input"
+                        placeholder="MM/DD/YYYY"
+                        name="birthday"
+                        type="date"
+                        selected={formState.birthday}
+                        value={formState.birthday}
+                        onChange={(date) => setFormState((prevData) => ({
+                              ...prevData,
+                              birthday: dateFormat(date, { formatType: 'MM/DD/YYYY' }),
+                            }))}
+                        dateFormat="MM/dd/yyyy"
                       />
                     </InputGroup>
                     <InputGroup className="mb-3">

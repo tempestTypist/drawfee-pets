@@ -9,7 +9,9 @@ const resolvers = {
     },
     
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('userBots').populate({ path: 'inbox', options: { sort: { createdAt: -1 } } });
+      return User.findOne({ username })
+        .populate('userBots')
+        .populate({ path: 'inbox', options: { sort: { createdAt: -1 } } });
     },
 
     bots: async () => {
@@ -53,8 +55,8 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
+    addUser: async (parent, { username, birthday, email, password }) => {
+      const user = await User.create({ username, birthday, email, password });
       const token = signToken(user);
       return { token, user }; 
     },

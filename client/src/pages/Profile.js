@@ -22,6 +22,7 @@ const Profile = () => {
   });
 
   const user = data?.me || data?.user || {};
+  console.log(user)
 
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Redirect to="/me" />;
@@ -72,7 +73,7 @@ const Profile = () => {
                           <div className="col-6">
                               <div className="media">
                                   <label>Birthday</label>
-                                  <p>11/11/1111</p>
+                                  <p>{user.birthday}</p>
                               </div>
                               <div className="media">
                                   <label>Forum Posts</label>
@@ -102,7 +103,7 @@ const Profile = () => {
                           : 
                             <div className="col-12">
                               <Link 
-                                className="me-2"
+                                className="me-2 text-decoration-underline"
                                 to={`/edit-profile`}>
                                   Edit Profile
                               </Link>
@@ -113,7 +114,8 @@ const Profile = () => {
                   </Card.Body>
                 </div>
               </Card>
-
+              
+              {!user.desc ? <></> :
               <Card className="janky-card-wrapper mb-2">
                 <Card.Header className="janky-card-header">
                   Description              
@@ -121,15 +123,16 @@ const Profile = () => {
                 <div className="janky-card-body-wrapper">
                   <Card.Body className="janky-card-body">
                     <div className="janky-card-inner-body">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                      <p>{user.desc}</p>
                     </div>
                   </Card.Body>
                 </div>
-              </Card>
+              </Card>}
+
             </div>
           </div>
           <div className="profile-avatar col-lg-6">
-              <img src="https://via.placeholder.com/350" title="User Profile" alt="User Profile" />
+              <img src="https://placehold.co/350" title="User Profile" alt="User Profile" />
           </div>
         </>
       )}

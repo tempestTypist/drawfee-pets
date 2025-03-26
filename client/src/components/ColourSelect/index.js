@@ -13,7 +13,7 @@ const ColourSelect = (props) => {
 			<label htmlFor="color-red">
 				<input 
 					type="radio" 
-					name="petColour" 
+					name="botColour" 
 					className="color-red" 
 					id="color-red" 
 					value="Red"
@@ -27,7 +27,7 @@ const ColourSelect = (props) => {
 			<label htmlFor="color-blue">
 				<input 
 					type="radio" 
-					name="petColour" 
+					name="botColour" 
 					className="color-blue" 
 					id="color-blue" 
 					value="Blue"
@@ -40,7 +40,7 @@ const ColourSelect = (props) => {
 			<label htmlFor="color-green">
 				<input 
 					type="radio" 
-					name="petColour" 
+					name="botColour" 
 					className="color-green" 
 					id="color-green" 
 					value="Green"
@@ -53,7 +53,7 @@ const ColourSelect = (props) => {
 			<label htmlFor="color-yellow">
 				<input 
 					type="radio" 
-					name="petColour" 
+					name="botColour" 
 					className="color-yellow" 
 					id="color-yellow"
 					value="Yellow"

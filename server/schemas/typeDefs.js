@@ -4,6 +4,7 @@ const typeDefs = gql`
   type User {
     _id: ID
     username: String
+    birthday: String
     email: String
     password: String
     activeBot: Bot
@@ -11,6 +12,7 @@ const typeDefs = gql`
     inventory: [Chip]!
     inbox: [Message]!
     posts: [Post]!
+    createdAt: String
   }
 
   type Bot {
@@ -80,7 +82,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
+    addUser(username: String!, birthday: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addBot(chassis: String!, botName: String!, botColour: String!): Bot
     favouriteBot(botId: ID!): Bot

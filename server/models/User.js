@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
@@ -20,12 +21,21 @@ const userSchema = new Schema({
     type: String,
     required: true,
     minlength: 5,
+    trim: true
+  },
+  birthday: {
+    type: String,
+    required: true
+  },
+  pronouns: {
+    type: String,
+    trim: true
   },
   activeBot: {
     type: Schema.Types.ObjectId,
     ref: 'Bot'
   },
-  userbots: [
+  userBots: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Bot',
@@ -49,6 +59,11 @@ const userSchema = new Schema({
       ref: 'Post',
     },
   ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    get: (timestamp) => dateFormat(timestamp),
+  },
 });
 
 userSchema.pre('save', async function (next) {

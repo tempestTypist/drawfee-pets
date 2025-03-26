@@ -11,11 +11,12 @@ import Auth from '../utils/auth'
 import Loading from '../components/Loading'
 import Carousel from '../components/Carousel'
 import ColourSelect from '../components/ColourSelect'
+import { useError } from '../components/ErrorContext'
 
 const isBotname = (username) =>
   /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i.test(username);
 
-const BotBuilder = ({ setErrors }) => {
+const BotBuilder = () => {
 const { loading, data: botsData } = useQuery(QUERY_BOTS);
 const bots = botsData?.bots || [];
 const allbots = bots.map((bot) => (bot.chassis))
@@ -26,6 +27,8 @@ const [botPreview, setBotPreview] = useState({
   botName: '',
   botColour: "Red",
 })
+
+const { setError } = useError();
 
 const [addBot, { error, data }] = useMutation(ADD_BOT);
 
@@ -44,22 +47,19 @@ const handleChange = (e) => {
 
 const validateForm = () => {
   const { botName } = botPreview;
-  const errors = {};
-  setErrors();
+  setError(null);
 
   if (botName.trim().length === 0) {
-    errors.petnameNull = "Please choose a name for your bot!"
-  } else if (!isBotname(botName)) {
-    errors.petnameReq = "Please enter a valid bot name! Bot names can contain characters a-z, 0-9, underscores and periods. The bots name cannot start or end with a period. It must also not have more than one period sequentially. Max length is 30 chars."
+    setError({ message: 'Please choose a name for your bot!' });
+    return false;
+  }  
+  
+  if (!isBotname(botName)) {
+    setError({ message: 'Please enter a valid bot name! Bot names can contain characters a-z, 0-9, underscores and periods. The bots name cannot start or end with a period. It must also not have more than one period sequentially. Max length is 30 chars.' });
+    return false;
   }
 
-  setErrors(errors);
-
-  if (Object.keys(errors).length > 0) {
-    return false
-  } else {
-    return true
-  }
+  return true;
 }
 
 const handleFormSubmit = async (e) => {
@@ -76,11 +76,7 @@ const handleFormSubmit = async (e) => {
 
       window.location.assign('/')
     } catch (err) {
-      const { name, message } = err;
-
-      setErrors({
-        [name]: message,
-      });
+      setError({ message: err.message });
     }
   }
 };

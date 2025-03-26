@@ -63,13 +63,13 @@ const Sidebar = () => {
                     <Loading />
                     ) : (
                     <>
-                      {(!user?.activePet) 
+                      {(!user?.activeBot) 
                         ? 
-                        <p>No favourite pet!</p>
+                        <p>No favourite bot!</p>
                         : 
                         <>
-                          <Image src={images[`${user.activePet.petSpecies}/${user.activePet.petSpecies}--${user.activePet.petColour}.png`]} alt="Pet image" fluid />
-                          <p className="font-supersonic text-center fw-bold my-3">{user.activePet.petName}</p>
+                          {/* <Image src={images[`${user.activePet.petSpecies}/${user.activePet.petSpecies}--${user.activePet.petColour}.png`]} alt="Pet image" fluid /> */}
+                          <p className="font-supersonic text-center fw-bold my-3">{user.activeBot.botName}</p>
                         </>
                       }
                     </>

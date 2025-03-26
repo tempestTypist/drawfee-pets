@@ -17,12 +17,17 @@ const addDateSuffix = (date) => {
   return dateStr;
 };
 
-// function to format a timestamp, accepts the timestamp and an `options` object as parameters
-module.exports = (
-  timestamp,
-  { monthLength = 'short', dateSuffix = true } = {}
-) => {
-  // create month object
+// Function to format date to MM/DD/YYYY format
+const mmddyyyFormat = (date) => {
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add leading zero
+  const day = date.getDate().toString().padStart(2, '0'); // Add leading zero
+  const year = date.getFullYear();
+
+  return `${month}/${day}/${year}`;
+};
+
+// Function to format timestamp to the default format (Mar 25th, 2025 at 1:47 am)
+const defaultFormat = (dateObj, { monthLength, dateSuffix }) => {
   const months = {
     0: monthLength === 'short' ? 'Jan' : 'January',
     1: monthLength === 'short' ? 'Feb' : 'February',
@@ -38,13 +43,10 @@ module.exports = (
     11: monthLength === 'short' ? 'Dec' : 'December',
   };
 
-  const dateObj = new Date(timestamp);
   const formattedMonth = months[dateObj.getMonth()];
-
   const dayOfMonth = dateSuffix
     ? addDateSuffix(dateObj.getDate())
     : dateObj.getDate();
-
   const year = dateObj.getFullYear();
   let hour =
     dateObj.getHours() > 12
@@ -64,4 +66,24 @@ module.exports = (
   const formattedTimeStamp = `${formattedMonth} ${dayOfMonth}, ${year} at ${hour}:${minutes} ${periodOfDay}`;
 
   return formattedTimeStamp;
+};
+
+// Main function to format timestamp based on formatType
+module.exports = (
+  timestamp,
+  { monthLength = 'short', dateSuffix = true, formatType = 'default' } = {}
+) => {
+  const dateObj = new Date(timestamp);
+
+  if (formatType === 'MM/DD/YYYY') {
+    return mmddyyyFormat(dateObj);
+  }
+
+  // Default format (Mar 25th, 2025 at 1:47 am)
+  if (formatType === 'default') {
+    return defaultFormat(dateObj, { monthLength, dateSuffix });
+  }
+
+  // You can add more formats here in the future
+  throw new Error(`Unsupported formatType: ${formatType}`);
 };
