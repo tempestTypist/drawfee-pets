@@ -33,12 +33,12 @@ const userSchema = new Schema({
   },
   activeBot: {
     type: Schema.Types.ObjectId,
-    ref: 'Bot'
+    ref: 'UserBot'
   },
   userBots: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Bot',
+      ref: 'UserBot',
     },
   ],
   inventory: [

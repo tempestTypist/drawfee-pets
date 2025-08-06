@@ -5,7 +5,7 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import ImageImport from '../../utils/imageimport';
 
 const Carousel = (props) => {
-	const { carouselItems, heading, selectBot, importImages } = props 
+	const { model, carouselItems, heading, selectBot, importImages } = props 
 	const headingId = `${heading.replace(/\s+/g, '-').toLowerCase()}`
 
 	const [app, updateApp] = useState({
@@ -16,7 +16,7 @@ const Carousel = (props) => {
 	});
 
 	const { items, currentIndex, currentItems } = app
-	const images = ImageImport.importAll(require.context('../../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
+	const images = ImageImport.importAll(require.context('../../assets/images/bots', true, /\.(png|jpe?g|svg)$/));
 
 	const moveLeft = () => {
 		let newIndex = currentIndex
@@ -46,42 +46,42 @@ const Carousel = (props) => {
 		importImages(id)
 	}
 
-useEffect(() => {
-	let listItems = []
-	let level
-	let className
-	console.log(currentItems)
+	useEffect(() => {
+		let listItems = []
+		let level
+		let className
+		console.log(currentItems)
 
-	for (let i = currentIndex - 2; i < currentIndex + 3; i++) {
-			let index = i
-			if (i < 0) {
-					index = items.length + i
-			} else if (i >= items.length) {
-					index = i % items.length
-			}
-			level = currentIndex - i
-			className = 'item level' + level
-			if (currentIndex === index) className += ' item--current'
+		for (let i = currentIndex - 2; i < currentIndex + 3; i++) {
+				let index = i
+				if (i < 0) {
+						index = items.length + i
+				} else if (i >= items.length) {
+						index = i % items.length
+				}
+				level = currentIndex - i
+				className = 'item level' + level
+				if (currentIndex === index) className += ' item--current'
 
-			switch (index) {
-				case currentIndex:
-					className += ' item--current'
-					break;
+				switch (index) {
+					case currentIndex:
+						className += ' item--current'
+						break;
 
-				case (currentIndex - 1):
-					className += ' item--previous'
-					break;
+					case (currentIndex - 1):
+						className += ' item--previous'
+						break;
 
-				case (currentIndex + 1):
-					className += ' item--next'
-					break;
-			}
+					case (currentIndex + 1):
+						className += ' item--next'
+						break;
+				}
 
-			listItems.push({ "index": index, "id": items[index], "class": className })
-	}
-	updateApp({ ...app, currentItems: [...listItems] });
-	selectBot(items[currentIndex])
-}, [currentIndex]);
+				listItems.push({ "index": index, "id": items[index], "class": className })
+		}
+		updateApp({ ...app, currentItems: [...listItems] });
+		selectBot(items[currentIndex])
+	}, [currentIndex]);
 
 	return (
 		<div className="carousel" aria-labelledby={headingId}>
@@ -104,8 +104,8 @@ useEffect(() => {
 							<img 
 								className="item__image"
 								alt={item.id}
-								name="petSpecies"
-								src={images[`${item.id}/${item.id}.png`]}
+								name="chassis"
+								src={images[`MODEL-${model}/${item.id}/full-body.png`]}
 								onLoad={imageLoaded}
 							/>
 						</div>

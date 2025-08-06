@@ -1,0 +1,22 @@
+[
+	{
+		"_id": "SQU",
+    "chassis": "SQU"
+  },
+  {
+		"_id": "C1R",
+    "chassis": "C1R"
+  },
+  {
+		"_id": "D14",
+    "chassis": "D14"
+  },
+  {
+		"_id": "H3M1",
+    "chassis": "H3M1"
+  },
+  {
+		"_id": "CYL1",
+    "chassis": "CYL1"
+  }
+]

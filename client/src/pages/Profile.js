@@ -11,18 +11,12 @@ import { Card } from 'react-bootstrap'
 
 const Profile = () => {
   const { username: userParam } = useParams();
-  console.log("Logged in? " + Auth.loggedIn())
 
-  if (Auth.loggedIn()) {
-    console.log("Logged in profile: " + JSON.stringify(Auth.getProfile()))
-  }
-
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+  const { error, loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
 
   const user = data?.me || data?.user || {};
-  console.log(user)
 
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Redirect to="/me" />;

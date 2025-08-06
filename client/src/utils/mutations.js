@@ -25,12 +25,13 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_BOT = gql`
-  mutation addBot($chassis: String!, $botName: String!, $botColour: String!) {
-    addBot(chassis: $chassis, botName: $botName, botColour: $botColour) {
+  mutation addBot($model: String!, $chassis: String!, $botName: String!, $colour: String!) {
+    addBot(model: $model, chassis: $chassis, botName: $botName, colour: $colour) {
       _id
+      model
       chassis
       botName
-      botColour
+      colour
       createdAt
       inventor
     }
@@ -41,9 +42,10 @@ export const FAVOURITE_BOT = gql`
   mutation favouriteBot($botId: ID!) {
     favouriteBot(botId: $botId) {
       _id
+      model
       chassis
       botName
-      botColour
+      colour
       createdAt
     }
   }

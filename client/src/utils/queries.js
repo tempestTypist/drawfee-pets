@@ -10,15 +10,17 @@ export const QUERY_ME = gql`
       activeBot {
         _id
         botName
+        model
         chassis
-        botColour
+        colour
         createdAt
       }
       userBots {
         _id
         botName
+        model
         chassis
-        botColour
+        colour
         createdAt
       }
       inbox {
@@ -49,15 +51,17 @@ export const QUERY_USER = gql`
       activeBot {
         _id
         botName
+        model
         chassis
-        botColour
+        colour
         createdAt
       }
       userBots {
         _id
         botName
+        model
         chassis
-        botColour
+        colour
         createdAt
       }
       inbox {
@@ -88,21 +92,22 @@ export const QUERY_USERS = gql`
   }
 `;
 
-export const QUERY_BOTS = gql`
-  query getBots {
-    bots {
+export const QUERY_BASEBOTS = gql`
+  query getBaseBots {
+    basebots {
       chassis
     }
   }
 `;
 
 export const QUERY_USERBOTS = gql`
-  query getuserBots {
-    userBots {
+  query getUserBots {
+    userbots {
       _id
+      model
       chassis
       botName
-      botColour
+      colour
       createdAt
       inventor
     }
@@ -111,11 +116,12 @@ export const QUERY_USERBOTS = gql`
 
 export const QUERY_SINGLE_BOT = gql`
   query getSingleBot($botId: ID!) {
-    bot(botId: $botId) {
+    userbot(botId: $botId) {
       _id
+      model
       chassis
       botName
-      botColour
+      colour
       createdAt
       inventor
     }

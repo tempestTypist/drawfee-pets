@@ -14,7 +14,7 @@ import Loading from '../Loading'
 const dateFormat = require('../../utils/dateFormat');
 
 const Header = ({ theme, setTheme, setErrors }) => {
-  const { loading, data } = useQuery(QUERY_ME);
+  const { error, loading, data } = useQuery(QUERY_ME);
 
   const user = data?.me || {};
   const inbox = user?.inbox

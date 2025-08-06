@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Bot, Message, Post, Bots, Chip } = require('../models');
+const { User, UserBot, Message, Post, BaseBot, Chip } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -14,17 +14,17 @@ const resolvers = {
         .populate({ path: 'inbox', options: { sort: { createdAt: -1 } } });
     },
 
-    bots: async () => {
-      return Bots.find().populate('bots');
+    basebots: async () => {
+      return BaseBot.find().populate('basebots');
     },
 
-    bot: async (parent, { botId }) => {
-      return Bot.findOne({ _id: botId });
-    },
-
-    userBots: async (parent, { username }) => {
+    userbots: async (parent, { username }) => {
       const params = username ? { username } : {};  // If a username is provided, filter by username
-      return Bot.find(params).sort({ createdAt: -1 });  // Sort pets by creation date, descending
+      return UserBot.find(params).sort({ createdAt: -1 });  // Sort bots by creation date, descending
+    },
+
+    userbot: async (parent, { botId }) => {
+      return UserBot.findOne({ _id: botId });
     },
 
     me: async (parent, args, context) => {
@@ -80,52 +80,54 @@ const resolvers = {
       return { token, user };
     },
 
-    addBot: async (parent, { chassis, botName, botColour }, context) => {
+    addBot: async (parent, { model, chassis, botName, colour }, context) => {
       if (context.user) {
-        const bot = await Bot.create({
+        const userBot = await UserBot.create({
+          model,
           chassis,
           botName,
-          botColour,
+          colour,
           inventor: context.user.username,
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { userBots: bot._id } }
+          { $addToSet: { userBots: userBot._id } }
         );
-
-        return bot;
+        
+        await userBot.save();
+        return userBot;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
 
     favouriteBot: async (parent, { botId }, context) => {
       if (context.user) {
-        const bot = await Bot.findOne({ _id: botId, inventor: context.user.username });
+        const userBot = await UserBot.findOne({ _id: botId, inventor: context.user.username });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $set: { activeBot: { ...bot } } }
+          { $set: { activeBot: { ...userBot } } }
         );
 
-        return bot;
+        return userBot;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
 
     removeBot: async (parent, { botId }, context) => {
       if (context.user) {
-        const bot = await Bot.findOneAndDelete({
+        const userBot = await UserBot.findOneAndDelete({
           _id: botId,
           inventor: context.user.username,
         });
 
         await User.findOneAndUpdate(
           { username: context.user.username },
-          { $pull: { pets: bot._id } }
+          { $pull: { userBots: userBot._id } }
         );
 
-        return bot;
+        return userBot;
       }
       throw new AuthenticationError('You need to be logged in!');
     },

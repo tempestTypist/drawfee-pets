@@ -14,7 +14,7 @@ const SingleBot = () => {
     variables: { botId: botId },
   });
 
-  const bot = data?.bot || {};
+  const bot = data?.userbot || {};
 
   const images = ImageImport.importAll(require.context('../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
 
@@ -30,7 +30,7 @@ const SingleBot = () => {
                 <Image 
                   fluid
                   className="pet-preview__screen mb-4" 
-                  src={images[`${bot.chassis}/${bot.chassis}--${bot.botColour}.png`]}
+                  src={images[`${bot.chassis}/${bot.chassis}--${bot.colour}.png`]}
                 />
               </div>
             </div>

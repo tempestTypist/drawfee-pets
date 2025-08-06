@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { Link } from 'react-router-dom';
-import { QUERY_BOTS } from '../utils/queries'
+import { QUERY_USERBOTS } from '../utils/queries'
 import { Container, Row, Col, Button, Card, Image } from 'react-bootstrap'
 import ImageImport from '../utils/imageimport'
 import Loading from '../components/Loading'
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_BOTS);
-  const bots = data?.bots || [];
-
+  const { loading, data } = useQuery(QUERY_USERBOTS);
+  const bots = data?.userBots || [];
+console.log(bots)
   const images = ImageImport.importAll(require.context('../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
 
   const [previewBot, setPreviewedBot] = useState(0);
@@ -105,8 +105,8 @@ const Home = () => {
                 </Card.Header>
                 <div className="janky-card-body-wrapper">
                   <Card.Body className="janky-card-body">
-                    <div className="janky-card-inner-body pet-list__wrapper">
-                      <Image src={images[`${bots[previewBot].chassis}/${bots[previewBot].chassis}--${bots[previewBot].botColour}.png`]} className="pet-list__image featured-pet" alt="Pet image"/>
+                    <div className="janky-card-inner-body colour">
+                      <Image src={images[`${bots[previewBot].chassis}/${bots[previewBot].chassis}--${bots[previewBot].colour}.png`]} className="pet-list__image featured-pet" alt="Pet image"/>
                     </div>
                   </Card.Body>
                 </div>

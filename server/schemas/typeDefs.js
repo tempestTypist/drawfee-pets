@@ -7,22 +7,23 @@ const typeDefs = gql`
     birthday: String
     email: String
     password: String
-    activeBot: Bot
-    userBots: [Bot]
+    activeBot: UserBot
+    userBots: [UserBot]
     inventory: [Chip]!
     inbox: [Message]!
     posts: [Post]!
     createdAt: String
   }
 
-  type Bot {
+  type UserBot {
     _id: ID
+    model: String
     chassis: String
     botName: String
-    botColour: String
-    createdAt: String
+    colour: String
     modules: [Chip]!
     inventor: String
+    createdAt: String
   }
 
   type Message {
@@ -51,7 +52,7 @@ const typeDefs = gql`
     createdAt: String
   }
 
-  type Bots {
+  type BaseBot {
     _id: String
     chassis: String!
   }
@@ -68,25 +69,25 @@ const typeDefs = gql`
   }
 
   type Query {
+    me: User
     users: [User]
     user(username: String!): User
-    bots: [Bots]
-    userBots(username: String): [Bot]
-    bot(botId: ID!): Bot
+    userbots(username: String!): [UserBot]
+    userbot(botId: ID!): UserBot
+    basebots: [BaseBot]
     inventory(username: String): [Chip]
     inbox(username: String): [Message]
     message(messageId: ID!): Message
     posts(username: String, offset: Int, limit: Int): [Post!]
     post(postId: ID!): Post
-    me: User
   }
 
   type Mutation {
     addUser(username: String!, birthday: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addBot(chassis: String!, botName: String!, botColour: String!): Bot
-    favouriteBot(botId: ID!): Bot
-    removeBot(botId: String!): Bot
+    addBot(model: String!, chassis: String!, botName: String!, colour: String!): UserBot
+    favouriteBot(botId: ID!): UserBot
+    removeBot(botId: String!): UserBot
     getChip(chipType: String!, chipName: String!, chipDesc: String!, chipEffect: String! ): Chip
     equipChip(chipId: ID!, botId: ID!): Chip
     sendMessage(messageRecipient: String!, messageTitle: String!, messageText: String!): Message

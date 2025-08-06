@@ -15,10 +15,8 @@ const ProfileBots = () => {
     variables: { username: userParam },
   });
 
-  console.log(error)
-
   const user = data?.me || data?.user || {};
-
+console.log(JSON.stringify(user))
   if (!user?.username) {
     return (
       <h4>

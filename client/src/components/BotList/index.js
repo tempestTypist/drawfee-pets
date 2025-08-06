@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
 import { REMOVE_BOT, FAVOURITE_BOT } from '../../utils/mutations';
-import { QUERY_ME, QUERY_SINGLE_PET } from '../../utils/queries';
+import { QUERY_ME, QUERY_SINGLE_BOT } from '../../utils/queries';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -22,9 +22,8 @@ const BotList = ({
   showTitle = true,
   showUsername = true,
 }) => {  
-	const images = ImageImport.importAll(require.context('../../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
+	const images = ImageImport.importAll(require.context('../../assets/images/bots', true, /\.(png|jpe?g|svg)$/));
   const { userBots, activeBot } = user
-  console.log(user)
 
   const [favourite, setFavourite] = useState({
     activeBot: activeBot,
@@ -72,7 +71,7 @@ const BotList = ({
   });
 
   const handleRemoveBot = async (botId) => {
-    let result = window.confirm("Are you sure you'd like to send this pet to the pound? I haven't made one yet so you can't get them back! Unless you make another one, of course.");
+    let result = window.confirm("Are you sure you'd like to send this bot to the junkyard? I haven't made one yet so you can't get them back! Unless you make another one, of course.");
     if (result) {
       try {
         const { data } = await removeBot({
@@ -125,7 +124,32 @@ const BotList = ({
             <div className="janky-card-body-wrapper">
               <Card.Body className="janky-card-body">
                 <div className="janky-card-inner-body">
-                    <Image src={images[`${bot.chassis}/${bot.chassis}--${bot.botColour}.png`]} className="pet-list__image" alt="Bot image"/>
+                  <div className="pet-list__wrapper">
+                    <Image 
+                      fluid
+                      className="pet-list__image" 
+                      src={images[`MODEL-${bot.model}/${bot.chassis}/head-${bot.colour}.png`]}
+                      alt="Bot Head"
+                    />
+                    <Image 
+                      fluid
+                      className="pet-list__image" 
+                      src={images[`MODEL-${bot.model}/arms.png`]}
+                      alt="Bot Arms"
+                    />
+                    <Image 
+                      fluid
+                      className="pet-list__image" 
+                      src={images[`MODEL-${bot.model}/body.png`]}
+                      alt="Bot Body"
+                    />
+                    <Image 
+                      fluid
+                      className="pet-list__image" 
+                      src={images[`MODEL-${bot.model}/legs.png`]}
+                      alt="Bot Legs"
+                    />
+                  </div>
                 </div>
               </Card.Body>
             </div>

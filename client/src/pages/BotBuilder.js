@@ -3,34 +3,43 @@ import { Link } from 'react-router-dom'
 import { Container, Row, Col, Button, Card, Form, FormControl, Image, InputGroup } from 'react-bootstrap'
 import { useQuery, useMutation } from '@apollo/client'
 
-import { QUERY_BOTS } from '../utils/queries'
+import { QUERY_BASEBOTS } from '../utils/queries'
 import { ADD_BOT } from '../utils/mutations'
 
 import ImageImport from '../utils/imageimport'
 import Auth from '../utils/auth'
 import Loading from '../components/Loading'
 import Carousel from '../components/Carousel'
-import ColourSelect from '../components/ColourSelect'
+import CustomSelect from '../components/CustomSelect'
 import { useError } from '../components/ErrorContext'
 
 const isBotname = (username) =>
   /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i.test(username);
 
 const BotBuilder = () => {
-const { loading, data: botsData } = useQuery(QUERY_BOTS);
-const bots = botsData?.bots || [];
+const { loading, data: botsData } = useQuery(QUERY_BASEBOTS);
+const bots = botsData?.basebots || [];
 const allbots = bots.map((bot) => (bot.chassis))
-const images = ImageImport.importAll(require.context('../assets/images/pets', true, /\.(png|jpe?g|svg)$/));
+const images = ImageImport.importAll(require.context('../assets/images/bots', true, /\.(png|jpe?g|svg)$/));
 
 const [botPreview, setBotPreview] = useState({
+  model: 'D',
   chassis: allbots[0],
   botName: '',
-  botColour: "Red",
+  colour: "Red",
 })
 
 const { setError } = useError();
 
 const [addBot, { error, data }] = useMutation(ADD_BOT);
+
+const modelChooserOptions = { 
+  image: "big-button",
+  values: ["D", "T", "L"] }
+
+const colourChooserOptions = { 
+  image: "paint-splatter",
+  values: ["red", "blue", "green", "yellow"] }
 
 const selectBot = (selected) => {
   setBotPreview({ ...botPreview, chassis: selected})
@@ -38,11 +47,14 @@ const selectBot = (selected) => {
 
 const handleChange = (e) => {
   const { name, value } = e.target;
+  const capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
 
   setBotPreview((prev) => ({
     ...prev,
-    [name]: value,
+    [name]: capitalizedValue,
   }));
+
+  console.log(botPreview)
 };
 
 const validateForm = () => {
@@ -108,7 +120,22 @@ const handleFormSubmit = async (e) => {
                           <Image 
                             fluid
                             className="pet-preview__screen" 
-                            src={images[`${botPreview.chassis}/${botPreview.chassis}--${botPreview.botColour}.png`]}
+                            src={images[`MODEL-${botPreview.model}/${botPreview.chassis}/head-${botPreview.colour}.png`]}
+                          />
+                          <Image 
+                            fluid
+                            className="pet-preview__screen" 
+                            src={images[`MODEL-${botPreview.model}/arms.png`]}
+                          />
+                          <Image 
+                            fluid
+                            className="pet-preview__screen" 
+                            src={images[`MODEL-${botPreview.model}/body.png`]}
+                          />
+                          <Image 
+                            fluid
+                            className="pet-preview__screen" 
+                            src={images[`MODEL-${botPreview.model}/legs.png`]}
                           />
                         </div>
                       </div>
@@ -116,6 +143,42 @@ const handleFormSubmit = async (e) => {
 
                     <Col xl={6} className="flex-grow-1" style={{"marginBottom": "-1rem"}}>
                       <div className="stacked-screens__wrapper">
+                          <CustomSelect 
+                            handleChange={handleChange}
+                            chooserType="model"
+                            chooserOptions={modelChooserOptions}
+                          />
+{/* 
+                          <div key={`inline-radio`} className="mb-3">
+                            <Form.Check
+                              inline
+                              label="D"
+                              value="D"
+                              name="model"
+                              type="radio"
+                              id={`inline-radio-1`}
+                              onChange={handleChange}
+                            />
+                            <Form.Check
+                              inline
+                              label="T"
+                              value="T"
+                              name="model"
+                              type="radio"
+                              id={`inline-radio-2`}
+                              onChange={handleChange}
+                            />
+                            <Form.Check
+                              inline
+                              label="L"
+                              value="L"
+                              name="model"
+                              type="radio"
+                              id={`inline-radio-3`}
+                              onChange={handleChange}
+                            />
+                          </div> */}
+
                         <div className="stacked-screen d-flex justify-content-center">
                           <InputGroup className="w-75">
                             <InputGroup.Text id="pet-name-input">Name</InputGroup.Text>
@@ -128,9 +191,12 @@ const handleFormSubmit = async (e) => {
                             />
                           </InputGroup>
                         </div>
-
                         <div className="stacked-screen">
-                          <ColourSelect handleChange={handleChange} />
+                          <CustomSelect 
+                            handleChange={handleChange}
+                            chooserType="colour"
+                            chooserOptions={colourChooserOptions}
+                          />
                         </div>
                       </div>
                     </Col>
@@ -138,7 +204,11 @@ const handleFormSubmit = async (e) => {
 
                   <Row>
                     <Col xs={12} className="pet-chooser">
-                      <Carousel heading="Bot Chooser" carouselItems={allbots} selectBot={selectBot} />
+                      <Carousel 
+                        heading="Bot Chooser" 
+                        carouselItems={allbots} 
+                        selectBot={selectBot} 
+                        model={botPreview.model} />
                     </Col>
 
                     <div className="screen-btn-wrapper">

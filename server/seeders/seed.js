@@ -1,22 +1,23 @@
 const db = require('../config/connection');
-const { Bots, User } = require('../models');
-const botSeeds = require('./botSeeds.json');
+const { BaseBot, User, UserBot } = require('../models');
+const baseBotSeeds = require('./baseBotSeeds.json');
 
 db.once('open', async () => {
   try {
     await User.deleteMany({});
-    await Bots.deleteMany({});
+    await UserBot.deleteMany({});
+    await BaseBot.deleteMany({});
 
-    await Bots.create(botSeeds);
+    await BaseBot.create(baseBotSeeds);
 
-    // for (let i = 0; i < petSeeds.length; i++) {
-    //   const { _id, petOwner } = await Pet.create(petSeeds[i]);
+    // for (let i = 0; i < userBotSeeds.length; i++) {
+    //   const { _id, inventor } = await Bot.create(userBotSeeds[i]);
       
     //   const user = await User.findOneAndUpdate(
-    //     { username: petOwner },
+    //     { username: inventor },
     //     {
     //       $addToSet: {
-    //         pets: _id,
+    //         userBots: _id,
     //       },
     //     }
     //   );
