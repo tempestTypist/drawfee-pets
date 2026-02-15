@@ -32,6 +32,7 @@ export const SidebarScreen = () => {
 			<div className="sidebar-screen">
 				<div className="sidebar-screen__inner">
 					<ScreenContent/>
+					<div className="sidebar-scanlines"></div>
 				</div>
 			</div>
 		</motion.div>

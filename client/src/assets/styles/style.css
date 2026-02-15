@@ -519,6 +519,33 @@ a:hover:not(.navbar-brand a):not(.nav-link):not(a.dropdown-menu):not(.dropdown-i
   border-radius: 100px;
 }
 
+.sidebar-scanlines {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 0;
+	opacity: 0.2;
+	will-change: opacity;
+	animation: opacity 3s linear infinite;
+}
+
+.sidebar-scanlines:before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	pointer-events: none;
+	background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, .5) 51%);
+	background-size: 100% 4px;
+  border-radius: 50px;
+  margin: 1.3rem 1.2rem;
+	will-change: background, background-size;
+	animation: scanlines 0.2s linear infinite;
+}
+
 .sidebar-screen__inner {
   display: flex;
   flex-direction: column;
@@ -2531,4 +2558,15 @@ font-size: 45px;
   13% { transform: rotate(2deg); }
   15% { transform: rotate(-1deg); }
   100% { transform: rotate(0); }
+}
+
+@keyframes scanlines {
+	from {
+		background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, .5) 51%);
+		background-size: 100% 4px;
+	}
+	to {
+		background: linear-gradient(to bottom, rgba(0, 0, 0, .5) 50%, transparent 51%);
+		background-size: 100% 4px;
+	}
 }
