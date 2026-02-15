@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, Toast } from 'react-bootstrap';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useError } from '../ErrorContext';
+import { useError } from '../../contexts/ErrorContext';
 
 const ToastComponent = () => {
   const { error, setError } = useError(); // Get the error from the context

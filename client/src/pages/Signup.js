@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { ADD_USER } from '../utils/mutations'
 import Auth from '../utils/auth';
-import { useError } from '../components/ErrorContext'
+import { useError } from '../contexts/ErrorContext'
 import { Card, InputGroup, FormControl } from 'react-bootstrap'
 import JankyButton from '../components/JankyButton'
 import DatePicker from 'react-datepicker';

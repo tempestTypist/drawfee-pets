@@ -11,7 +11,7 @@ import Auth from '../utils/auth'
 import Loading from '../components/Loading'
 import Carousel from '../components/Carousel'
 import CustomSelect from '../components/CustomSelect'
-import { useError } from '../components/ErrorContext'
+import { useError } from '../contexts/ErrorContext'
 
 const isBotname = (username) =>
   /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i.test(username);

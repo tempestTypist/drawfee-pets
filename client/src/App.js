@@ -29,9 +29,8 @@ import Header from './components/Header'
 import { Sidebar } from './components/Sidebar'
 import Footer from './components/Footer'
 import Assets from './pages/Assets'
-import Loading from './components/Loading'
 import ToastComponent from './components/ToastComponent'
-import { useError } from './components/ErrorContext'
+import { ThemeContext } from './contexts/ThemeContext';
 
 // construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -95,6 +94,7 @@ const App = () => {
   return (
       <ApolloProvider client={client}>
         <Router>
+          <ThemeContext.Provider value={{ theme, setTheme }}>
             <Header theme={theme} setTheme={setTheme} />
             <Container fluid>
               <Row className="main-content">
@@ -110,6 +110,7 @@ const App = () => {
               </Row>
             </Container>
             <Footer />
+          </ThemeContext.Provider>
         </Router>
       </ApolloProvider>
   );

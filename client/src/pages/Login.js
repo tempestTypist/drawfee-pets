@@ -5,7 +5,7 @@ import { LOGIN_USER } from '../utils/mutations';
 import { Card, InputGroup, FormControl } from 'react-bootstrap';
 import JankyButton from '../components/JankyButton';
 import Auth from '../utils/auth';
-import { useError } from '../components/ErrorContext'
+import { useError } from '../contexts/ErrorContext'
 
 const Login = () => {
   const [formState, setFormState] = useState({ 
