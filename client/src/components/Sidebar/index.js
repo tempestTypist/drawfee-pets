@@ -69,7 +69,7 @@ const Sidebar = () => {
 
                   <div className="sidebar-screen">
                     <div className="sidebar-screen__inner">
-                      <div className="position-relative h-100">
+                      <div className="position-relative h-100 w-100">
                         <Image 
                           fluid
                           className="" 

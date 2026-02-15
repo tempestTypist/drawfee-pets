@@ -522,7 +522,8 @@ a:hover:not(.navbar-brand a):not(.nav-link):not(a.dropdown-menu):not(.dropdown-i
 .sidebar-screen__inner {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   width: 100%;
 }
@@ -544,9 +545,8 @@ a:hover:not(.navbar-brand a):not(.nav-link):not(a.dropdown-menu):not(.dropdown-i
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 25.92%;
   padding: 1rem 2rem;
-  height: 100%;
+  height: 30%;
   width: 100%;
   background-color: var(--theme-primary);
   background-size: 100% 100%;
