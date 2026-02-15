@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client'
 import { QUERY_ME } from '../../utils/queries'
@@ -8,7 +8,7 @@ import Auth from '../../utils/auth'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell, faEnvelope, faEnvelopeOpen, faGear } from '@fortawesome/free-solid-svg-icons'
 
-import { Container, Row, Navbar, Nav, NavDropdown, Button, Offcanvas } from 'react-bootstrap' 
+import { Container, Navbar, Nav, NavDropdown, Offcanvas } from 'react-bootstrap' 
 import Logo from '../../assets/images/drawfee-logos/drawfee-light.png'
 import Loading from '../Loading'
 const dateFormat = require('../../utils/dateFormat');
@@ -136,13 +136,14 @@ const Header = ({ theme, setTheme, setErrors }) => {
                     <NavDropdown 
                       onMouseEnter={() => setHovered(true)}
                       onMouseLeave={() => setHovered(false)}
-                      title={<>
-                        <FontAwesomeIcon 
-                          className="lg-me-2 d-none d-lg-block dropdown-icon" 
-                          icon={isHovered ? faEnvelopeOpen : faEnvelope} 
-                        />
-                        <span className="d-lg-none">Messages</span>
-                      </>}
+                      title={
+                        <>
+                          <FontAwesomeIcon 
+                            className="lg-me-2 d-none d-lg-block dropdown-icon" 
+                            icon={isHovered ? faEnvelopeOpen : faEnvelope} 
+                          />
+                          <span className="d-lg-none">Messages</span>
+                        </>}
                       align="end" 
                       id="messages-dropdown"
                       >
@@ -186,10 +187,11 @@ const Header = ({ theme, setTheme, setErrors }) => {
                     </NavDropdown>
 
                     <NavDropdown 
-                      title={<>
-                        <FontAwesomeIcon className="lg-me-2 d-none d-lg-block dropdown-icon" icon={faBell} />
-                        <span className="d-lg-none">Notifications</span>
-                      </>} 
+                      title={
+                        <>
+                          <FontAwesomeIcon className="lg-me-2 d-none d-lg-block dropdown-icon" icon={faBell} />
+                          <span className="d-lg-none">Notifications</span>
+                        </>} 
                       align="end" 
                       id="notifications-dropdown"
                       >

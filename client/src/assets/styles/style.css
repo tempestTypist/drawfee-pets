@@ -165,8 +165,8 @@ a:hover:not(.navbar-brand a):not(.nav-link):not(a.dropdown-menu):not(.dropdown-i
 .loading {
   display: flex;
   justify-content: center;
-  height: 100vmin;
-  background-color: var(--main-bg-color)
+  height: 100%;
+  background-color: transparent
 }
 
 .loading .text-container {
