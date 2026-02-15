@@ -52,6 +52,7 @@ const BotList = ({
       const { data } = await favouriteBot({
         variables: { botId },
       });
+      console.log("favourited " + JSON.stringify(userBots[index]))
     } catch (err) {
       console.error(err);
     }

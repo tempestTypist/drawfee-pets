@@ -504,7 +504,7 @@ a:hover:not(.navbar-brand a):not(.nav-link):not(a.dropdown-menu):not(.dropdown-i
 
 .sidebar {
   position: fixed;
-  flex-direction: column;
+  /* flex-direction: column; */
   z-index: 999;
 }
 
@@ -513,7 +513,7 @@ a:hover:not(.navbar-brand a):not(.nav-link):not(a.dropdown-menu):not(.dropdown-i
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 3rem;
+  padding: 1.5rem 2rem;
   background: var(--screen-bg-color);
   border-image: var(--square-screen) 1 fill;
   border-radius: 100px;
@@ -522,15 +522,20 @@ a:hover:not(.navbar-brand a):not(.nav-link):not(a.dropdown-menu):not(.dropdown-i
 .sidebar-screen__inner {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
 }
 
 .sidebar-screen img {
-  object-fit: contain;
   background: transparent;
-  max-width: 100%;
-  height: 100%;
+  position: absolute;
+  object-fit: contain;
+  height: 150%;
+  top: -20%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 .sidebar-screen-btn {
