@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Container, Row, Col, Button, Card, Form, FormControl, Image, InputGroup } from 'react-bootstrap'
 import { useQuery, useMutation } from '@apollo/client'
@@ -6,6 +6,7 @@ import { useQuery, useMutation } from '@apollo/client'
 import { QUERY_BASEBOTS } from '../utils/queries'
 import { ADD_BOT } from '../utils/mutations'
 
+// import { Image } from 'react-bootstrap'
 import ImageImport from '../utils/imageimport'
 import Auth from '../utils/auth'
 import Loading from '../components/Loading'
@@ -29,6 +30,11 @@ const [botPreview, setBotPreview] = useState({
   colour: "Red",
 })
 
+  const carouselItems = allbots.map((bot) => ({
+      chassis: bot,
+      image: images[`MODEL-${botPreview.model}/${bot}/full-body.png`]
+  }))
+     
 const { setError } = useError();
 
 const [addBot, { error, data }] = useMutation(ADD_BOT);
@@ -109,34 +115,35 @@ const handleFormSubmit = async (e) => {
                 onSubmit={handleFormSubmit}
                 fluid >
 
-                {loading ? (
-                  <Loading />
-                ) : (
                 <>
                   <Row>
                     <Col xl={5} style={{"marginBottom": "-1rem"}}>
                       <div className="pet-preview__wrapper">
                         <div className="pet-preview">
-                          <Image 
-                            fluid
-                            className="pet-preview__screen" 
-                            src={images[`MODEL-${botPreview.model}/${botPreview.chassis}/head-${botPreview.colour}.png`]}
-                          />
-                          <Image 
-                            fluid
-                            className="pet-preview__screen" 
-                            src={images[`MODEL-${botPreview.model}/arms.png`]}
-                          />
-                          <Image 
-                            fluid
-                            className="pet-preview__screen" 
-                            src={images[`MODEL-${botPreview.model}/body.png`]}
-                          />
-                          <Image 
-                            fluid
-                            className="pet-preview__screen" 
-                            src={images[`MODEL-${botPreview.model}/legs.png`]}
-                          />
+                          {loading ? ( <Loading /> ) : (
+                            <>
+                              <Image 
+                                fluid
+                                className="pet-preview__screen" 
+                                src={images[`MODEL-${botPreview.model}/${botPreview.chassis}/head-${botPreview.colour}.png`]}
+                              />
+                              <Image 
+                                fluid
+                                className="pet-preview__screen" 
+                                src={images[`MODEL-${botPreview.model}/arms.png`]}
+                              />
+                              <Image 
+                                fluid
+                                className="pet-preview__screen" 
+                                src={images[`MODEL-${botPreview.model}/body.png`]}
+                              />
+                              <Image 
+                                fluid
+                                className="pet-preview__screen" 
+                                src={images[`MODEL-${botPreview.model}/legs.png`]}
+                              />
+                            </>
+                          )}
                         </div>
                       </div>
                     </Col>
@@ -148,36 +155,6 @@ const handleFormSubmit = async (e) => {
                             chooserType="model"
                             chooserOptions={modelChooserOptions}
                           />
-{/* 
-                          <div key={`inline-radio`} className="mb-3">
-                            <Form.Check
-                              inline
-                              label="D"
-                              value="D"
-                              name="model"
-                              type="radio"
-                              id={`inline-radio-1`}
-                              onChange={handleChange}
-                            />
-                            <Form.Check
-                              inline
-                              label="T"
-                              value="T"
-                              name="model"
-                              type="radio"
-                              id={`inline-radio-2`}
-                              onChange={handleChange}
-                            />
-                            <Form.Check
-                              inline
-                              label="L"
-                              value="L"
-                              name="model"
-                              type="radio"
-                              id={`inline-radio-3`}
-                              onChange={handleChange}
-                            />
-                          </div> */}
 
                         <div className="stacked-screen d-flex justify-content-center">
                           <InputGroup className="w-75">
@@ -206,9 +183,9 @@ const handleFormSubmit = async (e) => {
                     <Col xs={12} className="pet-chooser">
                       <Carousel 
                         heading="Bot Chooser" 
-                        carouselItems={allbots} 
-                        selectBot={selectBot} 
-                        model={botPreview.model} />
+                        carouselItems={carouselItems} 
+                        selectedItem={selectBot} 
+                        />
                     </Col>
 
                     <div className="screen-btn-wrapper">
@@ -216,7 +193,6 @@ const handleFormSubmit = async (e) => {
                     </div>
                   </Row>
                 </>
-                )}
               </Container>
             )
           }

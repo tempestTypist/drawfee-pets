@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import {
   ApolloClient,
   InMemoryCache,
@@ -8,9 +8,6 @@ import {
 import { setContext } from '@apollo/client/link/context'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './assets/styles/style.css'
-
 import Home from './pages/Home'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
@@ -31,6 +28,8 @@ import Footer from './components/Footer'
 import Assets from './pages/Assets'
 import ToastComponent from './components/ToastComponent'
 import { ThemeContext } from './contexts/ThemeContext';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './assets/styles/style.css'
 
 // construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -95,7 +94,7 @@ const App = () => {
       <ApolloProvider client={client}>
         <Router>
           <ThemeContext.Provider value={{ theme, setTheme }}>
-            <Header theme={theme} setTheme={setTheme} />
+            <Header />
             <Container fluid>
               <Row className="main-content">
                 <Sidebar />

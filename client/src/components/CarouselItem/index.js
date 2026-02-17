@@ -1,8 +1,8 @@
-import React from 'react';
 import ImageImport from '../../utils/imageimport';
+import { Image } from 'react-bootstrap';
 
 const CarouselItem = (props) => {
-  const { index, active, id, level } = props 
+  const { index, active, id, src, level } = props 
 	const slideClick = props.handleSlideClick
 	const images = ImageImport.importAll(require.context('../../assets/images/pets', false, /\.(png|jpe?g|svg)$/));
 	let className = 'item level' + level
@@ -21,14 +21,22 @@ const CarouselItem = (props) => {
 
 	return (
 	<li 
+		key={index}
 		className={className}
 		onClick={handleSlideClick} >
 		<div className="item__image-wrapper">
-			<img 
+			{/* <img 
 				className="item__image"
 				alt={id}
-				name="petSpecies"
-				src={images[`${id}.png`]}
+				name="chassis"
+				src={src}
+				onLoad={imageLoaded}
+			/> */}
+			<Image 
+				className="item__image" 
+				name="chassis"
+				src={src} 
+				alt={id} 
 				onLoad={imageLoaded}
 			/>
 		</div>
