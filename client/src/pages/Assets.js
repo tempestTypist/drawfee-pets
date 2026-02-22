@@ -3,8 +3,6 @@ import { Container, Row, Col, Image, Table, Figure, Form, FormControl, InputGrou
 import { Accordion, Alert, Badge, Breadcrumb, ButtonGroup, ButtonToolbar, Card, CardGroup, Carousel, CloseButton, Dropdown, DropdownButton, ListGroup, ListGroupItem, Nav, NavDropdown, Navbar, Offcanvas, Pagination, ProgressBar, Spinner, Toast  } from 'react-bootstrap';
 import JankyButton from '../components/JankyButton';
 
-import March from '../assets/images/footer-march.png';
-
 const Assets = () => {
 
 	const [isLoading, setLoading] = useState(false);
@@ -137,9 +135,9 @@ const Assets = () => {
 						<div className="bd-example">
 							<Image className="bd-placeholder-img" width="200" height="200" style={{background: "gray"}} thumbnail />
 						</div>
-						<div className="bd-example" height="250">
+						{/* <div className="bd-example" height="250">
 							<Image src={March} className="bd-placeholder-img" height="250" style={{background: "gray"}} fluid />
-						</div>
+						</div> */}
 					</article>
 
 					<article className="my-3" id="tables">

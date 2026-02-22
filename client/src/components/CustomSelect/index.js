@@ -1,29 +1,29 @@
 const CustomSelect = (props) => {
-	const { handleChange, chooserType, chooserOptions } = props
-
-	const changeHandler = (e) => {
-		handleChange(e)
-	}
+  const { handleChange, chooserType, chooserOptions, selectedValue } = props;
 
   return (
-		<div className={`${chooserType}-chooser`}>	
+    <div className={`${chooserType}-chooser`}>
+      {chooserOptions.values.map((value, index) => {
+        // const capitalizedValue =
+        //   value.charAt(0).toUpperCase() + value.slice(1);
 
-			{chooserOptions.values.map((value, index) => (
-				<label key={index} htmlFor={`${chooserType}-${value}`}>
-					<input 
-						type="radio" 
-						name={`${chooserType}`}
-						className={`${chooserType}-${value}`}
-						id={`${chooserType}-${value}`}
-						value={value}
-						onChange={changeHandler}
-					/>
-					<div className={`${chooserOptions.image}`} />
-					<div className={`${chooserType}-label`}>{value}</div>
-				</label>
-			))}
-
-		</div>
+        return (
+          <label key={index} htmlFor={`${chooserType}-${value}`}>
+            <input
+              type="radio"
+              name={chooserType}
+							className={`colour-${value}`}
+              id={`${chooserType}-${value}`}
+              value={value}
+              checked={selectedValue === value}
+              onChange={handleChange}
+            />
+            <div className={`${chooserOptions.image}`} />
+            <div className={`${chooserType}-label`}>{value.charAt(0).toUpperCase() + value.slice(1)}</div>
+          </label>
+        );
+      })}
+    </div>
 
 		// <div className="colour-chooser">
 

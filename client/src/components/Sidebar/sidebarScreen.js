@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Auth from '../../utils/auth'
 import * as motion from "motion/react-client"
 import { LoginScreen } from './loginScreen'
@@ -18,6 +19,10 @@ export const SidebarScreen = () => {
       }
     }
   }
+
+		useEffect(() => {
+	
+		}, [Auth]);
 
   return (
 		<motion.div

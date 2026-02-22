@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Auth from '../../utils/auth'
 import { Container, Navbar, Nav, Offcanvas } from 'react-bootstrap' 
 import { HeaderLogo } from './headerLogo'
@@ -7,6 +8,10 @@ import { UserNav } from './headerUserNav'
 const Header = () => {
   const NavBar = Auth.loggedIn() ? UserNav : GuestNav;
   
+  useEffect(() => {
+
+  }, [Auth]);
+
   return (
     <Navbar collapseOnSelect expand="lg" fixed="top" variant="dark" className="py-0">
       <Container fluid>
